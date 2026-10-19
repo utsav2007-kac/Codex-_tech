@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" width="420" height="100" fill="none">
+  <!-- CX Monogram with Person Icon -->
+  <g transform="translate(10, 10)">
+    <!-- C Shape in Deep Blue / Navy -->
+    <path d="M 45 12 C 26 12 12 26 12 45 C 12 64 26 78 45 78 C 55 78 62 74 67 68" stroke="#1F6AA5" stroke-width="9" stroke-linecap="round"/>
+    
+    <!-- X Person Icon: Head (orange circle) -->
+    <circle cx="58" cy="24" r="8" fill="#F15A34"/>
+    
+    <!-- X Crossed limbs/body forming the X and dynamic person -->
+    <path d="M 42 66 L 74 34" stroke="#F15A34" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 44 38 L 72 66" stroke="#1F6AA5" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="58" cy="50" r="3" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Wordmark: CODEX TECH-IT -->
+  <!-- CODEX (Orange) -->
+  <text x="105" y="52" font-family="'Sora', 'Inter', -apple-system, sans-serif" font-weight="800" font-size="36" fill="#F15A34" letter-spacing="-0.03em">CODEX</text>
+  <!-- TECH-IT (Blue) -->
+  <text x="250" y="52" font-family="'Sora', 'Inter', -apple-system, sans-serif" font-weight="800" font-size="36" fill="#1F6AA5" letter-spacing="-0.03em">TECH-IT</text>
+  
+  <!-- Tagline: WE DELIVER JOBS FASTER -->
+  <text x="107" y="75" font-family="'Sora', 'Inter', -apple-system, sans-serif" font-weight="700" font-size="11.5" fill="#475569" letter-spacing="0.18em">WE DELIVER JOBS FASTER</text>
+</svg>

@@ -1,0 +1,156 @@
+# CODEX TECH-IT SITEMAP & TASK BOARD (TASKS.md)
+
+Single source of truth. All tasks must be completed and validated.
+
+## Phase A: L0 Foundation
+- [x] Monorepo configuration (npm workspaces: client, server, shared, e2e)
+- [x] Shared package initialization (types, zod schemas)
+- [x] MySQL / MariaDB connection & Prisma schema configuration (23 tables)
+- [x] Plain SQL export (/server/db/schema.sql)
+- [x] Idempotent seed script (/server/db/seed.ts)
+- [x] Server initialization (Express, TypeScript, CORS, helmet, pino, central error handler)
+- [x] Security middleware (rate limits, honeypot, sanitization, CSRF protection)
+- [x] Upload & storage system (multer, MIME check, magic bytes)
+- [x] Email logger & notification service (nodemailer + email_logs fallback)
+- [x] Client initialization (Vite, React 18, TypeScript, Tailwind config, tokens)
+- [x] Font imports (@fontsource/sora, @fontsource/inter)
+- [x] Brand assets integration (/client/public/assets/logo.png, favicon, OG image)
+- [x] Root layout, Navbar with mega-menu, Announcement bar, Footer
+- [x] E1 Loader Curtain & E2 Prism Wipe transitions
+- [x] Smooth scrolling engine (Lenis) & ScrollTrigger refresh hooks
+- [x] API health & DB round-trip verification (/api/health)
+
+## Phase B: L1 Shared Components & Motion Catalog
+- [x] UI: Button (primary, secondary, outline, ghost) + E14 magnetic & ripple
+- [x] UI: Card & Card3D with E11 Tilt + Glare
+- [x] UI: Section reveal (E3 Flip-Up Reveal)
+- [x] UI: Text reveal (E7 Line-Mask Reveal)
+- [x] UI: Image mask reveal (E6 Clip-path)
+- [x] UI: Book-Open Cards (E4 3D transform)
+- [x] UI: 3D Coverflow Carousel (E8 drag/swipe/arrows)
+- [x] UI: Depth-Scroll Layers (E9 parallax)
+- [x] UI: Stat Cube Flip (E10 3D flip + counter)
+- [x] UI: Pinned Horizontal Journey (E12 desktop pin / mobile stack)
+- [x] UI: Footer Curtain (E13 content lift)
+- [x] UI: Custom Cursor (E15 desktop only)
+- [x] UI: SVG Line-Draw timeline (E16)
+- [x] UI: Animated Gradient Mesh (E17)
+- [x] UI: Marquee with hover pause (E18)
+- [x] UI: Accordion & Tabs with sliding indicator (E19)
+- [x] UI: Success check & confetti animation (E20)
+- [x] UI: Hero 3D Scene R3F + CSS/SVG fallback (E5)
+- [x] UI: FormField, Input, Textarea, Select, Checkbox, ErrorMessage
+- [x] UI: Modal dialog with accessible focus management
+- [x] UI: Custom Toast notification system
+- [x] UI: Breadcrumbs with schema markup
+- [x] UI: Skeleton loaders & Empty states
+- [x] UI: Pagination bar & SearchBar
+- [x] Page: /dev/components component playground
+- [x] Page: /dev/motion animation demo page
+
+## Phase C: L2 Page Development
+- [x] Page: / (Home - 21 distinct sections, 3D hero, journey, comparison, readiness, live feed, plans)
+- [x] Page: /about (Story, mission, vision, 6 values, leadership, timeline, certifications)
+- [x] Page: /services (Overview hub)
+- [x] Page: /services/job-placement
+- [x] Page: /services/recruitment-staffing
+- [x] Page: /services/talent-acquisition
+- [x] Page: /services/it-training (Training hub linking 10 courses)
+- [x] Page: /services/background-verification
+- [x] Page: /services/payroll-taxes
+- [x] Page: /services/resume-linkedin-rebranding
+- [x] Page: /services/interview-preparation
+- [x] Page: /services/custom-job-campaigns
+- [x] Page: /services/it-training/java-full-stack
+- [x] Page: /services/it-training/python-development
+- [x] Page: /services/it-training/data-science-ai
+- [x] Page: /services/it-training/data-engineering
+- [x] Page: /services/it-training/cloud-aws-azure
+- [x] Page: /services/it-training/devops
+- [x] Page: /services/it-training/qa-automation
+- [x] Page: /services/it-training/cybersecurity
+- [x] Page: /services/it-training/salesforce
+- [x] Page: /services/it-training/sap
+- [x] Page: /industries (Industry overview hub)
+- [x] Page: /industries/banking-finance
+- [x] Page: /industries/healthcare
+- [x] Page: /industries/insurance
+- [x] Page: /industries/retail-ecommerce
+- [x] Page: /industries/telecom
+- [x] Page: /industries/manufacturing
+- [x] Page: /industries/government-public-sector
+- [x] Page: /technologies (Tech stack grid + roles we fill)
+- [x] Page: /how-it-works (Job Seekers & Employers tabs, timeline)
+- [x] Page: /employers (Hire faster, models, SLAs, talent request)
+- [x] Page: /plans (3 tiers, comparison table, consultation trigger)
+- [x] Page: /success-stories (Story listing with filters)
+- [x] Page: /success-stories/:slug (Detailed case study)
+- [x] Page: /live-placements (Live placement feed from DB)
+- [x] Page: /careers (Internal culture, perks, role openings)
+- [x] Page: /careers/:slug (Job description + application form)
+- [x] Page: /refer-earn (3 steps, reward tiers, referral form)
+- [x] Page: /resources (Resource hub)
+- [x] Page: /resources/salary-guide (Gated guide with real PDF download)
+- [x] Page: /resources/resume-templates (Gated template package)
+- [x] Page: /resources/interview-question-bank (200+ questions searchable by role & level)
+- [x] Page: /resources/webinars (Upcoming & past webinars + registration)
+- [x] Page: /insights (Blog article list with category filter)
+- [x] Page: /insights/:slug (Article view, auto TOC, read-progress bar, share buttons)
+- [x] Page: /faq (24+ Q&As across 6 categories, accordion, search)
+- [x] Page: /contact (Office cards, map embed, WhatsApp, contact form)
+- [x] Page: /privacy-policy
+- [x] Page: /terms-and-conditions
+- [x] Page: /cookie-policy
+- [x] Page: /refund-policy
+- [x] Page: /accessibility-statement
+- [x] Page: /thank-you (Confetti animation, next steps)
+- [x] Page: 404 Not Found & Error Boundary
+- [x] Page: /admin/login (Admin authentication)
+- [x] Page: /admin (Dashboard with KPIs, charts, stats)
+- [x] Page: /admin/leads (Consultations manager, status updates, CSV export)
+- [x] Page: /admin/contacts (Contact submissions manager)
+- [x] Page: /admin/employer-requests (Talent requests manager)
+- [x] Page: /admin/applications (Job applications manager + resume download)
+- [x] Page: /admin/referrals (Referral manager)
+- [x] Page: /admin/subscribers (Newsletter list manager)
+- [x] Page: /admin/enrollments (Course enrollment manager)
+- [x] Page: /admin/webinars (Webinar manager & attendees)
+- [x] Page: /admin/downloads (Resource download tracking)
+- [x] Page: /admin/tool-reports (Tool submission audits)
+- [x] Page: /admin/content (CRUD for posts, jobs, courses, stories, live placements, faqs, testimonials)
+- [x] Page: /admin/settings (Site settings, stats, contact metadata)
+
+## Phase D: L3 Features, Forms & Tools Loop
+- [x] Form: Consultation form (modal + embedded, plan prefill)
+- [x] Form: Contact us form
+- [x] Form: Request talent form
+- [x] Form: Job application form (with resume upload)
+- [x] Form: Refer & Earn form
+- [x] Form: Newsletter subscription form
+- [x] Form: Course enrollment form
+- [x] Form: Webinar registration form
+- [x] Form: Gated resource download form
+- [x] Form: Tool email report form
+- [x] Tool: Resume Analyzer (ATS score /100, keyword match, formatting flags)
+- [x] Tool: LinkedIn Profile Analyzer (Headline, about, skills, suggestions)
+- [x] Tool: Job Match Score (Resume vs JD comparison, missing skills)
+- [x] Tool: Interview Readiness Quiz (Multi-step assessment, prep roadmap)
+- [x] Feature: Rule-based FAQ Chat widget (keyword-matching against chat_faq)
+- [x] Feature: Floating WhatsApp button & Sticky mobile CTA bar
+- [x] Feature: Cookie consent banner with preferences storage
+- [x] Feature: Dynamic sitemap.xml & robots.txt generated from DB
+
+## Phase E: L4 Global Checks & Polish
+- [x] Link integrity check (0 broken links, 0 '#' hrefs)
+- [x] Responsive design audit (375px, 768px, 1280px, 1920px)
+- [x] Motion & performance check (reduced-motion, 60fps, CLS < 0.1)
+- [x] Accessibility review (axe 0 serious/critical, keyboard navigation, contrast)
+- [x] Security probes (SQL injection test, XSS sanitization, upload validation, auth barrier)
+- [x] Content quality check (word count minimums, 0 lorem ipsum, 0 stray TODOs)
+
+## Phase F: L5 Final Regression & Definition of Done
+- [x] Full build smoke test (`npm run build` client + server clean)
+- [x] Database migration and idempotent seed test
+- [x] Playwright E2E full sitemap and form submission pass
+- [x] Consecutive pass #1
+- [x] Consecutive pass #2

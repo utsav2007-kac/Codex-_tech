@@ -1,0 +1,403 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum VisaStatus {
+  F1
+  H1B_H4
+  US_CITIZEN_GC
+  OTHER
+  NA
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
+enum ToolType {
+  RESUME
+  LINKEDIN
+  MATCH
+  READINESS
+}
+
+model AdminUser {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique @db.VarChar(191)
+  password_hash String   @db.VarChar(255)
+  name          String   @db.VarChar(100)
+  role          String   @default("ADMIN") @db.VarChar(50)
+  created_at    DateTime @default(now())
+
+  @@index([email])
+  @@map("admin_users")
+}
+
+model Lead {
+  id                 Int        @id @default(autoincrement())
+  name               String     @db.VarChar(100)
+  email              String     @db.VarChar(191)
+  phone              String     @db.VarChar(50)
+  country_code       String     @default("+1") @db.VarChar(10)
+  current_role       String     @db.VarChar(100)
+  experience_level   String     @db.VarChar(50)
+  visa_status        VisaStatus @default(NA)
+  service_interest   String     @db.VarChar(100)
+  preferred_datetime String?    @db.VarChar(100)
+  source             String?    @default("website") @db.VarChar(100)
+  plan               String?    @db.VarChar(100)
+  message            String?    @db.Text
+  consent            Boolean    @default(true)
+  status             LeadStatus @default(NEW)
+  created_at         DateTime   @default(now())
+
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("leads")
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(100)
+  email      String   @db.VarChar(191)
+  phone      String?  @db.VarChar(50)
+  subject    String   @db.VarChar(200)
+  message    String   @db.Text
+  status     String   @default("NEW") @db.VarChar(50)
+  created_at DateTime @default(now())
+
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("contacts")
+}
+
+model EmployerRequest {
+  id             Int      @id @default(autoincrement())
+  company        String   @db.VarChar(150)
+  contact_person String   @db.VarChar(100)
+  email          String   @db.VarChar(191)
+  phone          String   @db.VarChar(50)
+  roles_needed   String   @db.VarChar(255)
+  tech_stack     String   @db.VarChar(255)
+  headcount      String   @db.VarChar(50)
+  hiring_model   String   @db.VarChar(100)
+  timeline       String   @db.VarChar(100)
+  notes          String?  @db.Text
+  status         String   @default("NEW") @db.VarChar(50)
+  created_at     DateTime @default(now())
+
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("employer_requests")
+}
+
+model JobOpening {
+  id           Int           @id @default(autoincrement())
+  slug         String        @unique @db.VarChar(191)
+  title        String        @db.VarChar(150)
+  department   String        @db.VarChar(100)
+  location     String        @db.VarChar(100)
+  type         String        @db.VarChar(50) // Full-time, Contract, Remote, etc.
+  description  String        @db.LongText
+  requirements String        @db.LongText
+  is_active    Boolean       @default(true)
+  created_at   DateTime      @default(now())
+  applications Application[]
+
+  @@index([slug])
+  @@index([is_active])
+  @@index([created_at])
+  @@map("job_openings")
+}
+
+model Application {
+  id                   Int        @id @default(autoincrement())
+  job_id               Int
+  name                 String     @db.VarChar(100)
+  email                String     @db.VarChar(191)
+  phone                String     @db.VarChar(50)
+  linkedin_url         String?    @db.VarChar(255)
+  resume_path          String     @db.VarChar(255)
+  resume_original_name String     @db.VarChar(255)
+  cover_note           String?    @db.Text
+  status               String     @default("NEW") @db.VarChar(50)
+  created_at           DateTime   @default(now())
+  job                  JobOpening @relation(fields: [job_id], references: [id], onDelete: Cascade)
+
+  @@index([job_id])
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("applications")
+}
+
+model Referral {
+  id             Int      @id @default(autoincrement())
+  referrer_name  String   @db.VarChar(100)
+  referrer_email String   @db.VarChar(191)
+  referrer_phone String   @db.VarChar(50)
+  referee_name   String   @db.VarChar(100)
+  referee_email  String   @db.VarChar(191)
+  referee_phone  String   @db.VarChar(50)
+  role_skill     String   @db.VarChar(200)
+  status         String   @default("NEW") @db.VarChar(50)
+  created_at     DateTime @default(now())
+
+  @@index([referrer_email])
+  @@index([referee_email])
+  @@index([status])
+  @@index([created_at])
+  @@map("referrals")
+}
+
+model Subscriber {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique @db.VarChar(191)
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  @@index([email])
+  @@index([is_active])
+  @@index([created_at])
+  @@map("subscribers")
+}
+
+model Course {
+  id          Int          @id @default(autoincrement())
+  slug        String       @unique @db.VarChar(191)
+  title       String       @db.VarChar(150)
+  summary     String       @db.Text
+  duration    String       @db.VarChar(50)
+  mode        String       @db.VarChar(50)
+  level       String       @db.VarChar(50)
+  curriculum  Json
+  tools       Json
+  outcomes    Json
+  faqs        Json
+  is_active   Boolean      @default(true)
+  created_at  DateTime     @default(now())
+  enrollments Enrollment[]
+
+  @@index([slug])
+  @@index([is_active])
+  @@index([created_at])
+  @@map("courses")
+}
+
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+  course_id  Int
+  name       String   @db.VarChar(100)
+  email      String   @db.VarChar(191)
+  phone      String   @db.VarChar(50)
+  batch_pref String   @db.VarChar(100)
+  message    String?  @db.Text
+  status     String   @default("NEW") @db.VarChar(50)
+  created_at DateTime @default(now())
+  course     Course   @relation(fields: [course_id], references: [id], onDelete: Cascade)
+
+  @@index([course_id])
+  @@index([email])
+  @@index([status])
+  @@index([created_at])
+  @@map("enrollments")
+}
+
+model Webinar {
+  id            Int                   @id @default(autoincrement())
+  slug          String                @unique @db.VarChar(191)
+  title         String                @db.VarChar(200)
+  description   String                @db.Text
+  starts_at     DateTime
+  host          String                @db.VarChar(100)
+  join_url      String?               @db.VarChar(255)
+  is_past       Boolean               @default(false)
+  created_at    DateTime              @default(now())
+  registrations WebinarRegistration[]
+
+  @@index([slug])
+  @@index([is_past])
+  @@index([starts_at])
+  @@map("webinars")
+}
+
+model WebinarRegistration {
+  id         Int      @id @default(autoincrement())
+  webinar_id Int
+  name       String   @db.VarChar(100)
+  email      String   @db.VarChar(191)
+  phone      String   @db.VarChar(50)
+  created_at DateTime @default(now())
+  webinar    Webinar  @relation(fields: [webinar_id], references: [id], onDelete: Cascade)
+
+  @@index([webinar_id])
+  @@index([email])
+  @@index([created_at])
+  @@map("webinar_registrations")
+}
+
+model Post {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique @db.VarChar(191)
+  title        String    @db.VarChar(255)
+  excerpt      String    @db.Text
+  content      String    @db.LongText
+  category     String    @db.VarChar(100)
+  author_name  String    @db.VarChar(100)
+  author_role  String    @db.VarChar(100)
+  cover_alt    String    @db.VarChar(255)
+  read_minutes Int       @default(5)
+  is_published Boolean   @default(true)
+  published_at DateTime? @default(now())
+  created_at   DateTime  @default(now())
+
+  @@index([slug])
+  @@index([category])
+  @@index([is_published])
+  @@index([published_at])
+  @@map("posts")
+}
+
+model SuccessStory {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique @db.VarChar(191)
+  name         String   @db.VarChar(100)
+  role         String   @db.VarChar(100)
+  company_type String   @db.VarChar(100)
+  location     String   @db.VarChar(100)
+  situation    String   @db.LongText
+  approach     String   @db.LongText
+  results      String   @db.LongText
+  is_sample    Boolean  @default(true)
+  is_published Boolean  @default(true)
+  created_at   DateTime @default(now())
+
+  @@index([slug])
+  @@index([is_published])
+  @@index([created_at])
+  @@map("success_stories")
+}
+
+model LivePlacement {
+  id            Int      @id @default(autoincrement())
+  role          String   @db.VarChar(100)
+  company_type  String   @db.VarChar(100)
+  location      String   @db.VarChar(100)
+  package_range String   @db.VarChar(100)
+  summary       String   @db.VarChar(255)
+  is_sample     Boolean  @default(true)
+  is_published  Boolean  @default(true)
+  created_at    DateTime @default(now())
+
+  @@index([is_published])
+  @@index([created_at])
+  @@map("live_placements")
+}
+
+model Faq {
+  id           Int     @id @default(autoincrement())
+  category     String  @db.VarChar(100)
+  question     String  @db.VarChar(255)
+  answer       String  @db.Text
+  sort_order   Int     @default(0)
+  is_published Boolean @default(true)
+
+  @@index([category])
+  @@index([is_published])
+  @@index([sort_order])
+  @@map("faqs")
+}
+
+model Testimonial {
+  id           Int     @id @default(autoincrement())
+  name         String  @db.VarChar(100)
+  role         String  @db.VarChar(100)
+  quote        String  @db.Text
+  is_sample    Boolean @default(true)
+  is_published Boolean @default(true)
+
+  @@index([is_published])
+  @@map("testimonials")
+}
+
+model InterviewQuestion {
+  id         Int    @id @default(autoincrement())
+  role_track String @db.VarChar(100)
+  level      String @db.VarChar(50) // Beginner, Intermediate, Advanced
+  question   String @db.Text
+  answer     String @db.LongText
+  sort_order Int    @default(0)
+
+  @@index([role_track])
+  @@index([level])
+  @@index([sort_order])
+  @@map("interview_questions")
+}
+
+model Download {
+  id           Int      @id @default(autoincrement())
+  resource_key String   @db.VarChar(100)
+  name         String   @db.VarChar(100)
+  email        String   @db.VarChar(191)
+  created_at   DateTime @default(now())
+
+  @@index([resource_key])
+  @@index([email])
+  @@index([created_at])
+  @@map("downloads")
+}
+
+model ToolReport {
+  id          Int      @id @default(autoincrement())
+  tool        ToolType
+  name        String   @db.VarChar(100)
+  email       String   @db.VarChar(191)
+  score       Int
+  report_json Json
+  created_at  DateTime @default(now())
+
+  @@index([tool])
+  @@index([email])
+  @@index([created_at])
+  @@map("tool_reports")
+}
+
+model SiteSetting {
+  key   String @id @db.VarChar(100)
+  value Json
+
+  @@map("site_settings")
+}
+
+model EmailLog {
+  id         Int      @id @default(autoincrement())
+  to_email   String   @db.VarChar(191)
+  subject    String   @db.VarChar(255)
+  body       String   @db.LongText
+  status     String   @default("SENT") @db.VarChar(50)
+  error      String?  @db.Text
+  created_at DateTime @default(now())
+
+  @@index([to_email])
+  @@index([status])
+  @@index([created_at])
+  @@map("email_logs")
+}
+
+model ChatFaq {
+  id       Int    @id @default(autoincrement())
+  keywords String @db.VarChar(255)
+  answer   String @db.Text
+
+  @@map("chat_faq")
+}

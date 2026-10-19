@@ -1,0 +1,192 @@
+@import '@fontsource/sora/400.css';
+@import '@fontsource/sora/600.css';
+@import '@fontsource/sora/700.css';
+@import '@fontsource/sora/800.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --orange-500: #F15A34;
+    --orange-600: #D94822;
+    --blue-600: #1F6AA5;
+    --blue-700: #17527F;
+    --navy-900: #0B1B2E;
+    --navy-800: #12304D;
+    --slate-600: #475569;
+    --gray-50: #F5F7FA;
+    --white: #FFFFFF;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #475569;
+    background-color: #FFFFFF;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', system-ui, -apple-system, sans-serif;
+    color: #0B1B2E;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+    max-width: 65ch;
+  }
+
+  /* Fluid Scales */
+  .text-display {
+    font-size: clamp(2.75rem, 1.6rem + 5vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .text-h1 {
+    font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  .text-h2 {
+    font-size: clamp(1.875rem, 1.3rem + 2.4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  .text-h3 {
+    font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.75rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  .text-body-lg {
+    font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .font-numbers {
+    font-family: 'Sora', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom Components & Brand Utilities */
+@layer components {
+  .section-padding {
+    padding-top: clamp(4rem, 8vw, 8rem);
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+  }
+
+  .container-custom {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  /* Eyebrow pattern: 0.75rem | 600 | UPPERCASE | ls 0.14em | orange-500, preceded by 24px line */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #F25C2A;
+    margin-bottom: 0.75rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background-color: #F25C2A;
+    border-radius: 9999px;
+  }
+
+  /* Brand gradient text - Solid high-contrast two-tone warm orange gradient (WCAG compliant) */
+  .text-brand-gradient {
+    background: linear-gradient(135deg, #F25C2A 0%, #C2410C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  /* Soft white text scrim backing to guarantee calm contrast over any 3D/ambient layer */
+  .text-scrim-left {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.92) 75%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  /* Split-reveal text container ensuring descenders (g, y, p, j, q) are never cut */
+  .split-mask-container {
+    line-height: 1.25;
+    padding-bottom: 0.18em;
+    overflow: hidden;
+  }
+
+  /* Glassmorphism cards */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 10px 30px -5px rgba(11, 27, 46, 0.06);
+  }
+
+  .glass-card-dark {
+    background: rgba(18, 48, 77, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Animated link underline */
+  .animated-underline {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .animated-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #F25C2A;
+    transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .animated-underline:hover::after,
+  .animated-underline.active::after {
+    width: 100%;
+  }
+}
+
+/* Reduced Motion Override (Mandatory Guardrail) */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
