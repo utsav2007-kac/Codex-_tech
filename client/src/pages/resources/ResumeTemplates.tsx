@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Download, FileText, CheckCircle2, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { SEO } from '../../components/ui/SEO';
-import { Breadcrumbs } from '../../components/ui/Breadcrumbs';
+import { PageHero } from '../../components/layout/PageHero';
 import { Button } from '../../components/ui/Button';
 import { api } from '../../services/api';
 
@@ -116,25 +116,38 @@ TEMPLATE 2: CLOUD & DEVOPS ENGINEER (SKILLS-FIRST)
         canonical="/resources/resume-templates"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Resources', href: '/resources' },
-              { label: 'Resume Templates' },
-            ]}
-          />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">ATS Screening Optimization</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              ATS-Proof Technical <span className="text-brand-gradient">Resume Templates.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed">
-              Recruiting algorithms discard up to 75% of resumes due to unparseable two-column tables, text boxes, and missing keywords. Download our clean, high-parsing technical frameworks.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with ATS Resume Preview Visual) ── */}
+      <PageHero
+        eyebrow="ATS Screening Optimization"
+        title={
+          <>
+            ATS-Proof Technical <span className="text-brand-gradient">Resume Templates.</span>
+          </>
+        }
+        tagline="Engineered for Automated Parser Compliance & Recruiter Readability"
+        summary="Recruiting algorithms discard up to 75% of resumes due to unparseable two-column tables, text boxes, and missing keywords. Download our clean, high-parsing technical frameworks."
+        breadcrumbs={[
+          { label: 'Resources', path: '/resources' },
+          { label: 'Resume Templates' },
+        ]}
+        primaryCta={{
+          label: 'Download Free Kit',
+          onClick: () => {
+            const el = document.getElementById('download-form');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Explore All Resources',
+          href: '/resources',
+        }}
+        facts={[
+          { icon: CheckCircle2, label: 'Parse Rate', value: '98% ATS Score' },
+          { icon: ShieldCheck, label: 'Formats', value: 'DOCX, LaTeX, PDF' },
+          { icon: Download, label: 'Access', value: '100% Free' },
+        ]}
+        visual="resource-resume-templates"
+      />
 
       <section className="section-padding bg-white">
         <div className="container-custom">
@@ -174,7 +187,7 @@ TEMPLATE 2: CLOUD & DEVOPS ENGINEER (SKILLS-FIRST)
 
             {/* Download Form */}
             <div>
-              <div className="p-8 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm sticky top-24">
+              <div id="download-form" className="p-8 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm sticky top-24">
                 <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center mb-4">
                   <FileText className="w-6 h-6" />
                 </div>

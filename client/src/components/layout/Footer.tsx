@@ -113,17 +113,21 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 2: Diagnostic Tools */}
+          {/* Column 2: Careers & Talent */}
           <div>
-            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Free Tools</h5>
+            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Careers & Talent</h5>
             <ul className="flex flex-col gap-2 text-slate-300 font-normal">
-              {siteConfig.tools.map((t) => (
-                <li key={t.slug}>
-                  <Link to={`/tools/${t.slug}`} className="hover:text-orange-500 transition-colors">
-                    {t.title}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/careers" className="hover:text-orange-500 transition-colors flex items-center gap-1.5">
+                  <span>Browse All Open Roles</span>
+                  <span className="px-1.5 py-0.2 bg-orange-500/20 text-orange-400 text-[10px] font-bold rounded">Hot</span>
+                </Link>
+              </li>
+              <li><Link to="/careers" className="hover:text-orange-500 transition-colors">Cloud & Infrastructure</Link></li>
+              <li><Link to="/careers" className="hover:text-orange-500 transition-colors">Full-Stack & Backend</Link></li>
+              <li><Link to="/careers" className="hover:text-orange-500 transition-colors">Data & AI Engineering</Link></li>
+              <li><Link to="/careers" className="hover:text-orange-500 transition-colors">Candidate Benefits & Visa</Link></li>
+              <li><Link to="/refer-earn" className="hover:text-orange-500 transition-colors">Refer & Earn Program</Link></li>
             </ul>
           </div>
 

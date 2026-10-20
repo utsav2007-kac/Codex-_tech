@@ -5,6 +5,7 @@ import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
+import { PageHero } from '../components/layout/PageHero';
 
 export const Faq: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
@@ -69,7 +70,7 @@ export const Faq: React.FC = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-x-hidden">
       <SEO
         title="Frequently Asked Questions (FAQ) | Codex Tech-IT"
         description="Comprehensive answers regarding Codex Tech-IT's recruitment models, placement guarantees, training programs, visa eligibility, and payment plans."
@@ -78,29 +79,40 @@ export const Faq: React.FC = () => {
       />
 
       {/* Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'FAQ' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Clear Answers</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Frequently Asked <span className="text-brand-gradient">Questions.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed mb-8">
-              Everything you need to know about our recruitment timelines, payment frameworks, visa sponsorship support, and training curricula.
-            </p>
+      <PageHero
+        breadcrumbs={[{ label: 'FAQ' }]}
+        badge="Help Center & Knowledge Base"
+        title="Frequently Asked Questions."
+        titleGradientWords={['Questions.']}
+        subtitle="Everything you need to know about our recruitment timelines, payment frameworks, visa sponsorship support, and training curricula."
+        primaryCta={{
+          label: 'Ask an Advisor',
+          onClick: onOpenConsultation,
+        }}
+        secondaryCta={{
+          label: 'Search Questions',
+          href: '#faq-search-bar',
+        }}
+        facts={[
+          { label: 'Documented Answers', value: `${faqs.length > 0 ? faqs.length : '30'}+` },
+          { label: 'Avg Advisory Reply', value: '< 15 Mins' },
+          { label: 'Clarity Guarantee', value: '100% Direct' },
+        ]}
+        visual="faq-helper"
+      />
 
-            {/* Search Input */}
-            <div className="relative max-w-xl">
-              <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search any keyword (e.g. refund, H1B, resume, timeline)..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white shadow-sm"
-              />
-            </div>
+      {/* Search Toolbar */}
+      <section id="faq-search-bar" className="py-6 bg-slate-50 border-b border-gray-200">
+        <div className="container-custom">
+          <div className="relative max-w-xl mx-auto">
+            <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search any keyword (e.g. refund, H1B, resume, timeline)..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white shadow-sm"
+            />
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { DollarSign, FileText, HelpCircle, Video, ArrowRight, Download, Sparkles } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 
 export const Resources: React.FC = () => {
   const resourceCards = [
@@ -48,24 +48,38 @@ export const Resources: React.FC = () => {
         canonical="/resources"
       />
 
-      {/* Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Resources' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Knowledge Center</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Engineering Career & <span className="text-brand-gradient">Hiring Toolkit.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed">
-              Equip yourself with validated compensation data, ATS-compliant resume frameworks, role-specific technical questions, and interactive webinars built by technical staffing veterans.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Resources Vault Visual) ── */}
+      <PageHero
+        eyebrow="Knowledge Center"
+        title={
+          <>
+            Engineering Career & <span className="text-brand-gradient">Hiring Toolkit.</span>
+          </>
+        }
+        tagline="Curated Playbooks, Comp Guides & Technical Prep Tools"
+        summary="Equip yourself with validated compensation data, ATS-compliant resume frameworks, role-specific technical questions, and interactive webinars built by technical staffing veterans."
+        breadcrumbs={[{ label: 'Resources' }]}
+        primaryCta={{
+          label: 'Explore Resources',
+          onClick: () => {
+            const el = document.getElementById('resources-grid');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: '2026 Salary Guide',
+          href: '/resources/salary-guide',
+        }}
+        facts={[
+          { icon: Download, label: 'Guides Downloaded', value: '16,800+' },
+          { icon: FileText, label: 'Templates & Banks', value: '100% Free' },
+          { icon: Sparkles, label: 'Content Updates', value: 'Weekly Refreshes' },
+        ]}
+        visual="resources-hub"
+      />
 
       {/* Resources Grid */}
-      <section className="section-padding bg-white">
+      <section id="resources-grid" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {resourceCards.map((res, idx) => {

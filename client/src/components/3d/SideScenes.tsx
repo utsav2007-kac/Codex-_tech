@@ -32,6 +32,16 @@ export const SideScenes: React.FC = () => {
     // Set initial display
     canvas.style.display = isVisible ? 'block' : 'none';
 
+    // If not visible on this screen size or gutter, do not create WebGL context
+    if (!isVisible) return;
+
+    // Test WebGL context availability before passing to Three.js
+    const testGl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    if (!testGl) {
+      console.warn('WebGL context unavailable for SideScenes');
+      return;
+    }
+
     // Create Single WebGL Renderer
     let renderer: THREE.WebGLRenderer | null = null;
     try {

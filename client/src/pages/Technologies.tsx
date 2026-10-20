@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import { Code2, Server, Cloud, Database, Shield, Smartphone, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
 
 interface TechStackCategory {
   category: string;
@@ -67,20 +70,35 @@ export const Technologies: React.FC = () => {
         canonical="/technologies"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Technologies' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Engineering Matrix</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Technologies & <span className="text-brand-gradient">Roles We Fill.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed">
-              We do not staff generalists. Our candidate evaluation engines and placement pipelines are organized by technical stack depth.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Technologies Map Visual) ── */}
+      <PageHero
+        eyebrow="Engineering Matrix"
+        title={
+          <>
+            Technologies & <span className="text-brand-gradient">Roles We Fill.</span>
+          </>
+        }
+        tagline="Organized by Technical Stack Depth & Enterprise Architecture"
+        summary="We do not staff generalists. Our candidate evaluation engines and placement pipelines are organized by technical stack depth."
+        breadcrumbs={[{ label: 'Technologies' }]}
+        primaryCta={{
+          label: 'Explore Tech Stacks',
+          onClick: () => {
+            const el = document.getElementById('tech-grid');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Discuss Custom Stack',
+          onClick: onOpenConsultation,
+        }}
+        facts={[
+          { icon: Server, label: 'Core Categories', value: '6 Disciplines' },
+          { icon: Cloud, label: 'Frameworks Supported', value: '45+ Techs' },
+          { icon: CheckCircle2, label: 'Pre-Screening', value: '100% Practical' },
+        ]}
+        visual="technologies-map"
+      />
 
       {/* Category Filter Pills */}
       <section className="py-6 bg-white border-b border-gray-100 sticky top-20 z-20 backdrop-blur-md bg-white/95">
@@ -108,11 +126,11 @@ export const Technologies: React.FC = () => {
       </section>
 
       {/* Grid of Tech Stacks */}
-      <section className="section-padding bg-gray-50">
+      <Scroll3DSection preset="lift" className="section-padding bg-gray-50">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {filtered.map((cat, idx) => (
-              <div key={idx} className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between">
+              <Scroll3DCard key={cat.category} index={idx} maxTilt={5} className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center">
@@ -154,30 +172,32 @@ export const Technologies: React.FC = () => {
                   <button onClick={onOpenConsultation} className="text-xs font-bold text-orange-500 hover:underline cursor-pointer">
                     Submit profile for this track →
                   </button>
-                  <Link to="/employers" className="text-xs font-bold text-navy-900 hover:text-orange-500">
+                  <button onClick={onOpenConsultation} className="text-xs font-bold text-navy-900 hover:text-orange-500 cursor-pointer">
                     Hire for this track →
-                  </Link>
+                  </button>
                 </div>
-              </div>
+              </Scroll3DCard>
             ))}
           </div>
         </div>
-      </section>
+      </Scroll3DSection>
 
       {/* Bottom CTA */}
-      <section className="section-padding bg-navy-900 text-white text-center">
+      <Scroll3DSection preset="scaleIn" className="section-padding bg-navy-900 text-white text-center">
         <div className="container-custom max-w-2xl mx-auto">
-          <h2 className="text-h2 text-white mb-4">
-            Don't See Your Exact <span className="text-brand-gradient">Technical Stack?</span>
-          </h2>
-          <p className="text-slate-300 text-sm mb-8">
-            We support custom requisitions and tailored candidate searches across niche engineering stacks.
-          </p>
-          <Button variant="primary" size="lg" onClick={onOpenConsultation}>
-            Speak with a Technical Recruiter
-          </Button>
+          <SectionReveal variant="tiltUp">
+            <h2 className="text-h2 text-white mb-4">
+              Don't See Your Exact <span className="text-brand-gradient">Technical Stack?</span>
+            </h2>
+            <p className="text-slate-300 text-sm mb-8">
+              We support custom requisitions and tailored candidate searches across niche engineering stacks.
+            </p>
+            <Button variant="primary" size="lg" onClick={onOpenConsultation}>
+              Speak with a Technical Recruiter
+            </Button>
+          </SectionReveal>
         </div>
-      </section>
+      </Scroll3DSection>
     </div>
   );
 };

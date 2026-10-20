@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Briefcase, MapPin, Clock, ArrowLeft, Upload, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
 
@@ -142,34 +142,34 @@ export const CareerDetail: React.FC = () => {
       />
 
       {/* Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Careers', href: '/careers' },
-              { label: job.title },
-            ]}
-          />
-
-          <div className="max-w-4xl mt-6">
-            <div className="flex flex-wrap items-center gap-3 text-xs mb-4">
-              <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-bold text-[11px]">
-                {job.department}
-              </span>
-              <span className="flex items-center gap-1 text-slate-500">
-                <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                {job.location}
-              </span>
-              <span className="flex items-center gap-1 text-slate-500">
-                <Clock className="w-3.5 h-3.5 text-slate-400" />
-                {job.type}
-              </span>
-            </div>
-
-            <h1 className="text-h1 text-navy-900 mb-4">{job.title}</h1>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Careers Life Visual) ── */}
+      <PageHero
+        eyebrow={job.department || 'Engineering Requisition'}
+        title={job.title}
+        tagline={`${job.location} · ${job.type}`}
+        summary={job.description ? job.description.slice(0, 160) + '...' : 'Explore role requirements, team details, and submit your application directly to engineering directors.'}
+        breadcrumbs={[
+          { label: 'Careers', path: '/careers' },
+          { label: job.title },
+        ]}
+        primaryCta={{
+          label: 'Apply for Role',
+          onClick: () => {
+            const el = document.getElementById('apply-form');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Back to Open Positions',
+          href: '/careers',
+        }}
+        facts={[
+          { icon: MapPin, label: 'Location', value: job.location },
+          { icon: Clock, label: 'Employment Type', value: job.type },
+          { icon: CheckCircle2, label: 'Candidate Representation', value: '100% Free' },
+        ]}
+        visual="careers-life"
+      />
 
       {/* Content Grid */}
       <section className="section-padding bg-white">
@@ -194,7 +194,7 @@ export const CareerDetail: React.FC = () => {
 
             {/* Application Form */}
             <div>
-              <div className="p-8 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm sticky top-24">
+              <div id="apply-form" className="p-8 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm sticky top-24">
                 <h3 className="font-heading font-bold text-xl text-navy-900 mb-2">Apply for this Position</h3>
                 <p className="text-xs text-slate-500 mb-6">
                   Submit your resume and details directly to our hiring directors.

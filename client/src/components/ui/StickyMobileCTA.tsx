@@ -16,11 +16,11 @@ export const StickyMobileCTA: React.FC<StickyMobileCTAProps> = ({ onOpenConsulta
         <span>Book Free Consultation</span>
       </button>
       <a
-        href="/tools"
+        href="/careers"
         className="bg-navy-900 text-white font-heading font-semibold text-xs py-3 px-3.5 rounded-xl flex items-center gap-1.5 shrink-0"
       >
         <Sparkles className="w-3.5 h-3.5 text-orange-400" />
-        <span>Free Tools</span>
+        <span>View Jobs</span>
       </a>
     </aside>
   );

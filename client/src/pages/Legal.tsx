@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Shield, FileText, CheckCircle, Scale, Eye } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 
 export const Legal: React.FC = () => {
   const location = useLocation();
@@ -159,23 +160,33 @@ export const Legal: React.FC = () => {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-x-hidden">
       <SEO
         title={`${title} | Codex Tech-IT`}
         description={`Read the official ${title} of Codex Tech-IT regarding our technical staffing, recruitment, and IT training operations.`}
         canonical={path}
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: title }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">{eyebrow}</div>
-            <h1 className="text-h1 text-navy-900 mb-4">{title}</h1>
-            <p className="text-xs text-slate-400">Last Reviewed and Updated: {lastUpdated}</p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        breadcrumbs={[{ label: title }]}
+        badge={eyebrow}
+        title={title}
+        subtitle={`Official regulatory policies, consumer protections, and terms of service governing Codex Tech-IT talent placement and IT training operations. Last reviewed: ${lastUpdated}.`}
+        primaryCta={{
+          label: 'Contact Legal Desk',
+          href: '/contact',
+        }}
+        secondaryCta={{
+          label: 'Back to Home',
+          href: '/',
+        }}
+        facts={[
+          { label: 'Data Security', value: 'TLS 1.3' },
+          { label: 'Privacy Framework', value: 'GDPR / CCPA' },
+          { label: 'Screening Standard', value: 'FCRA Aligned' },
+        ]}
+        visual="legal-shield"
+      />
 
       <section className="section-padding bg-white">
         <div className="container-custom max-w-4xl">

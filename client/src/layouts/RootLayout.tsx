@@ -13,6 +13,7 @@ import { CookieConsent } from '../components/ui/CookieConsent';
 import { ConsultationModal } from '../components/forms/ConsultationModal';
 import { useLenisScroll } from '../hooks/useLenisScroll';
 import { SideScenes } from '../components/3d/SideScenes';
+import { GlobalScrollCanvas3D } from '../components/3d/GlobalScrollCanvas3D';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 
 export const RootLayout: React.FC = () => {
@@ -24,6 +25,10 @@ export const RootLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative selection:bg-orange-500/20 selection:text-orange-600">
+      {/* Global 3D Ambient Scroll Canvas (Meshes & Starfield with reversible scroll tracking) */}
+      <ErrorBoundary fallback={null}>
+        <GlobalScrollCanvas3D />
+      </ErrorBoundary>
       {/* Three.js Persistent Dual-Gutter Animations (Left Candidate Helix & Right Hiring Network) */}
       <ErrorBoundary fallback={null}>
         <SideScenes />

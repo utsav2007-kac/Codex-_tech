@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Gift, DollarSign, Users, CheckCircle2, ArrowRight, AlertCircle, Loader2, Sparkles } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
 
@@ -97,21 +97,38 @@ export const ReferEarn: React.FC = () => {
         canonical="/refer-earn"
       />
 
-      {/* Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Refer & Earn' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Talent Referral Program</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Connect Great Talent. <span className="text-brand-gradient">Earn Generous Rewards.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed">
-              Know an engineer, cloud specialist, or data architect looking for their next career milestone? Recommend them to Codex Tech-IT and receive cash bonuses up to $1,500 upon their successful placement.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Referral Engine Visual) ── */}
+      <PageHero
+        eyebrow="Talent Referral Program"
+        title={
+          <>
+            Connect Great Talent. <span className="text-brand-gradient">Earn Generous Rewards.</span>
+          </>
+        }
+        tagline="Uncapped Cash Rewards for Technical Candidate Introductions"
+        summary="Know an engineer, cloud specialist, or data architect looking for their next career milestone? Recommend them to Codex Tech-IT and receive cash bonuses up to $1,500 upon their successful placement."
+        breadcrumbs={[{ label: 'Refer & Earn' }]}
+        primaryCta={{
+          label: 'Submit a Referral',
+          onClick: () => {
+            const el = document.getElementById('referral-form');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'View Reward Tiers',
+          onClick: () => {
+            const el = document.getElementById('reward-tiers');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        facts={[
+          { icon: DollarSign, label: 'Max Reward / Placement', value: 'Up to $1,500' },
+          { icon: Users, label: 'Referral Limit', value: 'Uncapped' },
+          { icon: CheckCircle2, label: 'Payout Speed', value: 'Direct Wire' },
+        ]}
+        visual="refer-earn"
+      />
 
       {/* 3 Steps */}
       <section className="section-padding bg-gray-50 border-b border-gray-200/60">
@@ -134,7 +151,7 @@ export const ReferEarn: React.FC = () => {
       </section>
 
       {/* Reward Tiers */}
-      <section className="section-padding bg-white border-b border-gray-200/60">
+      <section id="reward-tiers" className="section-padding bg-white border-b border-gray-200/60">
         <div className="container-custom">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="eyebrow">Reward Structure (SAMPLE)</div>
@@ -160,7 +177,7 @@ export const ReferEarn: React.FC = () => {
       </section>
 
       {/* Referral Form */}
-      <section className="section-padding bg-gray-50">
+      <section id="referral-form" className="section-padding bg-gray-50">
         <div className="container-custom max-w-3xl">
           <div className="p-8 md:p-12 rounded-3xl bg-white border border-gray-200 shadow-xl">
             <div className="text-center mb-8">

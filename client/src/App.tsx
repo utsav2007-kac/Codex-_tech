@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { RootLayout } from './layouts/RootLayout';
 import { ScrollToTop } from './components/layout/ScrollToTop';
 
@@ -9,16 +9,7 @@ import { About } from './pages/About';
 import { Services } from './pages/Services';
 import { ServiceDetail } from './pages/ServiceDetail';
 import { CourseDetail } from './pages/CourseDetail';
-import { Industries } from './pages/Industries';
-import { IndustryDetail } from './pages/IndustryDetail';
 import { Technologies } from './pages/Technologies';
-import { Tools } from './pages/Tools';
-import { ResumeAnalyzer } from './pages/tools/ResumeAnalyzer';
-import { LinkedInAnalyzer } from './pages/tools/LinkedInAnalyzer';
-import { JobMatchScore } from './pages/tools/JobMatchScore';
-import { InterviewReadiness } from './pages/tools/InterviewReadiness';
-import { HowItWorks } from './pages/HowItWorks';
-import { Employers } from './pages/Employers';
 import { Plans } from './pages/Plans';
 import { SuccessStories } from './pages/SuccessStories';
 import { StoryDetail } from './pages/StoryDetail';
@@ -61,16 +52,17 @@ export const App: React.FC = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/services/:service" element={<ServiceDetail />} />
           <Route path="/services/it-training/:course" element={<CourseDetail />} />
-          <Route path="/industries" element={<Industries />} />
-          <Route path="/industries/:industry" element={<IndustryDetail />} />
           <Route path="/technologies" element={<Technologies />} />
-          <Route path="/tools" element={<Tools />} />
-          <Route path="/tools/resume-analyzer" element={<ResumeAnalyzer />} />
-          <Route path="/tools/linkedin-profile-analyzer" element={<LinkedInAnalyzer />} />
-          <Route path="/tools/job-match-score" element={<JobMatchScore />} />
-          <Route path="/tools/interview-readiness" element={<InterviewReadiness />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/employers" element={<Employers />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/careers/:slug" element={<CareerDetail />} />
+
+          {/* Graceful Redirects for Removed Pages */}
+          <Route path="/how-it-works" element={<Navigate to="/about" replace />} />
+          <Route path="/employers" element={<Navigate to="/contact" replace />} />
+          <Route path="/tools" element={<Navigate to="/services" replace />} />
+          <Route path="/tools/*" element={<Navigate to="/services" replace />} />
+          <Route path="/industries" element={<Navigate to="/services" replace />} />
+          <Route path="/industries/*" element={<Navigate to="/services" replace />} />
           <Route path="/plans" element={<Plans />} />
           <Route path="/success-stories" element={<SuccessStories />} />
           <Route path="/success-stories/:slug" element={<StoryDetail />} />

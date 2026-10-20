@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none">
+  <!-- C Shape in Orange #F15A34 -->
+  <path id="cx-c" d="M 52 14 C 28 14 12 30 12 50 C 12 70 28 86 52 86 C 63 86 72 81 77 74" stroke="#F15A34" stroke-width="10" stroke-linecap="round"/>
+  
+  <!-- Person Head in White with Orange Rim -->
+  <circle id="cx-head" cx="64" cy="22" r="8.5" fill="#FFFFFF" stroke="#F15A34" stroke-width="2.5"/>
+  
+  <!-- X Orange Left Bar (Lower-Left to Upper-Right) -->
+  <path id="cx-x-orange" d="M 46 72 L 82 36" stroke="#F15A34" stroke-width="9" stroke-linecap="round"/>
+  
+  <!-- X Blue Right Bar (Upper-Left to Lower-Right) -->
+  <path id="cx-x-blue" d="M 48 38 L 80 72" stroke="#1F6AA5" stroke-width="9" stroke-linecap="round"/>
+  
+  <!-- Center Intersection Spark Node -->
+  <circle id="cx-core" cx="64" cy="54" r="3.5" fill="#FFFFFF"/>
+</svg>

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Download, DollarSign, CheckCircle2, TrendingUp, AlertCircle, Loader2 } from 'lucide-react';
 import { SEO } from '../../components/ui/SEO';
-import { Breadcrumbs } from '../../components/ui/Breadcrumbs';
+import { PageHero } from '../../components/layout/PageHero';
 import { Button } from '../../components/ui/Button';
 import { api } from '../../services/api';
 
@@ -104,25 +104,38 @@ For tailored compensation evaluations, visit https://codextechit.com/contact
         canonical="/resources/salary-guide"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Resources', href: '/resources' },
-              { label: 'Salary Guide' },
-            ]}
-          />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Compensation Intelligence</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              2026 Technical Salary & <span className="text-brand-gradient">Compensation Guide.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed">
-              Real-world placement intelligence detailing base salaries, hourly contracting rates, and bonus structures across high-demand tech stacks.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Tech Compensation Index Visual) ── */}
+      <PageHero
+        eyebrow="Compensation Intelligence"
+        title={
+          <>
+            2026 Technical Salary & <span className="text-brand-gradient">Compensation Guide.</span>
+          </>
+        }
+        tagline="Real-World Base Salaries, Contracting Rates & Equity Models"
+        summary="Real-world placement intelligence detailing base salaries, hourly contracting rates, and bonus structures across high-demand tech stacks."
+        breadcrumbs={[
+          { label: 'Resources', path: '/resources' },
+          { label: 'Salary Guide' },
+        ]}
+        primaryCta={{
+          label: 'Download Free PDF',
+          onClick: () => {
+            const el = document.getElementById('download-form');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Explore All Resources',
+          href: '/resources',
+        }}
+        facts={[
+          { icon: DollarSign, label: 'Data Points', value: '2,400+ Offers' },
+          { icon: TrendingUp, label: 'Highest Tech Lift', value: '+42% Uplift' },
+          { icon: CheckCircle2, label: 'Access', value: '100% Free' },
+        ]}
+        visual="resource-salary-guide"
+      />
 
       <section className="section-padding bg-white">
         <div className="container-custom">
@@ -195,7 +208,7 @@ For tailored compensation evaluations, visit https://codextechit.com/contact
 
             {/* Gated Download Form */}
             <div>
-              <div className="p-8 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm sticky top-24">
+              <div id="download-form" className="p-8 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm sticky top-24">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center mb-4">
                   <Download className="w-6 h-6" />
                 </div>

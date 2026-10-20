@@ -104,85 +104,44 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               )}
             </div>
 
-            {/* Tools Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setToolsOpen(true)}
-              onMouseLeave={() => setToolsOpen(false)}
-            >
-              <button
-                className={`inline-flex items-center gap-1 px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors ${
-                  location.pathname.startsWith('/tools') ? 'text-orange-500' : ''
-                }`}
-                aria-expanded={toolsOpen}
-              >
-                <span>Tools</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${toolsOpen ? 'rotate-180 text-orange-500' : ''}`} />
-              </button>
-
-              {toolsOpen && (
-                <div className="absolute top-full -left-10 w-[420px] bg-white rounded-2xl shadow-card border border-gray-100 p-4 flex flex-col gap-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="pb-2 mb-1 border-b border-gray-100 flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-wider text-slate-400 font-bold">Free Diagnostic Tools</span>
-                    <span className="text-[10px] px-2 py-0.5 bg-orange-100 text-orange-600 rounded-full font-bold">Instant Results</span>
-                  </div>
-                  {siteConfig.tools.map((t) => (
-                    <Link
-                      key={t.slug}
-                      to={`/tools/${t.slug}`}
-                      className="p-2.5 rounded-xl hover:bg-gray-50 transition-colors group flex flex-col"
-                    >
-                      <span className="text-sm font-bold text-navy-900 group-hover:text-orange-500 transition-colors flex items-center justify-between">
-                        {t.title}
-                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all text-orange-500" />
-                      </span>
-                      <span className="text-xs text-slate-500 line-clamp-1 mt-0.5">{t.desc}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
+            {/* About Us */}
             <Link
-              to="/industries"
+              to="/about"
               className={`px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors animated-underline ${
-                location.pathname.startsWith('/industries') ? 'active text-orange-500' : ''
+                location.pathname === '/about' ? 'active text-orange-500 font-bold' : ''
               }`}
             >
-              Industries
+              About Us
             </Link>
 
+            {/* Careers */}
             <Link
-              to="/how-it-works"
-              className={`px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors animated-underline ${
-                location.pathname === '/how-it-works' ? 'active text-orange-500' : ''
+              to="/careers"
+              className={`px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors animated-underline flex items-center gap-1.5 ${
+                location.pathname.startsWith('/careers') ? 'active text-orange-500 font-bold' : ''
               }`}
             >
-              How It Works
+              <span>Careers</span>
+              <span className="px-1.5 py-0.5 rounded-full bg-orange-100 text-orange-600 text-[10px] font-extrabold uppercase tracking-wide">
+                Hiring
+              </span>
             </Link>
 
-            <Link
-              to="/employers"
-              className={`px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors animated-underline ${
-                location.pathname === '/employers' ? 'active text-orange-500' : ''
-              }`}
-            >
-              Employers
-            </Link>
-
+            {/* Insights */}
             <Link
               to="/insights"
               className={`px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors animated-underline ${
-                location.pathname.startsWith('/insights') ? 'active text-orange-500' : ''
+                location.pathname.startsWith('/insights') ? 'active text-orange-500 font-bold' : ''
               }`}
             >
               Insights
             </Link>
 
+            {/* Contact */}
             <Link
               to="/contact"
               className={`px-3 py-2 rounded-lg hover:text-orange-500 hover:bg-orange-50/50 transition-colors animated-underline ${
-                location.pathname === '/contact' ? 'active text-orange-500' : ''
+                location.pathname === '/contact' ? 'active text-orange-500 font-bold' : ''
               }`}
             >
               Contact
@@ -191,8 +150,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
 
           {/* Desktop Right CTA */}
           <div className="hidden lg:flex items-center gap-3">
+            <Link
+              to="/careers"
+              className="px-4 py-2 rounded-xl text-xs font-bold text-navy-900 hover:text-orange-600 transition-colors"
+            >
+              View Jobs
+            </Link>
             <Button variant="primary" size="md" onClick={onOpenConsultation}>
-              Book Free Call
+              Hire Talent
             </Button>
           </div>
 
@@ -211,6 +176,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-x-0 top-20 bg-white border-b border-gray-200 p-6 shadow-xl max-h-[85vh] overflow-y-auto animate-in slide-in-from-top duration-300">
           <div className="flex flex-col gap-4 font-heading font-semibold text-base">
+            <Link to="/about" className="text-navy-900 hover:text-orange-500 py-1">
+              About Us
+            </Link>
+
             <Link to="/services" className="text-navy-900 hover:text-orange-500 py-1 flex items-center justify-between">
               Services <ChevronDown className="w-4 h-4 text-slate-400" />
             </Link>
@@ -225,17 +194,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               </Link>
             </div>
 
-            <Link to="/tools" className="text-navy-900 hover:text-orange-500 py-1">
-              Diagnostic Tools
-            </Link>
-            <Link to="/industries" className="text-navy-900 hover:text-orange-500 py-1">
-              Industries
-            </Link>
-            <Link to="/how-it-works" className="text-navy-900 hover:text-orange-500 py-1">
-              How It Works
-            </Link>
-            <Link to="/employers" className="text-navy-900 hover:text-orange-500 py-1">
-              For Employers
+            <Link to="/careers" className="text-navy-900 hover:text-orange-500 py-1 flex items-center justify-between">
+              <span>Careers at Codex</span>
+              <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">We're Hiring</span>
             </Link>
             <Link to="/plans" className="text-navy-900 hover:text-orange-500 py-1">
               Plans & Pricing
@@ -243,8 +204,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             <Link to="/success-stories" className="text-navy-900 hover:text-orange-500 py-1">
               Success Stories
             </Link>
-            <Link to="/careers" className="text-navy-900 hover:text-orange-500 py-1">
-              Careers at Codex
+            <Link to="/insights" className="text-navy-900 hover:text-orange-500 py-1">
+              Industry Insights
             </Link>
             <Link to="/refer-earn" className="text-navy-900 hover:text-orange-500 py-1">
               Refer & Earn

@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Clock, Calendar, User, ArrowRight, Loader2, Sparkles } from 'lucide-react';
+import { Link, useOutletContext } from 'react-router-dom';
+import { Search, Clock, Calendar, User, ArrowRight, Loader2, Sparkles, BookOpen } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
+import { FALLBACK_INSIGHTS, type InsightPost } from '../data/insightsData';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
+import { PageHero } from '../components/layout/PageHero';
 
 export const Insights: React.FC = () => {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
+  const [posts, setPosts] = useState<InsightPost[]>(FALLBACK_INSIGHTS);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
 
@@ -16,13 +23,16 @@ export const Insights: React.FC = () => {
       .then((res) => {
         const raw = res.data?.data;
         const list = Array.isArray(raw) ? raw : (raw?.items || []);
-        setPosts(list);
+        if (list.length > 0) {
+          setPosts(list);
+        }
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .catch(() => {
+        // Retain FALLBACK_INSIGHTS
+      });
   }, []);
 
-  const safePosts = Array.isArray(posts) ? posts : [];
+  const safePosts = Array.isArray(posts) && posts.length > 0 ? posts : FALLBACK_INSIGHTS;
   const categories = ['ALL', ...Array.from(new Set(safePosts.map((p) => p.category).filter(Boolean)))];
 
   const filtered = safePosts.filter((p) => {
@@ -36,42 +46,56 @@ export const Insights: React.FC = () => {
   });
 
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-x-hidden">
       <SEO
         title="Technical Career Insights & Hiring Strategies | Codex Tech-IT"
         description="Deep-dive articles on ATS resume fixes, technical interview frameworks, contract vs direct hire dynamics, and tech talent acquisition."
         canonical="/insights"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
+      <PageHero
+        breadcrumbs={[{ label: 'Insights' }]}
+        badge="Market Intelligence & Research"
+        title="Engineering Careers & Hiring Intelligence."
+        titleGradientWords={['Hiring Intelligence.']}
+        subtitle="Practical, field-tested guidance on resume positioning, technical interview tactics, compliance standards, and tech staffing economics from the Codex engineering desk."
+        primaryCta={{
+          label: 'Request Strategy Session',
+          onClick: onOpenConsultation,
+        }}
+        secondaryCta={{
+          label: 'Explore Latest Articles',
+          href: '#articles-section',
+        }}
+        facts={[
+          { label: 'Intelligence Reports', value: `${safePosts.length}+` },
+          { label: 'Quarterly Radar', value: 'Q4 2026' },
+          { label: 'Weekly Cadence', value: 'Fresh Data' },
+        ]}
+        visual="insights-radar"
+      />
+
+      {/* Filter Bar Toolbar */}
+      <section id="articles-section" className="py-6 bg-slate-50 border-b border-gray-200">
         <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Insights' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Expert Analysis & Guides</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Engineering Careers & <span className="text-brand-gradient">Hiring Intelligence.</span>
-            </h1>
-            <p className="text-body-lg text-slate-800 font-medium leading-relaxed mb-8">
-              Practical, field-tested guidance on resume positioning, technical interview tactics, compliance standards, and tech staffing economics.
-            </p>
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div className="relative flex-1 w-full max-w-xl">
+              <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search articles by title, topic, or keyword..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white shadow-sm"
+              />
+            </div>
 
-            {/* Filter Bar */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="Search articles by title, topic, or keyword..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white shadow-sm"
-                />
-              </div>
-
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline">Category:</span>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="py-3 px-4 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 shadow-sm"
+                className="w-full sm:w-auto py-3 px-4 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 shadow-sm"
               >
                 {categories.map((c) => (
                   <option key={c} value={c}>
@@ -85,7 +109,7 @@ export const Insights: React.FC = () => {
       </section>
 
       {/* Grid */}
-      <section className="section-padding bg-white">
+      <Scroll3DSection preset="lift" className="section-padding bg-white">
         <div className="container-custom">
           {loading ? (
             <div className="py-20 text-center">
@@ -104,9 +128,11 @@ export const Insights: React.FC = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filtered.map((post) => (
-                <article
+              {filtered.map((post, idx) => (
+                <Scroll3DCard
                   key={post.slug}
+                  index={idx}
+                  maxTilt={6}
                   className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
@@ -141,12 +167,29 @@ export const Insights: React.FC = () => {
                       <ArrowRight className="w-3.5 h-3.5 text-orange-500" />
                     </Link>
                   </div>
-                </article>
+                </Scroll3DCard>
               ))}
             </div>
           )}
         </div>
-      </section>
+      </Scroll3DSection>
+
+      {/* Bottom CTA */}
+      <Scroll3DSection preset="scaleIn" className="section-padding bg-navy-900 text-white text-center">
+        <div className="container-custom max-w-2xl mx-auto">
+          <SectionReveal variant="tiltUp">
+            <h2 className="text-h2 text-white mb-4">
+              Looking for Tailored <span className="text-brand-gradient">Career Guidance?</span>
+            </h2>
+            <p className="text-slate-300 text-sm mb-8">
+              Schedule a 1-on-1 strategy call with our talent directors to discuss ATS positioning, compensation benchmarks, and direct employer representation.
+            </p>
+            <Button variant="primary" size="lg" onClick={onOpenConsultation}>
+              Book Free Strategy Consultation
+            </Button>
+          </SectionReveal>
+        </div>
+      </Scroll3DSection>
     </div>
   );
 };

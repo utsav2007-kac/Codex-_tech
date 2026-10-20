@@ -14,6 +14,8 @@ import {
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
+import { PageHero } from '../components/layout/PageHero';
+import { CourseSnapshotVisual } from '../components/hero-visuals/courses/CourseSnapshotVisual';
 import { api } from '../services/api';
 
 export const CourseDetail: React.FC = () => {
@@ -99,40 +101,43 @@ export const CourseDetail: React.FC = () => {
         type="course"
       />
 
-      {/* Hero Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Services', path: '/services' },
-              { label: 'IT Training', path: '/services/it-training' },
-              { label: course.title },
-            ]}
+      {/* ── 1. UNIVERSAL PAGE HERO (Balanced 12-Column Grid with Course Snapshot Companion) ── */}
+      <PageHero
+        eyebrow="Industry-Led IT Training Track"
+        title={course.title}
+        tagline="Comprehensive Curriculum & Production Capstones"
+        summary={course.summary}
+        primaryCta={{
+          label: 'Enroll in Next Cohort',
+          onClick: () => {
+            const formEl = document.getElementById('enroll-form');
+            formEl?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Talk to Lead Instructor',
+          onClick: onOpenConsultation,
+        }}
+        breadcrumbs={[
+          { label: 'Services', path: '/services' },
+          { label: 'IT Training', path: '/services/it-training' },
+          { label: course.title },
+        ]}
+        facts={[
+          { icon: Clock, label: 'Course Duration', value: course.duration },
+          { icon: Laptop, label: 'Delivery Mode', value: course.mode },
+          { icon: Layers, label: 'Audience Level', value: course.level },
+        ]}
+        visual={
+          <CourseSnapshotVisual
+            courseTitle={course.title}
+            duration={course.duration}
+            mode={course.mode}
+            level={course.level}
+            tools={tools}
           />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Industry-Led IT Training Track</div>
-            <h1 className="text-h1 text-navy-900 mb-4">
-              {course.title}
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed mb-6">
-              {course.summary}
-            </p>
-
-            {/* Quick stats pills */}
-            <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700">
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 border border-orange-200 text-orange-700">
-                <Clock className="w-4 h-4 text-orange-500" /> Duration: {course.duration}
-              </span>
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-700">
-                <Laptop className="w-4 h-4 text-blue-600" /> Mode: {course.mode}
-              </span>
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-navy-50 border border-navy-100 text-navy-900">
-                <Layers className="w-4 h-4 text-navy-700" /> Level: {course.level}
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* Main Content Layout */}
       <section className="section-padding bg-white">
@@ -229,7 +234,7 @@ export const CourseDetail: React.FC = () => {
 
             {/* Right 4 Columns: Sticky Enrollment Card */}
             <div className="lg:col-span-4">
-              <div className="sticky top-28 p-6 sm:p-7 rounded-3xl bg-white border border-gray-200 shadow-xl">
+              <div id="enroll-form" className="sticky top-28 p-6 sm:p-7 rounded-3xl bg-white border border-gray-200 shadow-xl">
                 <h3 className="font-heading font-bold text-lg text-navy-900 mb-1">Enroll in this Track</h3>
                 <p className="text-xs text-slate-500 mb-6">
                   Reserve your seat for upcoming live batches. Flexible 0% interest monthly installments available.

@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { CheckCircle2, XCircle, Sparkles, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
 
 export const Plans: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
@@ -75,31 +78,45 @@ export const Plans: React.FC = () => {
         canonical="/plans"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Career Plans' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Clear, Transparent Pricing</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Tailored Career <span className="text-brand-gradient">Acceleration Plans.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed mb-6">
-              Standard recruitment placement is always 100% employer-funded. For candidates seeking intensive 1-on-1 executive rebranding, live mock interviews, or bootcamp training, we offer clear accelerator packages.
-            </p>
-            <div className="p-4 rounded-xl bg-orange-50 border border-orange-200/60 text-xs text-orange-900 font-medium inline-block">
-              Notice: Standard recruitment placement has zero fees for job seekers. Accelerator programs have flexible 0% interest monthly installment plans.
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with ROI Matrix Visual) ── */}
+      <PageHero
+        eyebrow="Clear, Transparent Pricing"
+        title={
+          <>
+            Tailored Career <span className="text-brand-gradient">Acceleration Plans.</span>
+          </>
+        }
+        tagline="Employer-Funded Placement & Candidate-First Accelerators"
+        summary="Standard recruitment placement is always 100% employer-funded. For candidates seeking intensive 1-on-1 executive rebranding or live mock interviews, we offer clear accelerator packages."
+        breadcrumbs={[{ label: 'Career Plans' }]}
+        primaryCta={{
+          label: 'Explore Packages',
+          onClick: () => {
+            const el = document.getElementById('plans-grid');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Compare Options With Advisor',
+          onClick: onOpenConsultation,
+        }}
+        facts={[
+          { icon: ShieldCheck, label: 'Standard Placement', value: '100% Free' },
+          { icon: Sparkles, label: 'Average Salary Lift', value: '+$34,500' },
+          { icon: CheckCircle2, label: 'Financing', value: '0% Interest EMI' },
+        ]}
+        visual="plans-compass"
+      />
 
       {/* 3 Tier Cards */}
-      <section className="section-padding bg-white">
+      <Scroll3DSection preset="lift" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
             {plans.map((p, idx) => (
-              <div
+              <Scroll3DCard
                 key={idx}
+                index={idx}
+                maxTilt={p.popular ? 8 : 5}
                 className={`p-8 rounded-3xl flex flex-col justify-between transition-all duration-300 ${
                   p.popular
                     ? 'bg-white border-2 border-orange-500 shadow-elevated relative scale-105 z-10'
@@ -149,12 +166,12 @@ export const Plans: React.FC = () => {
                 >
                   Choose {p.name}
                 </Button>
-              </div>
+              </Scroll3DCard>
             ))}
           </div>
 
           {/* Feature Comparison Table */}
-          <div className="max-w-4xl mx-auto mb-20">
+          <SectionReveal variant="depthZoom" className="max-w-4xl mx-auto mb-20">
             <h3 className="text-h3 font-bold text-navy-900 text-center mb-8">Detailed Feature Comparison</h3>
             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
@@ -189,39 +206,39 @@ export const Plans: React.FC = () => {
                 </table>
               </div>
             </div>
-          </div>
+          </SectionReveal>
 
           {/* Pricing FAQ */}
-          <div className="max-w-3xl mx-auto">
+          <SectionReveal variant="tiltUp" className="max-w-3xl mx-auto">
             <h3 className="text-h3 font-bold text-navy-900 text-center mb-8">Pricing & Payments FAQ</h3>
             <div className="flex flex-col gap-4 text-xs sm:text-sm">
-              <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+              <Scroll3DCard index={0} maxTilt={3} className="p-5 rounded-2xl bg-gray-50 border border-gray-100">
                 <h4 className="font-bold text-navy-900 mb-1">Is job placement really free for candidates?</h4>
                 <p className="text-slate-600 leading-relaxed">
                   Yes. When you are hired through our standard staffing representation, the hiring employer compensates Codex Tech-IT. We never charge candidates for placement into our client network.
                 </p>
-              </div>
-              <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+              </Scroll3DCard>
+              <Scroll3DCard index={1} maxTilt={3} className="p-5 rounded-2xl bg-gray-50 border border-gray-100">
                 <h4 className="font-bold text-navy-900 mb-1">How do payment plans work for Accelerator packages?</h4>
                 <p className="text-slate-600 leading-relaxed">
                   We offer flexible monthly installment plans with 0% interest to make coaching accessible to transitioning professionals.
                 </p>
-              </div>
-              <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+              </Scroll3DCard>
+              <Scroll3DCard index={2} maxTilt={3} className="p-5 rounded-2xl bg-gray-50 border border-gray-100">
                 <h4 className="font-bold text-navy-900 mb-1">What is your refund policy?</h4>
                 <p className="text-slate-600 leading-relaxed">
                   We provide a 100% money-back guarantee within the first 7 days of starting any coaching or training program if you are not completely satisfied.
                 </p>
-              </div>
+              </Scroll3DCard>
             </div>
 
             {/* Disclaimer */}
             <div className="mt-12 text-center text-[11px] text-slate-400 leading-relaxed">
               * Outcomes-Not-Guaranteed Disclaimer: Career acceleration programs provide intensive coaching, profile reconstruction, and interview preparation. Specific employment offers, compensation amounts, and hiring decisions remain solely at the discretion of prospective corporate employers.
             </div>
-          </div>
+          </SectionReveal>
         </div>
-      </section>
+      </Scroll3DSection>
     </div>
   );
 };

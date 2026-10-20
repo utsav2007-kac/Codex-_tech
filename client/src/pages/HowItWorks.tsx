@@ -4,6 +4,9 @@ import { CheckCircle2, ArrowRight, UserCheck, Building2, Zap, Clock, ShieldCheck
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
 
 export const HowItWorks: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
@@ -76,10 +79,10 @@ export const HowItWorks: React.FC = () => {
       />
 
       {/* Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
+      <Scroll3DSection preset="fade3d" className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
         <div className="container-custom">
           <Breadcrumbs items={[{ label: 'How It Works' }]} />
-          <div className="max-w-3xl mt-4">
+          <SectionReveal variant="tiltUp" className="max-w-3xl mt-4">
             <div className="eyebrow">Proven Methodology</div>
             <h1 className="text-h1 text-navy-900 mb-6">
               How Codex Tech-IT <span className="text-brand-gradient">Delivers Faster.</span>
@@ -109,17 +112,17 @@ export const HowItWorks: React.FC = () => {
                 <span>For Employers</span>
               </button>
             </div>
-          </div>
+          </SectionReveal>
         </div>
-      </section>
+      </Scroll3DSection>
 
       {/* Steps Timeline */}
-      <section className="section-padding bg-white">
+      <Scroll3DSection preset="lift" className="section-padding bg-white">
         <div className="container-custom max-w-4xl">
-          <div className="relative border-l-2 border-orange-500/30 pl-8 sm:pl-12 flex flex-col gap-12">
+          <div className="relative border-l-2 border-orange-500/30 pl-8 sm:pl-12 flex flex-col gap-10">
             {steps.map((s, idx) => (
-              <div key={idx} className="relative">
-                <div className="absolute -left-[41px] sm:-left-[57px] top-1 w-6 h-6 rounded-full bg-orange-500 border-4 border-white shadow-md flex items-center justify-center" />
+              <Scroll3DCard key={idx} index={idx} maxTilt={4} className="p-6 sm:p-8 rounded-3xl bg-gray-50/70 border border-gray-200/80 shadow-sm relative">
+                <div className="absolute -left-[45px] sm:-left-[61px] top-6 w-6 h-6 rounded-full bg-orange-500 border-4 border-white shadow-md flex items-center justify-center" />
                 <span className="text-sm font-numbers font-extrabold text-orange-600 uppercase tracking-widest block mb-1">
                   Step {s.step}
                 </span>
@@ -129,11 +132,11 @@ export const HowItWorks: React.FC = () => {
                 <p className="text-slate-700 font-medium text-sm sm:text-base leading-relaxed max-w-2xl">
                   {s.desc}
                 </p>
-              </div>
+              </Scroll3DCard>
             ))}
           </div>
 
-          <div className="mt-16 pt-8 border-t border-gray-100 text-center">
+          <SectionReveal variant="tiltUp" className="mt-16 pt-8 border-t border-gray-100 text-center">
             {activeTab === 'candidates' ? (
               <Button variant="primary" size="lg" onClick={onOpenConsultation}>
                 Start Your Placement Journey <ArrowRight className="w-5 h-5 ml-1" />
@@ -143,9 +146,9 @@ export const HowItWorks: React.FC = () => {
                 Request Engineering Talent Shortlist <ArrowRight className="w-5 h-5 ml-1" />
               </Button>
             )}
-          </div>
+          </SectionReveal>
         </div>
-      </section>
+      </Scroll3DSection>
     </div>
   );
 };

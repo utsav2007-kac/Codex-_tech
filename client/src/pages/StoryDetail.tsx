@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useOutletContext } from 'react-router-dom';
 import { ArrowLeft, Building, MapPin, CheckCircle2, Award, Calendar, ArrowRight, Loader2 } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
 
@@ -54,42 +54,35 @@ export const StoryDetail: React.FC = () => {
         canonical={`/success-stories/${story.slug}`}
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Success Stories', href: '/success-stories' },
-              { label: story.name },
-            ]}
-          />
-
-          <div className="max-w-4xl mt-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-orange-600 text-xs font-semibold mb-4">
-              <Award className="w-3.5 h-3.5" />
-              Verified Placement Case Study (SAMPLE)
-            </div>
-
-            <h1 className="text-h1 text-navy-900 mb-4">
-              How {story.name} Secured a <span className="text-brand-gradient">{story.role}</span> Role.
-            </h1>
-
-            <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 mb-6">
-              <span className="flex items-center gap-1.5">
-                <Building className="w-4 h-4 text-blue-600" />
-                {story.company_type}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-slate-400" />
-                {story.location}
-              </span>
-              <span className="flex items-center gap-1.5 text-emerald-600 font-medium">
-                <CheckCircle2 className="w-4 h-4" />
-                Offer Signed & Verified
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Success Story Companion Visual) ── */}
+      <PageHero
+        eyebrow="Verified Placement Case Study"
+        title={
+          <>
+            How {story.name} Secured a <span className="text-brand-gradient">{story.role}</span> Role.
+          </>
+        }
+        tagline={`${story.company_type} · ${story.location}`}
+        summary={`Read how ${story.name} transitioned into a ${story.role} position with verified compensation uplift through Codex Tech-IT's career campaign.`}
+        breadcrumbs={[
+          { label: 'Success Stories', path: '/success-stories' },
+          { label: story.name },
+        ]}
+        primaryCta={{
+          label: 'Schedule Career Review',
+          onClick: onOpenConsultation,
+        }}
+        secondaryCta={{
+          label: 'Back to All Stories',
+          href: '/success-stories',
+        }}
+        facts={[
+          { icon: Building, label: 'Company Sector', value: story.company_type },
+          { icon: MapPin, label: 'Location', value: story.location },
+          { icon: CheckCircle2, label: 'Placement Status', value: 'Offer Signed' },
+        ]}
+        visual="success-stories"
+      />
 
       <section className="section-padding bg-white">
         <div className="container-custom">

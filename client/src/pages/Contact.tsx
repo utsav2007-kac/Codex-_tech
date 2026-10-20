@@ -7,6 +7,10 @@ import { Mail, Phone, MapPin, Clock, MessageSquare, CheckCircle2, AlertCircle, L
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
+import { PageHero } from '../components/layout/PageHero';
 import { siteConfig } from '../config/site';
 import { api } from '../services/api';
 
@@ -56,39 +60,48 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-x-hidden">
       <SEO
         title="Contact Codex Tech-IT | Offices in Dallas, TX & Hyderabad"
         description="Get in touch with Codex Tech-IT technical recruiters and talent directors. Reach our Dallas, TX headquarters or Hyderabad delivery operations."
         canonical="/contact"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Contact' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Get in Touch</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Let's Discuss Your <span className="text-brand-gradient">Hiring or Career Goals.</span>
-            </h1>
-            <p className="text-body-lg text-slate-800 font-medium leading-relaxed">
-              Whether you need to scale an engineering pod under aggressive delivery deadlines or accelerate your personal job search, we are ready to assist.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        breadcrumbs={[{ label: 'Contact' }]}
+        badge="Get in Touch"
+        title="Let's Discuss Your Hiring or Career Goals."
+        titleGradientWords={['Hiring or Career Goals.']}
+        subtitle="Whether you need to scale an engineering pod under aggressive delivery deadlines or accelerate your personal job search, our technical recruiters are ready to assist."
+        primaryCta={{
+          label: 'Send Direct Message',
+          href: '#contact-form-section',
+        }}
+        secondaryCta={{
+          label: 'Book Consultation',
+          onClick: onOpenConsultation,
+        }}
+        facts={[
+          { label: 'Advisory Reply', value: '< 15 Mins' },
+          { label: 'Headquarters', value: 'Dallas & Hyd' },
+          { label: 'Support SLA', value: '24/7 Global' },
+        ]}
+        visual="contact-card"
+      />
 
-      <section className="section-padding bg-white">
+      <Scroll3DSection id="contact-form-section" preset="lift" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-6xl">
             {/* Contact Information & Office Locations */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-h3 text-navy-900 mb-6">Global Offices</h2>
+                <SectionReveal variant="tiltLeft">
+                  <h2 className="text-h3 text-navy-900 mb-6">Global Offices</h2>
+                </SectionReveal>
 
                 <div className="space-y-6">
                   {/* USA Office */}
-                  <div className="p-6 rounded-3xl bg-gray-50 border border-gray-200">
+                  <Scroll3DCard index={0} className="p-6 rounded-3xl bg-gray-50 border border-gray-200">
                     <div className="text-xs font-bold text-orange-600 uppercase tracking-wider mb-2">
                       United States Headquarters
                     </div>
@@ -111,10 +124,10 @@ export const Contact: React.FC = () => {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </Scroll3DCard>
 
                   {/* India Office */}
-                  <div className="p-6 rounded-3xl bg-gray-50 border border-gray-200">
+                  <Scroll3DCard index={1} className="p-6 rounded-3xl bg-gray-50 border border-gray-200">
                     <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">
                       India Delivery Operations
                     </div>
@@ -131,10 +144,10 @@ export const Contact: React.FC = () => {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </Scroll3DCard>
 
                   {/* Business Hours */}
-                  <div className="p-6 rounded-3xl bg-blue-50/50 border border-blue-100">
+                  <Scroll3DCard index={2} className="p-6 rounded-3xl bg-blue-50/50 border border-blue-100">
                     <div className="flex items-center gap-2 text-xs font-bold text-blue-900 mb-2">
                       <Clock className="w-4 h-4 text-blue-600" />
                       <span>Operating Hours</span>
@@ -142,12 +155,12 @@ export const Contact: React.FC = () => {
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {siteConfig.contact.hours}
                     </p>
-                  </div>
+                  </Scroll3DCard>
                 </div>
               </div>
 
               {/* Direct Strategy Booking Card */}
-              <div className="p-6 rounded-3xl bg-navy-900 text-white">
+              <Scroll3DCard index={3} className="p-6 rounded-3xl bg-navy-900 text-white">
                 <h4 className="font-heading font-bold text-base mb-2">Prefer a direct conversation?</h4>
                 <p className="text-xs text-slate-300 leading-relaxed mb-4">
                   Schedule a 1-on-1 career consultation directly with our talent directors.
@@ -155,12 +168,12 @@ export const Contact: React.FC = () => {
                 <Button variant="primary" size="sm" className="w-full justify-center" onClick={onOpenConsultation}>
                   Reserve Free Strategy Call
                 </Button>
-              </div>
+              </Scroll3DCard>
             </div>
 
             {/* Interactive Contact Form */}
             <div className="lg:col-span-2">
-              <div className="p-8 md:p-10 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm">
+              <Scroll3DCard index={1} maxTilt={3} className="p-8 md:p-10 rounded-3xl bg-gray-50 border border-gray-200 shadow-sm">
                 <div className="mb-8">
                   <h2 className="text-h3 text-navy-900 mb-2">Send Us an Inquiry</h2>
                   <p className="text-xs text-slate-500">
@@ -268,11 +281,11 @@ export const Contact: React.FC = () => {
                     </Button>
                   </form>
                 )}
-              </div>
+              </Scroll3DCard>
             </div>
           </div>
         </div>
-      </section>
+      </Scroll3DSection>
     </div>
   );
 };

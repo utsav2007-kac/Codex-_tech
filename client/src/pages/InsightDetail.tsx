@@ -5,27 +5,33 @@ import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
+import { FALLBACK_INSIGHTS } from '../data/insightsData';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
+import { PageHero } from '../components/layout/PageHero';
 
 export const InsightDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
 
-  const [post, setPost] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
+  const fallbackPost = FALLBACK_INSIGHTS.find((p) => p.slug === slug) || null;
+  const [post, setPost] = useState<any | null>(fallbackPost);
+  const [loading, setLoading] = useState(!fallbackPost);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);
   const [toc, setToc] = useState<{ id: string; text: string }[]>([]);
 
   useEffect(() => {
     if (!slug) return;
-    setLoading(true);
+    if (!fallbackPost) setLoading(true);
+
     api.get(`/posts/${slug}`)
       .then((res) => {
         if (res.data?.data) {
           const p = res.data.data;
           setPost(p);
 
-          // Generate simple TOC from content lines starting with ## or numbers
           const lines = (p.content || '').split('\n');
           const headings: { id: string; text: string }[] = [];
           lines.forEach((line: string, index: number) => {
@@ -39,7 +45,11 @@ export const InsightDetail: React.FC = () => {
           setToc(headings);
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        if (fallbackPost) {
+          setPost(fallbackPost);
+        }
+      })
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -98,43 +108,37 @@ export const InsightDetail: React.FC = () => {
       />
 
       {/* Header */}
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Insights', href: '/insights' },
-              { label: post.title },
-            ]}
-          />
-
-          <div className="max-w-4xl mt-6">
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 mb-4">
-              <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-bold text-[11px]">
-                {post.category}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                {post.read_minutes} min read
-              </span>
-              <span className="flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5" />
-                {post.author_name} ({post.author_role})
-              </span>
-            </div>
-
-            <h1 className="text-h1 text-navy-900 mb-6 leading-tight">{post.title}</h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed max-w-3xl">{post.excerpt}</p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        breadcrumbs={[
+          { label: 'Insights', path: '/insights' },
+          { label: post.title },
+        ]}
+        badge={post.category || 'Engineering Insight'}
+        title={post.title}
+        subtitle={post.excerpt}
+        primaryCta={{
+          label: copied ? 'Link Copied!' : 'Share Article',
+          onClick: copyShareLink,
+        }}
+        secondaryCta={{
+          label: 'All Insights',
+          href: '/insights',
+        }}
+        facts={[
+          { label: 'Read Time', value: `${post.read_minutes || 6} min` },
+          { label: 'Author', value: post.author_name || 'Codex Team' },
+          { label: 'Topic', value: post.category || 'Career Intelligence' },
+        ]}
+        visual="insights-radar"
+      />
 
       {/* Body & TOC Grid */}
-      <section className="section-padding bg-white">
+      <Scroll3DSection preset="lift" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 max-w-6xl">
             {/* Auto Table of Contents & Social Share (Desktop Sticky) */}
             <div className="hidden lg:block lg:col-span-1 space-y-8">
-              <div className="sticky top-24 p-6 rounded-3xl bg-gray-50 border border-gray-200">
+              <Scroll3DCard maxTilt={3} className="sticky top-24 p-6 rounded-3xl bg-gray-50 border border-gray-200">
                 <h3 className="font-heading font-bold text-xs uppercase tracking-wider text-navy-900 mb-4">
                   Table of Contents
                 </h3>
@@ -165,7 +169,7 @@ export const InsightDetail: React.FC = () => {
                     <span>{copied ? 'Link Copied!' : 'Copy Article Link'}</span>
                   </button>
                 </div>
-              </div>
+              </Scroll3DCard>
             </div>
 
             {/* Article Content */}
@@ -175,7 +179,7 @@ export const InsightDetail: React.FC = () => {
               </div>
 
               {/* Author Footer */}
-              <div className="mt-12 p-8 rounded-3xl bg-gray-50 border border-gray-200 flex items-center gap-6">
+              <Scroll3DCard maxTilt={3} className="mt-12 p-8 rounded-3xl bg-gray-50 border border-gray-200 flex items-center gap-6">
                 <div className="w-14 h-14 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center font-heading font-extrabold text-xl shrink-0">
                   {post.author_name.charAt(0)}
                 </div>
@@ -186,10 +190,10 @@ export const InsightDetail: React.FC = () => {
                     Senior career strategist at Codex Tech-IT specializing in technical recruitment, interview calibration, and engineering placement campaigns.
                   </p>
                 </div>
-              </div>
+              </Scroll3DCard>
 
               {/* Consultation CTA Banner */}
-              <div className="mt-12 p-8 rounded-3xl bg-navy-900 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+              <Scroll3DCard maxTilt={3} className="mt-12 p-8 rounded-3xl bg-navy-900 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
                   <h3 className="font-heading font-bold text-lg mb-1">Applying these strategies?</h3>
                   <p className="text-xs text-slate-300">Let our recruiting team tailor your resume and launch your targeted employer campaign.</p>
@@ -197,11 +201,11 @@ export const InsightDetail: React.FC = () => {
                 <Button variant="primary" size="md" onClick={onOpenConsultation} className="shrink-0">
                   Book Free Consultation
                 </Button>
-              </div>
+              </Scroll3DCard>
             </div>
           </div>
         </div>
-      </section>
+      </Scroll3DSection>
     </div>
   );
 };

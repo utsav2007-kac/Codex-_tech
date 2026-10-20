@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Calendar, Clock, User, Video, CheckCircle2, AlertCircle, Loader2, ArrowRight } from 'lucide-react';
 import { SEO } from '../../components/ui/SEO';
-import { Breadcrumbs } from '../../components/ui/Breadcrumbs';
+import { PageHero } from '../../components/layout/PageHero';
 import { Button } from '../../components/ui/Button';
 import { api } from '../../services/api';
 
@@ -83,28 +83,41 @@ export const Webinars: React.FC = () => {
         canonical="/resources/webinars"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: 'Resources', href: '/resources' },
-              { label: 'Webinars' },
-            ]}
-          />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Interactive Learning</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Technical Webinars & <span className="text-brand-gradient">Masterclasses.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed">
-              Live sessions led by principal engineers, engineering managers, and executive tech recruiters. Register for upcoming streams or watch past session recordings.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Webinars Visual) ── */}
+      <PageHero
+        eyebrow="Interactive Learning"
+        title={
+          <>
+            Technical Webinars & <span className="text-brand-gradient">Masterclasses.</span>
+          </>
+        }
+        tagline="Live Architecture Deep Dives with Principal Engineers & Directors"
+        summary="Live sessions led by principal engineers, engineering managers, and executive tech recruiters. Register for upcoming streams or watch past session recordings."
+        breadcrumbs={[
+          { label: 'Resources', path: '/resources' },
+          { label: 'Webinars' },
+        ]}
+        primaryCta={{
+          label: 'Explore Upcoming Sessions',
+          onClick: () => {
+            const el = document.getElementById('webinars-list');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Explore All Resources',
+          href: '/resources',
+        }}
+        facts={[
+          { icon: Video, label: 'Session Type', value: 'Live + Q&A' },
+          { icon: Clock, label: 'Frequency', value: 'Weekly Masterclasses' },
+          { icon: CheckCircle2, label: 'RSVP Access', value: '100% Free' },
+        ]}
+        visual="resource-webinars"
+      />
 
       {/* Main Content */}
-      <section className="section-padding bg-white">
+      <section id="webinars-list" className="section-padding bg-white">
         <div className="container-custom">
           {loading ? (
             <div className="py-20 text-center">

@@ -28,22 +28,22 @@ export const LoaderCurtain: React.FC = () => {
           key="curtain-container"
           className="fixed inset-0 z-50 pointer-events-auto flex items-center justify-center overflow-hidden"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.35, delay: 1.25, ease: 'easeOut' }}
         >
-          {/* Orange Left Slant Panel */}
+          {/* Left Panel */}
           <motion.div
             initial={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.2 }}
-            className="absolute inset-y-0 left-0 w-1/2 bg-navy-900 border-r border-orange-500/30"
+            exit={{ x: '-102%' }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+            className="absolute inset-y-0 left-0 w-[52%] bg-navy-900 border-0 outline-none ring-0 shadow-none"
           />
 
-          {/* Blue Right Slant Panel */}
+          {/* Right Panel */}
           <motion.div
             initial={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.2 }}
-            className="absolute inset-y-0 right-0 w-1/2 bg-navy-900 border-l border-blue-600/30"
+            exit={{ x: '102%' }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+            className="absolute inset-y-0 right-0 w-[52%] bg-navy-900 border-0 outline-none ring-0 shadow-none"
           />
 
           {/* Center Logo Draw & Brand Reveal */}

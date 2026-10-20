@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { MapPin, Building, DollarSign, Calendar, Search, Sparkles, Loader2, CheckCircle2 } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
+import { Scroll3DSection } from '../components/motion/Scroll3DSection';
+import { Scroll3DCard } from '../components/motion/Scroll3DCard';
+import { SectionReveal } from '../components/motion/SectionReveal';
 
 export const LivePlacements: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
@@ -44,49 +47,66 @@ export const LivePlacements: React.FC = () => {
         canonical="/live-placements"
       />
 
-      <section className="pt-10 pb-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="container-custom">
-          <Breadcrumbs items={[{ label: 'Live Placements' }]} />
-          <div className="max-w-3xl mt-4">
-            <div className="eyebrow">Real-Time Hiring Transparency (SAMPLE)</div>
-            <h1 className="text-h1 text-navy-900 mb-6">
-              Recent Offers & <span className="text-brand-gradient">Hiring Triumphs.</span>
-            </h1>
-            <p className="text-body-lg text-slate-600 leading-relaxed mb-8">
-              A dynamic record of recent engineering placements negotiated and secured through Codex Tech-IT's direct employer pipeline.
-            </p>
+      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Live Radar Companion Visual) ── */}
+      <PageHero
+        eyebrow="Real-Time Hiring Transparency"
+        title={
+          <>
+            Recent Offers & <span className="text-brand-gradient">Hiring Triumphs.</span>
+          </>
+        }
+        tagline="Continuous Flow of Signed Engineering Contracts Across North America"
+        summary="A dynamic record of recent engineering placements negotiated and secured through Codex Tech-IT's direct employer pipeline."
+        breadcrumbs={[{ label: 'Live Placements' }]}
+        primaryCta={{
+          label: 'Explore Placements',
+          onClick: () => {
+            const el = document.getElementById('placements-grid');
+            el?.scrollIntoView({ behavior: 'smooth' });
+          },
+        }}
+        secondaryCta={{
+          label: 'Request Placement Evaluation',
+          onClick: onOpenConsultation,
+        }}
+        facts={[
+          { icon: CheckCircle2, label: 'Average Timeline', value: '18.4 Days' },
+          { icon: DollarSign, label: 'Average Tech Base', value: '$142,000' },
+          { icon: Building, label: 'Corporate Partners', value: '180+' },
+        ]}
+        visual="live-placements"
+      />
 
-            {/* Filter & Search Bar */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="Filter by role, city, or technology..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white shadow-sm"
-                />
-              </div>
-
-              <select
-                value={selectedCompanyType}
-                onChange={(e) => setSelectedCompanyType(e.target.value)}
-                className="py-3 px-4 rounded-2xl border border-gray-200 text-xs sm:text-sm text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 shadow-sm"
-              >
-                {companyTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type === 'ALL' ? 'All Industry Sectors' : type}
-                  </option>
-                ))}
-              </select>
-            </div>
+      {/* Filter & Search Bar */}
+      <section id="placements-grid" className="py-8 bg-slate-50/70 border-b border-slate-100">
+        <div className="container-custom flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Filter by role, city, or technology..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white shadow-xs"
+            />
           </div>
+
+          <select
+            value={selectedCompanyType}
+            onChange={(e) => setSelectedCompanyType(e.target.value)}
+            className="py-2.5 px-4 rounded-xl border border-slate-200 text-xs sm:text-sm text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 shadow-xs"
+          >
+            {companyTypes.map((type) => (
+              <option key={type} value={type}>
+                {type === 'ALL' ? 'All Industry Sectors' : type}
+              </option>
+            ))}
+          </select>
         </div>
       </section>
 
       {/* Placement Grid */}
-      <section className="section-padding bg-white">
+      <Scroll3DSection preset="lift" className="section-padding bg-white">
         <div className="container-custom">
           {loading ? (
             <div className="py-20 text-center">
@@ -105,9 +125,10 @@ export const LivePlacements: React.FC = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((item) => (
-                <div
+              {filtered.map((item, idx) => (
+                <Scroll3DCard
                   key={item.id}
+                  index={idx}
                   className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:shadow-md hover:border-orange-500/40 transition-all flex flex-col justify-between"
                 >
                   <div>
@@ -142,27 +163,29 @@ export const LivePlacements: React.FC = () => {
                     </span>
                     <span>Placed Recently</span>
                   </div>
-                </div>
+                </Scroll3DCard>
               ))}
             </div>
           )}
         </div>
-      </section>
+      </Scroll3DSection>
 
       {/* CTA */}
-      <section className="section-padding bg-navy-900 text-white text-center">
+      <Scroll3DSection preset="scaleIn" className="section-padding bg-navy-900 text-white text-center">
         <div className="container-custom max-w-2xl mx-auto">
-          <h2 className="text-h2 text-white mb-4">
-            Want to See Your Name on this <span className="text-brand-gradient">Placement Board?</span>
-          </h2>
-          <p className="text-slate-300 text-sm mb-8">
-            Connect with our technical recruiters to benchmark your compensation and initiate your targeted placement campaign.
-          </p>
-          <Button variant="primary" size="lg" onClick={onOpenConsultation}>
-            Start Your Placement Campaign
-          </Button>
+          <SectionReveal variant="tiltUp">
+            <h2 className="text-h2 text-white mb-4">
+              Want to See Your Name on this <span className="text-brand-gradient">Placement Board?</span>
+            </h2>
+            <p className="text-slate-300 text-sm mb-8">
+              Connect with our technical recruiters to benchmark your compensation and initiate your targeted placement campaign.
+            </p>
+            <Button variant="primary" size="lg" onClick={onOpenConsultation}>
+              Start Your Placement Campaign
+            </Button>
+          </SectionReveal>
         </div>
-      </section>
+      </Scroll3DSection>
     </div>
   );
 };

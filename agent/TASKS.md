@@ -154,3 +154,18 @@ Single source of truth. All tasks must be completed and validated.
 - [x] Playwright E2E full sitemap and form submission pass
 - [x] Consecutive pass #1
 - [x] Consecutive pass #2
+
+## Phase G: Whitespace Elimination & Universal PageHero Redesign
+- [ ] G1: Build universal `<PageHero>` component (12-column grid, responsive, max-35w summary, key facts, ScrollFX)
+- [ ] G2: Build Visual Registry architecture in `/client/src/components/hero-visuals/`
+- [ ] G3: Whitespace Audit tool (`scripts/whitespace-audit.ts` / `npm run audit:space`) for 6 breakpoints
+- [ ] G4: Run baseline whitespace audit and generate initial report for `/services/job-placement`
+- [ ] G5: Services visual batch (9 services): Placement Pipeline, Talent Shortlist, Hiring Funnel, Learn-by-Building, Verification Checklist, Payroll Dashboard, Before/After, Mock Interview, Campaign Tracker
+- [ ] G6: Courses visual batch (10 course subpages): Course Snapshot visual
+- [ ] G7: Industries (7 subpages Sector Skyline) & Technologies (Stack Map)
+- [ ] G8: Interactive Tools visual batch (Index + 4 tools): Live Preview visual
+- [ ] G9: Company batch: About, Employers, Plans, Stories, Live Placements, Careers, Refer & Earn
+- [ ] G10: Resources, Insights, FAQ, Contact visual batch
+- [ ] G11: Legal, Thank-you, and 404 visuals
+- [ ] G12: Lower section companions C1-C8 (Sticky side cards, 50/50 splits, stat trios, balanced grids, reading rails)
+- [ ] G13: Final automated whitespace audit with 0 failures across all routes and widths
