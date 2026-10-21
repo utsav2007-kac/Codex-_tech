@@ -794,7 +794,7 @@ export const ServiceDetail: React.FC = () => {
                     </h5>
                     <p className="text-xs text-slate-500 line-clamp-2">{s.desc}</p>
                   </div>
-                  <div className="mt-4 text-xs font-bold text-orange-500 flex items-center gap-1">
+                  <div className="mt-4 text-xs font-bold text-orange-600 flex items-center gap-1">
                     <span>Learn more</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>

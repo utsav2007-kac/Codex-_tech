@@ -106,7 +106,7 @@ export const Footer: React.FC = () => {
                 </li>
               ))}
               <li>
-                <Link to="/services" className="text-xs font-bold text-orange-500 hover:underline">
+                <Link to="/services" className="text-xs font-bold text-orange-400 hover:text-orange-300 hover:underline">
                   View all 9 services →
                 </Link>
               </li>
@@ -166,13 +166,13 @@ export const Footer: React.FC = () => {
               <li><Link to="/cookie-policy" className="hover:text-orange-500 transition-colors">Cookie Policy</Link></li>
               <li><Link to="/refund-policy" className="hover:text-orange-500 transition-colors">Refund Policy</Link></li>
               <li><Link to="/accessibility-statement" className="hover:text-orange-500 transition-colors">Accessibility Statement</Link></li>
-              <li><Link to="/admin/login" className="text-xs text-slate-400 hover:text-slate-200">Admin Portal</Link></li>
+              <li><Link to="/admin/login" className="text-xs text-slate-300 hover:text-white transition-colors">Admin Portal</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4 font-medium">
+        <div className="pt-8 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-300 gap-4 font-medium">
           <p>© {new Date().getFullYear()} Codex Tech-IT LLC. All rights reserved. E-Verified Employer.</p>
           <div className="flex items-center gap-6">
             <span>USA: {siteConfig.contact.phoneUSA}</span>

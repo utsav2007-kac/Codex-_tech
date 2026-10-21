@@ -21,6 +21,9 @@ export const GlobalScrollCanvas3D: React.FC = () => {
 
     let renderer: THREE.WebGLRenderer | null = null;
     try {
+      const testGl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      if (!testGl) return;
+
       renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
@@ -29,8 +32,7 @@ export const GlobalScrollCanvas3D: React.FC = () => {
       });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       renderer.setSize(width, height, false);
-    } catch (e) {
-      console.warn('WebGL not supported for GlobalScrollCanvas3D:', e);
+    } catch {
       return;
     }
 
@@ -255,7 +257,6 @@ export const GlobalScrollCanvas3D: React.FC = () => {
 
       if (renderer) {
         renderer.dispose();
-        renderer.forceContextLoss();
       }
     };
   }, []);

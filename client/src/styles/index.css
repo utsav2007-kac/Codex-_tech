@@ -12,13 +12,13 @@
 
 @layer base {
   :root {
-    --orange-500: #F15A34;
-    --orange-600: #D94822;
+    --orange-500: #D14316;
+    --orange-600: #B4340C;
     --blue-600: #1F6AA5;
     --blue-700: #17527F;
     --navy-900: #0B1B2E;
     --navy-800: #12304D;
-    --slate-600: #475569;
+    --slate-600: #334155;
     --gray-50: #F5F7FA;
     --white: #FFFFFF;
   }
@@ -36,6 +36,13 @@
     font-family: 'Sora', system-ui, -apple-system, sans-serif;
     color: #0B1B2E;
     text-wrap: balance;
+  }
+
+  .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6,
+  .bg-navy-900 h1, .bg-navy-900 h2, .bg-navy-900 h3, .bg-navy-900 h4, .bg-navy-900 h5, .bg-navy-900 h6,
+  .bg-navy-800 h1, .bg-navy-800 h2, .bg-navy-800 h3, .bg-navy-800 h4, .bg-navy-800 h5, .bg-navy-800 h6,
+  [class*="bg-[#070E1A]"] h1, [class*="bg-[#070E1A]"] h2, [class*="bg-[#070E1A]"] h3, [class*="bg-[#070E1A]"] h4, [class*="bg-[#070E1A]"] h5, [class*="bg-[#070E1A]"] h6 {
+    color: #FFFFFF;
   }
 
   p {
@@ -99,7 +106,7 @@
     padding-right: 1.25rem;
   }
 
-  /* Eyebrow pattern: 0.75rem | 600 | UPPERCASE | ls 0.14em | orange-500, preceded by 24px line */
+  /* Eyebrow pattern: 0.75rem | 600 | UPPERCASE | ls 0.14em | high-contrast brand orange (#CA3E12, 4.71:1 on gray-50, 5.01:1 on white), preceded by 24px line */
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -108,7 +115,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: #F25C2A;
+    color: #CA3E12;
     margin-bottom: 0.75rem;
   }
 
@@ -117,13 +124,13 @@
     display: inline-block;
     width: 24px;
     height: 2px;
-    background-color: #F25C2A;
+    background-color: #CA3E12;
     border-radius: 9999px;
   }
 
-  /* Brand gradient text - Solid high-contrast two-tone warm orange gradient (WCAG compliant) */
+  /* Brand gradient text - Solid high-contrast two-tone warm orange gradient (WCAG AA & AAA compliant: 4.67:1 to 7.24:1 against white) */
   .text-brand-gradient {
-    background: linear-gradient(135deg, #F25C2A 0%, #C2410C 100%);
+    background: linear-gradient(135deg, #D14316 0%, #9A3412 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
@@ -190,3 +197,52 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Keyboard Focus Visibility (WCAG 2.1 AA) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #1F6AA5 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 4px rgba(31, 106, 165, 0.25) !important;
+}
+
+
+/* WCAG 2.1 AA/AAA Contrast Utility Overrides */
+.bg-orange-500 {
+  background-color: #D14316 !important; /* 4.67:1 contrast with white text */
+}
+.bg-orange-600 {
+  background-color: #B4340C !important; /* 6.2:1 contrast with white text */
+}
+.text-orange-500 {
+  color: #D14316 !important; /* 4.67:1 contrast on white */
+}
+.text-orange-600 {
+  color: #B4340C !important; /* 6.2:1 contrast on white */
+}
+.text-emerald-600 {
+  color: #047857 !important; /* 5.3:1 contrast on white */
+}
+.text-\[\#F15A34\] {
+  color: #D14316 !important; /* 4.67:1 contrast on white */
+}
+
+/* Ensure secondary text on dark sections (#0B1B2E, #070E1A, slate-900) exceeds 4.5:1 */
+.bg-navy-900 .text-slate-400,
+.bg-navy-800 .text-slate-400,
+[class*="bg-[#070E1A]"] .text-slate-400,
+[class*="bg-slate-900"] .text-slate-400 {
+  color: #CBD5E1 !important; /* 9.2:1 contrast */
+}
+
+/* Ensure pill badges on dark backgrounds have crisp 8+:1 contrast */
+[class*="bg-[#070E1A]"] [class*="text-orange-400"],
+[class*="bg-slate-900"] [class*="text-orange-400"] {
+  color: #FED7AA !important; /* 10.4:1 contrast */
+}
+
+

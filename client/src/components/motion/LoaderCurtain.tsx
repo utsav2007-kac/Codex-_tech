@@ -12,7 +12,7 @@ export const LoaderCurtain: React.FC = () => {
       sessionStorage.setItem('codex_visited_curtain', 'true');
       const timer = setTimeout(() => {
         setIsVisible(false);
-      }, 2100);
+      }, 550);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -26,24 +26,24 @@ export const LoaderCurtain: React.FC = () => {
       {isVisible && (
         <motion.div
           key="curtain-container"
-          className="fixed inset-0 z-50 pointer-events-auto flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, delay: 1.25, ease: 'easeOut' }}
+          transition={{ duration: 0.25, delay: 0.35, ease: 'easeOut' }}
         >
           {/* Left Panel */}
           <motion.div
             initial={{ x: 0 }}
             exit={{ x: '-102%' }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="absolute inset-y-0 left-0 w-[52%] bg-navy-900 border-0 outline-none ring-0 shadow-none"
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            className="absolute inset-y-0 left-0 w-[52%] bg-navy-900 border-0 outline-none ring-0 shadow-none pointer-events-none"
           />
 
           {/* Right Panel */}
           <motion.div
             initial={{ x: 0 }}
             exit={{ x: '102%' }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="absolute inset-y-0 right-0 w-[52%] bg-navy-900 border-0 outline-none ring-0 shadow-none"
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            className="absolute inset-y-0 right-0 w-[52%] bg-navy-900 border-0 outline-none ring-0 shadow-none pointer-events-none"
           />
 
           {/* Center Logo Draw & Brand Reveal */}

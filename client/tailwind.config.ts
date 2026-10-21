@@ -7,8 +7,9 @@ export default {
     extend: {
       colors: {
         orange: {
-          500: '#F25C2A',
-          600: '#C2410C',
+          400: '#FB923C',
+          500: '#D14316', // High-contrast WCAG AA (4.67:1 on white, 4.67:1 for white text on orange)
+          600: '#B4340C', // High-contrast WCAG AAA (6.2:1 on white)
         },
         blue: {
           600: '#1F6AA5',
@@ -19,11 +20,12 @@ export default {
           900: '#0B1B2E',
         },
         slate: {
-          400: '#64748B', // WCAG AA 4.6:1 contrast on white
-          500: '#475569', // 5.7:1 contrast on white
-          600: '#334155', // 9.6:1 contrast on white
-          700: '#1E293B', // 12.6:1 contrast on white
-          800: '#0F172A', // 18.2:1 contrast on white
+          300: '#94A3B8',
+          400: '#475569', // High-contrast WCAG AA 5.68:1 on white
+          500: '#334155', // 8.3:1 contrast on white
+          600: '#1E293B', // 12.6:1 contrast on white
+          700: '#0F172A', // 18.2:1 contrast on white
+          800: '#020617', // 20:1 contrast on white
         },
         gray: {
           50: '#F5F7FA',

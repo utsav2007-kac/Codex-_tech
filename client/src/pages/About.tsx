@@ -180,7 +180,7 @@ export const About: React.FC = () => {
               </p>
             </SectionReveal>
 
-            <SectionReveal variant="tiltRight" className="lg:col-span-6 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white p-8 sm:p-10 rounded-3xl shadow-xl relative overflow-hidden">
+            <SectionReveal variant="tiltRight" className="lg:col-span-6 bg-navy-900 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white p-8 sm:p-10 rounded-3xl shadow-xl relative overflow-hidden">
               <div className="relative z-10 space-y-6">
                 <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center">
                   <Target className="w-6 h-6" />

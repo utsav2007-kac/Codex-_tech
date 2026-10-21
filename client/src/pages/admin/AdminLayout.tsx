@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { LayoutDashboard, Users, FileText, Settings, LogOut, ExternalLink, Menu, X, Shield, BookOpen, Layers } from 'lucide-react';
 import { api } from '../../services/api';
 
@@ -11,16 +11,25 @@ export const AdminLayout: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    const hasSession = localStorage.getItem('codex_admin_user');
+    if (!hasSession) {
+      setIsChecking(false);
+      navigate('/admin/login', { replace: true });
+      return;
+    }
+
     api.get('/admin/me')
       .then((res) => {
         if (res.data?.success && res.data?.data?.user) {
           setCurrentUser(res.data.data.user);
         } else {
-          navigate('/admin/login');
+          localStorage.removeItem('codex_admin_user');
+          navigate('/admin/login', { replace: true });
         }
       })
       .catch(() => {
-        navigate('/admin/login');
+        localStorage.removeItem('codex_admin_user');
+        navigate('/admin/login', { replace: true });
       })
       .finally(() => setIsChecking(false));
   }, [navigate]);
@@ -42,6 +51,10 @@ export const AdminLayout: React.FC = () => {
         </div>
       </div>
     );
+  }
+
+  if (!currentUser) {
+    return <Navigate to="/admin/login" replace />;
   }
 
   const navItems = [

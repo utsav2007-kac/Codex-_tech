@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { Search, ChevronDown, ChevronUp, HelpCircle, MessageSquare, Loader2 } from 'lucide-react';
+import { Search, ChevronDown, HelpCircle, MessageSquare, Loader2, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
@@ -159,25 +160,66 @@ export const Faq: React.FC = () => {
                 return (
                   <div
                     key={item.id}
-                    className="border border-gray-200/90 rounded-2xl bg-white overflow-hidden shadow-sm transition-all"
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden shadow-sm ${
+                      isOpen
+                        ? 'bg-gradient-to-r from-orange-50/25 via-white to-white border-orange-500/50 ring-1 ring-orange-500/20 shadow-md'
+                        : 'bg-white border-gray-200/90 hover:border-orange-500/30 hover:shadow'
+                    }`}
                   >
                     <button
+                      type="button"
                       onClick={() => toggleAccordion(item.id)}
-                      className="w-full text-left p-6 flex items-start justify-between gap-4 hover:bg-gray-50/50 transition-colors"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-answer-page-${item.id}`}
+                      id={`faq-header-page-${item.id}`}
+                      className="w-full text-left p-5 sm:p-6 flex items-start justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 group"
                     >
-                      <h3 className="font-heading font-bold text-base text-navy-900 leading-snug">
-                        {item.question}
-                      </h3>
-                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                        {isOpen ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+                      <div className="flex-1 min-w-0">
+                        {item.category && (
+                          <span
+                            className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider mb-2 transition-colors ${
+                              isOpen
+                                ? 'bg-orange-100 text-orange-700 border border-orange-200'
+                                : 'bg-slate-100 text-slate-600 border border-slate-200/60 group-hover:bg-orange-50 group-hover:text-orange-600'
+                            }`}
+                          >
+                            {item.category.replace('_', ' ')}
+                          </span>
+                        )}
+                        <h3 className="font-heading font-bold text-base sm:text-lg text-navy-900 leading-snug group-hover:text-orange-600 transition-colors">
+                          {item.question}
+                        </h3>
+                      </div>
+
+                      <div
+                        className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 mt-0.5 ${
+                          isOpen
+                            ? 'rotate-180 bg-orange-500 text-white shadow-sm shadow-orange-500/30'
+                            : 'bg-slate-100 text-slate-600 group-hover:bg-orange-100 group-hover:text-orange-600'
+                        }`}
+                      >
+                        <ChevronDown className="w-4 h-4 transition-transform" />
                       </div>
                     </button>
 
-                    {isOpen && (
-                      <div className="px-6 pb-6 pt-1 border-t border-gray-100 bg-gray-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed whitespace-pre-line">
-                        {item.answer}
-                      </div>
-                    )}
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          id={`faq-answer-page-${item.id}`}
+                          role="region"
+                          aria-labelledby={`faq-header-page-${item.id}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-6 pt-1 text-slate-700 text-sm sm:text-base leading-relaxed border-t border-gray-100/80 whitespace-pre-line">
+                            {item.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}

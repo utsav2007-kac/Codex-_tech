@@ -141,12 +141,77 @@ ${allRoutes
 // Mount /api routes
 app.use('/api', apiRouter);
 
-// Serve frontend dist in production with SPA fallback
+// Route-Specific SEO Metadata Map for Crawlers and Previews
+const routeSeoMap: Record<string, { title: string; desc: string; canonical: string }> = {
+  '/': {
+    title: 'We Deliver Jobs Faster | IT Recruitment, Staffing & Training - Codex Tech-IT',
+    desc: 'Codex Tech-IT connects skilled IT professionals with companies ready to hire, through sharp profile positioning, interview coaching and direct employer access.',
+    canonical: 'https://codextechit.com/',
+  },
+  '/services': {
+    title: 'Specialized IT Solutions & Staffing Services - Codex Tech-IT',
+    desc: 'Explore full-lifecycle tech recruitment, IT training, contract staffing, executive search, and career acceleration solutions from Codex Tech-IT.',
+    canonical: 'https://codextechit.com/services',
+  },
+  '/careers': {
+    title: 'High-Growth IT Careers & Tech Openings - Codex Tech-IT',
+    desc: 'Browse open full-stack, AI/ML, cloud DevOps, and data engineering positions with pre-vetted corporate enterprise partners.',
+    canonical: 'https://codextechit.com/careers',
+  },
+  '/about': {
+    title: 'About Codex Tech-IT | Our Mission, Leadership & Enterprise Network',
+    desc: 'Learn how Codex Tech-IT bridges top technical talent with industry leaders through specialized calibration and transparent placement partnerships.',
+    canonical: 'https://codextechit.com/about',
+  },
+  '/contact': {
+    title: 'Contact Codex Tech-IT | Hire Talent or Accelerate Your Tech Career',
+    desc: 'Get in touch with our recruitment directors or career advisors. Direct consultations for employers and tech candidates.',
+    canonical: 'https://codextechit.com/contact',
+  },
+  '/plans': {
+    title: 'Candidate Career Acceleration Plans & Pricing - Codex Tech-IT',
+    desc: 'Flexible, outcome-driven career placement programs including Staffing, Executive Coaching, and Technical Upskilling tracks.',
+    canonical: 'https://codextechit.com/plans',
+  },
+};
+
+// Serve frontend dist in production with SPA fallback & dynamic SEO injection
 const clientDist = path.resolve(__dirname, '../../client/dist');
 if (fs.existsSync(clientDist)) {
-  app.use(express.static(clientDist));
-  app.get('*', (_req, res) => {
-    res.sendFile(path.join(clientDist, 'index.html'));
+  app.use(express.static(clientDist, { index: false }));
+  app.get('*', (req, res) => {
+    const indexPath = path.join(clientDist, 'index.html');
+    if (!fs.existsSync(indexPath)) {
+      return res.status(404).send('Application build not found.');
+    }
+
+    const reqPath = req.path.replace(/\/$/, '') || '/';
+    const seo = routeSeoMap[reqPath] || routeSeoMap['/'];
+
+    let html = fs.readFileSync(indexPath, 'utf8');
+
+    // Inject dynamic, unique SEO metadata
+    html = html.replace(/<title>.*?<\/title>/i, `<title>${seo.title}</title>`);
+
+    if (html.includes('<meta name="description"')) {
+      html = html.replace(/<meta name="description"[^>]*>/i, `<meta name="description" content="${seo.desc}" />`);
+    } else {
+      html = html.replace('</head>', `<meta name="description" content="${seo.desc}" />\n</head>`);
+    }
+
+    const ogTags = `
+    <link rel="canonical" href="${seo.canonical}" />
+    <meta property="og:title" content="${seo.title}" />
+    <meta property="og:description" content="${seo.desc}" />
+    <meta property="og:url" content="${seo.canonical}" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${seo.title}" />
+    <meta name="twitter:description" content="${seo.desc}" />
+    `;
+    html = html.replace('</head>', `${ogTags}\n</head>`);
+
+    res.send(html);
   });
 }
 

@@ -16,9 +16,11 @@ import {
   Star,
   Layers,
   ChevronRight,
+  ChevronDown,
   Code,
   Zap,
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SEO } from '../components/ui/SEO';
 import { SectionReveal } from '../components/motion/SectionReveal';
 import { TextReveal } from '../components/motion/TextReveal';
@@ -30,8 +32,38 @@ import { ScrollExperienceScene } from '../components/3d/ScrollExperienceScene';
 import { Scroll3DSection } from '../components/motion/Scroll3DSection';
 import { Scroll3DCard } from '../components/motion/Scroll3DCard';
 import { Button } from '../components/ui/Button';
+import { Reveal } from '../components/motion/Reveal';
+import { MagneticButton } from '../components/motion/MagneticButton';
+import { ScrollDepthSection } from '../components/motion/ScrollDepthSection';
 import { siteConfig } from '../config/site';
 import { api } from '../services/api';
+
+const defaultHomeFaqs = [
+  {
+    id: 1,
+    category: 'Placement Timeline',
+    question: 'How quickly can Codex Tech-IT help me secure interviews?',
+    answer: 'Most actively prepared candidates receive their first curated interview invitation within 10 to 21 business days after completing our profile positioning review.',
+  },
+  {
+    id: 2,
+    category: 'Candidate Eligibility',
+    question: 'Do you only place senior engineers, or can juniors and career switchers apply?',
+    answer: 'We support candidates across all experience levels, from fresh computer science graduates and career switchers to senior enterprise architects.',
+  },
+  {
+    id: 3,
+    category: 'Hiring Approach',
+    question: 'What makes Codex Tech-IT different from mass-applying on job boards?',
+    answer: 'We do not blast your resume blindly. We tailor your positioning, conduct technical mock interviews, and present your profile directly to vetted hiring managers with active openings.',
+  },
+  {
+    id: 4,
+    category: 'Confidentiality',
+    question: 'Is my current employment kept confidential during the process?',
+    answer: 'Absolutely. We never share your resume or contact details without your explicit prior authorization.',
+  },
+];
 
 export const Home: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
@@ -41,7 +73,8 @@ export const Home: React.FC = () => {
   const [livePlacements, setLivePlacements] = useState<any[]>([]);
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
-  const [faqs, setFaqs] = useState<any[]>([]);
+  const [faqs, setFaqs] = useState<any[]>(defaultHomeFaqs);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   // Readiness widget state
   const [readinessStep, setReadinessStep] = useState(78);
@@ -61,7 +94,7 @@ export const Home: React.FC = () => {
     }).catch(() => { });
 
     api.get('/faqs?category=Job%20Seekers').then((res) => {
-      if (res.data?.data) setFaqs(res.data.data.slice(0, 5));
+      if (res.data?.data && res.data.data.length > 0) setFaqs(res.data.data.slice(0, 5));
     }).catch(() => { });
   }, []);
 
@@ -86,43 +119,49 @@ export const Home: React.FC = () => {
                 aria-hidden="true"
               />
 
-              <div className="eyebrow">IT Recruitment · Staffing · Training</div>
+              <Reveal variant="3d-unfold">
+                <div className="eyebrow">IT Recruitment · Staffing · Training</div>
 
-              <h1 className="text-display text-navy-900 mb-6">
-                We Deliver Jobs <span className="text-brand-gradient">Faster.</span>
-              </h1>
+                <h1 className="text-display text-navy-900 mb-6">
+                  We Deliver Jobs <span className="text-brand-gradient">Faster.</span>
+                </h1>
 
-              <p className="text-body-lg text-slate-800 font-medium mb-8 max-w-xl leading-relaxed">
-                Codex Tech-IT connects skilled IT professionals with companies ready to hire, through sharp profile positioning, interview coaching, and direct employer access.
-              </p>
+                <p className="text-body-lg text-slate-800 font-medium mb-8 max-w-xl leading-relaxed">
+                  Codex Tech-IT connects skilled IT professionals with companies ready to hire, through sharp profile positioning, interview coaching, and direct employer access.
+                </p>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-4 mb-10 w-full sm:w-auto">
-                <Button variant="primary" size="lg" href="/careers">
-                  Explore Careers <ArrowRight className="w-5 h-5 ml-1" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={onOpenConsultation}
-                  className="bg-white text-[#0F172A] border-[1.5px] border-[#0F172A] hover:bg-slate-50 hover:border-slate-800 shadow-sm"
-                >
-                  Hire Top Talent
-                </Button>
-              </div>
-
-              {/* Floating trust indicators */}
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-xs font-semibold text-orange-800 shadow-sm">
-                  <Zap className="w-3.5 h-3.5 text-orange-600" /> Fast interviews
+                {/* CTAs */}
+                <div className="flex flex-wrap items-center gap-4 mb-10 w-full sm:w-auto">
+                  <MagneticButton strength={0.2}>
+                    <Button variant="primary" size="lg" href="/careers">
+                      Find My Next Job <ArrowRight className="w-5 h-5 ml-1" />
+                    </Button>
+                  </MagneticButton>
+                  <MagneticButton strength={0.2}>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={onOpenConsultation}
+                      className="bg-white text-[#0F172A] border-[1.5px] border-[#0F172A] hover:bg-slate-50 hover:border-slate-800 shadow-sm"
+                    >
+                      Hire Top Talent
+                    </Button>
+                  </MagneticButton>
                 </div>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-semibold text-blue-800 shadow-sm">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-700" /> Pre-screened talent
+
+                {/* Floating trust indicators */}
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-xs font-semibold text-orange-800 shadow-sm">
+                    <Zap className="w-3.5 h-3.5 text-orange-600" /> Fast interviews
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-semibold text-blue-800 shadow-sm">
+                    <ShieldCheck className="w-3.5 h-3.5 text-blue-700" /> Pre-screened talent
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-300 text-xs font-semibold text-slate-800 shadow-sm">
+                    <Compass className="w-3.5 h-3.5 text-slate-600" /> Career-first support
+                  </div>
                 </div>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-300 text-xs font-semibold text-slate-800 shadow-sm">
-                  <Compass className="w-3.5 h-3.5 text-slate-600" /> Career-first support
-                </div>
-              </div>
+              </Reveal>
             </div>
 
             {/* Right Column: Codex Monogram Stage */}
@@ -136,7 +175,7 @@ export const Home: React.FC = () => {
       {/* ── 2. TRUST MARQUEE ── */}
       <Scroll3DSection preset="lift" className="py-8 bg-gray-50 border-y border-gray-200/70 overflow-hidden">
         <div className="container-custom mb-3 text-center">
-          <p className="text-xs uppercase font-bold tracking-widest text-slate-400">
+          <p className="text-xs uppercase font-bold tracking-widest text-slate-600">
             Trusted by teams hiring across tech, finance, healthcare, and high-growth sectors
           </p>
         </div>
@@ -785,7 +824,7 @@ export const Home: React.FC = () => {
       {/* ── 15. TECHNICAL PRACTICE TRACKS ── */}
       <Scroll3DSection preset="fade3d" className="py-12 bg-gray-50 border-y border-gray-200/70">
         <div className="container-custom text-center">
-          <p className="text-xs uppercase font-bold tracking-widest text-slate-400 mb-6">
+          <p className="text-xs uppercase font-bold tracking-widest text-slate-600 mb-6">
             Core Technical Practice Areas & Placement Tracks
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -831,7 +870,7 @@ export const Home: React.FC = () => {
             ))}
           </div>
           <div className="mt-4">
-            <Link to="/technologies" className="text-xs font-bold text-orange-500 hover:underline">
+            <Link to="/technologies" className="text-xs font-bold text-orange-600 hover:underline">
               Explore full tech stack dictionary & roles →
             </Link>
           </div>
@@ -865,7 +904,7 @@ export const Home: React.FC = () => {
                 Latest Hiring <span className="text-brand-gradient">Insights.</span>
               </h2>
             </div>
-            <Link to="/insights" className="text-xs font-bold text-orange-500 hover:underline flex items-center gap-1">
+            <Link to="/insights" className="text-xs font-bold text-orange-600 hover:underline flex items-center gap-1">
               Read all articles →
             </Link>
           </SectionReveal>
@@ -879,7 +918,7 @@ export const Home: React.FC = () => {
               >
                 <Link to={`/insights/${post.slug}`} className="flex flex-col justify-between h-full">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-orange-500 mb-2 inline-block">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-orange-600 mb-2 inline-block">
                       {post.category}
                     </span>
                     <h3 className="font-heading font-bold text-base text-navy-900 group-hover:text-orange-600 transition-colors mb-2">
@@ -902,31 +941,97 @@ export const Home: React.FC = () => {
         </div>
       </Scroll3DSection>
 
-      {/* ── 19. TOP FAQS (FROM DB) ── */}
-      <Scroll3DSection preset="lift" className="section-padding bg-gray-50 border-t border-gray-200/60 relative">
-        <div className="container-custom max-w-4xl">
+      {/* ── 19. TOP FAQS (PREMIUM INTERACTIVE ACCORDION) ── */}
+      <Scroll3DSection preset="lift" className="section-padding bg-slate-50/70 border-t border-gray-200/60 relative">
+        <div className="container-custom max-w-4xl mx-auto">
           <SectionReveal variant="tiltUp" className="text-center mb-12">
             <div className="eyebrow justify-center">Answers & Clarity</div>
             <h2 className="text-h2 text-navy-900 mb-3">
               Frequently Asked <span className="text-brand-gradient">Questions.</span>
             </h2>
-            <p className="text-slate-600 text-sm">
-              Have questions? Find quick answers below or speak to our team.
+            <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
+              Have questions? Find quick answers below or speak directly to our talent directors.
             </p>
           </SectionReveal>
 
-          <div className="flex flex-col gap-4">
-            {faqs.map((faq, i) => (
-              <Scroll3DCard key={i} index={i} className="p-6 rounded-2xl bg-white border border-gray-200/80 shadow-sm">
-                <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{faq.question}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{faq.answer}</p>
-              </Scroll3DCard>
-            ))}
+          <div className="space-y-4">
+            {faqs.map((faq, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <div
+                  key={faq.id || i}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden shadow-sm ${
+                    isOpen
+                      ? 'bg-gradient-to-r from-orange-50/30 via-white to-white border-orange-500/50 ring-1 ring-orange-500/20 shadow-md'
+                      : 'bg-white border-gray-200/90 hover:border-orange-500/30 hover:shadow'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-home-${i}`}
+                    id={`faq-question-home-${i}`}
+                    className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 group"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                      {faq.category && (
+                        <span
+                          className={`self-start sm:self-center px-2.5 py-0.5 rounded-full text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-colors ${
+                            isOpen
+                              ? 'bg-orange-100 text-orange-700 border border-orange-200'
+                              : 'bg-slate-100 text-slate-600 border border-slate-200/60 group-hover:bg-orange-50 group-hover:text-orange-600'
+                          }`}
+                        >
+                          {faq.category}
+                        </span>
+                      )}
+                      <h3 className="font-heading font-bold text-base sm:text-lg text-navy-900 leading-snug group-hover:text-orange-600 transition-colors">
+                        {faq.question}
+                      </h3>
+                    </div>
+
+                    <div
+                      className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                        isOpen
+                          ? 'rotate-180 bg-orange-500 text-white shadow-sm shadow-orange-500/30'
+                          : 'bg-slate-100 text-slate-600 group-hover:bg-orange-100 group-hover:text-orange-600'
+                      }`}
+                    >
+                      <ChevronDown className="w-4 h-4 transition-transform" />
+                    </div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        id={`faq-answer-home-${i}`}
+                        role="region"
+                        aria-labelledby={`faq-question-home-${i}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-6 pb-6 pt-1 text-slate-700 text-sm sm:text-base leading-relaxed border-t border-gray-100/80">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="text-center mt-8">
-            <Link to="/faq" className="text-xs font-bold text-orange-500 hover:underline">
-              Browse complete FAQ knowledge base (24+ Q&As across 6 categories) →
+          <div className="text-center mt-10">
+            <Link
+              to="/faq"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-orange-600 hover:text-orange-700 hover:underline"
+            >
+              <span>Browse complete FAQ knowledge base (24+ Q&As across 6 categories)</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

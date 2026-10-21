@@ -1,19 +1,41 @@
 import { Request, Response, NextFunction } from 'express';
 import { prisma } from '../services/db';
 
+let lastHealthCheck = 0;
+let cachedHealthData: any = null;
+
 export const publicController = {
-  // Health check
+  // Health check with 5s in-memory TTL caching to prevent database connection spikes
   async health(req: Request, res: Response, next: NextFunction) {
+    const now = Date.now();
+    if (cachedHealthData && now - lastHealthCheck < 5000) {
+      return res.json({
+        success: true,
+        data: {
+          ...cachedHealthData,
+          uptime: process.uptime(),
+          timestamp: new Date().toISOString(),
+          cached: true,
+        },
+      });
+    }
+
     try {
       const dbCheck = await prisma.$queryRaw`SELECT 1 as is_alive`;
+      cachedHealthData = {
+        status: 'ok',
+        database: 'connected',
+        dbCheck,
+      };
+      lastHealthCheck = now;
+
       res.json({
         success: true,
         data: {
-          status: 'ok',
+          ...cachedHealthData,
           uptime: process.uptime(),
           timestamp: new Date().toISOString(),
-          database: 'connected',
-          dbCheck,
+          cached: false,
         },
       });
     } catch (err: any) {

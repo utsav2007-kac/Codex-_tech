@@ -81,8 +81,12 @@ export const Scroll3DCard: React.FC<Scroll3DCardProps> = ({
     }
   }
 
-  const finalWrapperClass = `w-full h-full ${layoutClasses.join(' ')} ${wrapperClassName}`.trim();
-  const finalInnerClass = `relative overflow-hidden transition-shadow duration-300 w-full h-full ${innerClasses.join(' ')}`.trim();
+  const wantsFullHeight = rawClasses.includes('h-full');
+  const heightWrapper = wantsFullHeight ? 'h-full' : '';
+  const heightInner = wantsFullHeight ? 'h-full' : '';
+
+  const finalWrapperClass = `w-full ${heightWrapper} ${layoutClasses.join(' ')} ${wrapperClassName}`.trim();
+  const finalInnerClass = `relative overflow-hidden transition-shadow duration-300 w-full ${heightInner} ${innerClasses.join(' ')}`.trim();
 
   return (
     <motion.div

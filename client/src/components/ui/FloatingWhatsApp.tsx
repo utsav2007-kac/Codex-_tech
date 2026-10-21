@@ -8,7 +8,7 @@ export const FloatingWhatsApp: React.FC = () => {
       href={siteConfig.contact.whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-24 right-6 z-30 p-3.5 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-green-500/30 transition-transform active:scale-95 flex items-center justify-center group"
+      className="fixed bottom-24 right-6 z-30 p-3.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full shadow-lg hover:shadow-emerald-700/30 transition-transform active:scale-95 flex items-center justify-center group"
       aria-label="Chat with Codex Tech-IT on WhatsApp"
     >
       <MessageCircle className="w-6 h-6" />

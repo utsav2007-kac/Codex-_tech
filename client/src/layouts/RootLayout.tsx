@@ -12,8 +12,8 @@ import { FloatingWhatsApp } from '../components/ui/FloatingWhatsApp';
 import { CookieConsent } from '../components/ui/CookieConsent';
 import { ConsultationModal } from '../components/forms/ConsultationModal';
 import { useLenisScroll } from '../hooks/useLenisScroll';
-import { SideScenes } from '../components/3d/SideScenes';
-import { GlobalScrollCanvas3D } from '../components/3d/GlobalScrollCanvas3D';
+import { UnifiedGlobalCanvas3D } from '../components/3d/UnifiedGlobalCanvas3D';
+import { ScrollProgressBar } from '../components/ui/ScrollProgressBar';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 
 export const RootLayout: React.FC = () => {
@@ -25,13 +25,12 @@ export const RootLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative selection:bg-orange-500/20 selection:text-orange-600">
-      {/* Global 3D Ambient Scroll Canvas (Meshes & Starfield with reversible scroll tracking) */}
+      {/* Scroll Progress Bar & Desktop Rail Indicator */}
+      <ScrollProgressBar />
+
+      {/* Unified Global 3D Canvas (Ambient background + Dual-gutter scenes rendered via 1 shared WebGL context) */}
       <ErrorBoundary fallback={null}>
-        <GlobalScrollCanvas3D />
-      </ErrorBoundary>
-      {/* Three.js Persistent Dual-Gutter Animations (Left Candidate Helix & Right Hiring Network) */}
-      <ErrorBoundary fallback={null}>
-        <SideScenes />
+        <UnifiedGlobalCanvas3D />
       </ErrorBoundary>
       {/* Skip to Content Accessibility Link */}
       <a

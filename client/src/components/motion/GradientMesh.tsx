@@ -18,9 +18,9 @@ export const GradientMesh: React.FC<{ className?: string }> = ({ className = '' 
         WebkitMaskImage: 'radial-gradient(closest-side, #000 60%, transparent 100%)',
       }}
     >
-      {/* Soft Blue Tint (Lower Left / Center) */}
+      {/* Soft Blue Tint (Lower Left / Center of Right Column) */}
       <div
-        className="absolute top-[18%] -right-[8%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-full filter blur-[90px] opacity-[0.45] pointer-events-none"
+        className="absolute top-[18%] -right-[8%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-full filter blur-[90px] opacity-[0.20] pointer-events-none"
         style={{
           background: 'radial-gradient(circle, #DCEBFA 0%, rgba(220, 235, 250, 0) 70%)',
         }}

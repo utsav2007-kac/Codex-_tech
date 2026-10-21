@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { ContactShadows, Environment, Lightformer } from '@react-three/drei';
 import * as THREE from 'three';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Smartphone, Code2, Sparkles, Terminal } from 'lucide-react';
 
 // ── 3D MONOGRAM GEOMETRY BUILDERS ─────────────────────────────────────────────
@@ -153,6 +153,18 @@ function MonogramMesh({ mouse, activePulse, isMobile, throwAngle, throwVelocity,
       }),
     [activePulse]
   );
+
+  // Dispose Three.js geometries and materials on unmount to prevent GPU memory leaks
+  useEffect(() => {
+    return () => {
+      cGeometry.dispose();
+      xBarGeometry.dispose();
+      orangeGlassMat.dispose();
+      blueGlassMat.dispose();
+      headMat.dispose();
+      sparkNodeMat.dispose();
+    };
+  }, [cGeometry, xBarGeometry, orangeGlassMat, blueGlassMat, headMat, sparkNodeMat]);
 
   // Passive window scroll tracker
   useEffect(() => {
@@ -383,9 +395,26 @@ export const CodexMonogramStage: React.FC = () => {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [activeCardIdx, setActiveCardIdx] = useState(0);
   const [activePulse, setActivePulse] = useState(false);
-  const [introDone, setIntroDone] = useState(false);
+  const [introDone, setIntroDone] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [inView, setInView] = useState(true);
+
+  // IntersectionObserver to pause/unmount 3D scene when off-screen
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Check WebGL, Screen Size and Motion Preferences
   useEffect(() => {
@@ -393,7 +422,7 @@ export const CodexMonogramStage: React.FC = () => {
     setReducedMotion(mq.matches);
 
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
+      setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -406,9 +435,7 @@ export const CodexMonogramStage: React.FC = () => {
       setHasWebGL(false);
     }
 
-    const timer = setTimeout(() => setIntroDone(true), 1200);
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
@@ -430,18 +457,21 @@ export const CodexMonogramStage: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Cohesive rhythmic synchronization: cycles 0 -> 1 -> 3 -> 2 (clockwise constellation)
+  // Cohesive rhythmic synchronization: cycles 0 -> 1 -> 2 -> 3 (clockwise constellation)
   useEffect(() => {
     if (reducedMotion) return;
 
+    let pulseTimeout: ReturnType<typeof setTimeout>;
     const interval = setInterval(() => {
       setActiveCardIdx((prev) => (prev + 1) % 4);
       setActivePulse(true);
-      const pulseTimeout = setTimeout(() => setActivePulse(false), 550);
-      return () => clearTimeout(pulseTimeout);
+      pulseTimeout = setTimeout(() => setActivePulse(false), 550);
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(pulseTimeout);
+    };
   }, [reducedMotion]);
 
   // Cursor Throw & Drag Physics State
@@ -453,11 +483,12 @@ export const CodexMonogramStage: React.FC = () => {
   // Cursor Throw & Drag Handlers
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (reducedMotion) return;
+    if (e.button !== 0) return; // Only primary mouse button / touch
     isDraggingRef.current = true;
     lastPointerRef.current = { x: e.clientX, y: e.clientY, time: performance.now() };
     throwVelocityRef.current = { x: 0, y: 0 };
     try {
-      (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+      containerRef.current?.setPointerCapture?.(e.pointerId);
     } catch {}
   };
 
@@ -502,7 +533,7 @@ export const CodexMonogramStage: React.FC = () => {
       throwVelocityRef.current = { x: 0, y: 0 };
     }
     try {
-      (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+      containerRef.current?.releasePointerCapture?.(e.pointerId);
     } catch {}
   };
 
@@ -528,12 +559,12 @@ export const CodexMonogramStage: React.FC = () => {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onMouseLeave={handleMouseLeave}
-        className="relative w-full max-w-[620px] h-[340px] sm:h-[490px] lg:h-[550px] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-visible"
+        className="relative w-full max-w-[620px] h-[340px] sm:h-[490px] lg:h-[550px] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-visible touch-pan-y"
         aria-label="Codex Tech-IT 3D Glass Monogram Stage"
       >
         {/* ── B. LIGHT WASH (Feathered radial background glows) ── */}
         <div
-          className="absolute inset-0 pointer-events-none overflow-hidden -z-20"
+          className="absolute inset-0 pointer-events-none overflow-visible -z-20"
           style={{
             maskImage: 'radial-gradient(closest-side, #000 55%, transparent 100%)',
             WebkitMaskImage: 'radial-gradient(closest-side, #000 55%, transparent 100%)',
@@ -634,8 +665,16 @@ export const CodexMonogramStage: React.FC = () => {
         </svg>
 
         {/* ── A. THE CENTRAL 3D MONOGRAM CANVAS ── */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {hasWebGL && !reducedMotion ? (
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            maskImage:
+              'radial-gradient(ellipse 88% 85% at 50% 50%, black 55%, rgba(0, 0, 0, 0.4) 78%, transparent 100%)',
+            WebkitMaskImage:
+              'radial-gradient(ellipse 88% 85% at 50% 50%, black 55%, rgba(0, 0, 0, 0.4) 78%, transparent 100%)',
+          }}
+        >
+          {hasWebGL && !reducedMotion && inView && !isMobile ? (
             <Suspense fallback={<StaticFallback />}>
               <Canvas
                 camera={{ position: [0, 0.15, 12], fov: 30 }}
@@ -767,14 +806,15 @@ export const CodexMonogramStage: React.FC = () => {
 
         {/* ── 1. JOB CARD 1: MOBILE IOS & ANDROID (Upper-Left Area) ── */}
         <motion.div
-          initial={{ opacity: 0, y: -16, scale: 0.96 }}
+          onPointerDown={(e) => e.stopPropagation()}
+          initial={{ opacity: 0, y: -10, scale: 0.98 }}
           animate={{
             opacity: 1,
             scale: activeCardIdx === 0 ? 1.03 : 1.0,
             y: reducedMotion ? 0 : [0, -6, 0],
           }}
           transition={{
-            opacity: { duration: 0.5, delay: 0.15 },
+            opacity: { duration: 0.25, delay: 0 },
             scale: { duration: 0.35, ease: 'easeOut' },
             y: { duration: 4.2, repeat: Infinity, ease: 'easeInOut' },
           }}
@@ -806,16 +846,17 @@ export const CodexMonogramStage: React.FC = () => {
 
         {/* ── 2. JOB CARD 2: FULL STACK ENGINEER (Upper-Right Area) ── */}
         <motion.div
-          initial={{ opacity: 0, y: -16, scale: 0.96 }}
+          onPointerDown={(e) => e.stopPropagation()}
+          initial={{ opacity: 0, y: -10, scale: 0.98 }}
           animate={{
             opacity: 1,
             scale: activeCardIdx === 1 ? 1.03 : 1.0,
             y: reducedMotion ? 0 : [0, -8, 0],
           }}
           transition={{
-            opacity: { duration: 0.5, delay: 0.30 },
+            opacity: { duration: 0.25, delay: 0.04 },
             scale: { duration: 0.35, ease: 'easeOut' },
-            y: { duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.5 },
+            y: { duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.2 },
           }}
           className={`absolute top-5 sm:top-7 right-1 sm:right-2 lg:-right-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border ${card2.accentBorder} shadow-[0_16px_40px_rgba(31,106,165,0.12)] transition-all duration-300 hidden sm:flex ${
             activeCardIdx === 1 ? card2.activeGlow : 'hover:shadow-[0_20px_45px_rgba(31,106,165,0.20)]'
@@ -845,16 +886,17 @@ export const CodexMonogramStage: React.FC = () => {
 
         {/* ── 3. JOB CARD 3: PYTHON DEVELOPER (Lower-Left Area - RED CIRCLE AREA) ── */}
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.96 }}
+          onPointerDown={(e) => e.stopPropagation()}
+          initial={{ opacity: 0, y: 10, scale: 0.98 }}
           animate={{
             opacity: 1,
             scale: activeCardIdx === 2 ? 1.03 : 1.0,
             y: reducedMotion ? 0 : [0, -7, 0],
           }}
           transition={{
-            opacity: { duration: 0.5, delay: 0.45 },
+            opacity: { duration: 0.25, delay: 0.08 },
             scale: { duration: 0.35, ease: 'easeOut' },
-            y: { duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 },
+            y: { duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 },
           }}
           className={`absolute bottom-4 sm:bottom-6 left-1 sm:left-2 lg:-left-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(99,102,241,0.08)] transition-all duration-300 hidden sm:flex ${
             activeCardIdx === 2 ? card3.activeGlow : 'hover:shadow-[0_18px_40px_rgba(99,102,241,0.18)]'
@@ -884,16 +926,17 @@ export const CodexMonogramStage: React.FC = () => {
 
         {/* ── 4. JOB CARD 4: AI / ML ENGINEER (Lower-Right Area) ── */}
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.96 }}
+          onPointerDown={(e) => e.stopPropagation()}
+          initial={{ opacity: 0, y: 10, scale: 0.98 }}
           animate={{
             opacity: 1,
             scale: activeCardIdx === 3 ? 1.03 : 1.0,
             y: reducedMotion ? 0 : [0, -6, 0],
           }}
           transition={{
-            opacity: { duration: 0.5, delay: 0.60 },
+            opacity: { duration: 0.25, delay: 0.12 },
             scale: { duration: 0.35, ease: 'easeOut' },
-            y: { duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.2 },
+            y: { duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 },
           }}
           className={`absolute bottom-4 sm:bottom-6 right-2 sm:right-4 lg:right-3 z-20 w-[252px] sm:w-[266px] lg:w-[276px] p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(16,185,129,0.08)] transition-all duration-300 hidden sm:flex ${
             activeCardIdx === 3 ? card4.activeGlow : 'hover:shadow-[0_18px_40px_rgba(16,185,129,0.18)]'

@@ -436,7 +436,6 @@ export const SideScenes: React.FC = () => {
 
       if (renderer) {
         renderer.dispose();
-        renderer.forceContextLoss();
       }
     };
   }, []);
