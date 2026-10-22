@@ -30,15 +30,17 @@ export const Footer: React.FC = () => {
     <footer className="bg-navy-900 text-slate-300 pt-16 pb-12 border-t border-navy-800 relative z-10">
       <div className="container-custom">
         {/* Top Section: Brand + Newsletter */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-navy-800">
-          <div className="lg:col-span-5 flex flex-col gap-4">
-            <Link to="/" className="inline-block w-56">
-              <img src="/assets/logo-white.svg" alt="Codex Tech-IT" className="h-11 w-auto object-contain" />
-            </Link>
-            <p className="text-sm text-slate-300 leading-relaxed max-w-md font-normal">
-              Codex Tech-IT connects skilled IT professionals with the companies that need them, faster, fairer, and with far less hiring chaos.
-            </p>
-            <div className="flex items-center gap-3 mt-2 text-slate-300">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-navy-800 items-stretch">
+          <div className="lg:col-span-5 flex flex-col justify-between h-full">
+            <div className="flex flex-col gap-4">
+              <Link to="/" className="inline-block w-56">
+                <img src="/assets/logo-white.svg" alt="Codex Tech-IT" className="h-11 w-auto object-contain" />
+              </Link>
+              <p className="text-sm text-slate-300 leading-relaxed max-w-md font-normal">
+                Codex Tech-IT connects skilled IT professionals with the companies that need them, faster, fairer, and with far less hiring chaos.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 mt-6 text-slate-300">
               <a href={siteConfig.socials.linkedin} target="_blank" rel="noreferrer" aria-label="Codex LinkedIn" className="p-2 rounded-lg bg-navy-800 hover:text-white hover:bg-orange-500 transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
@@ -55,7 +57,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Newsletter Box */}
-          <div className="lg:col-span-7 flex flex-col justify-center bg-navy-800/60 p-6 sm:p-8 rounded-2xl border border-navy-700/60">
+          <div className="lg:col-span-7 flex flex-col justify-center bg-navy-800/60 p-6 sm:p-8 rounded-2xl border border-navy-700/60 h-full">
             <h4 className="text-white font-heading font-bold text-lg mb-1">
               Hiring insights, in your inbox. No spam.
             </h4>
@@ -93,11 +95,11 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Middle Section: Sitemapped Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 py-12 text-sm">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 py-12 text-sm items-stretch">
           {/* Column 1: Services */}
-          <div>
-            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Services</h5>
-            <ul className="flex flex-col gap-2 text-slate-300 font-normal">
+          <div className="flex flex-col h-full">
+            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider min-h-[1.75rem] flex items-start">Services</h5>
+            <ul className="flex flex-col gap-2 text-slate-300 font-normal flex-1">
               {siteConfig.services.slice(0, 6).map((s) => (
                 <li key={s.slug}>
                   <Link to={`/services/${s.slug}`} className="hover:text-orange-500 transition-colors">
@@ -105,7 +107,7 @@ export const Footer: React.FC = () => {
                   </Link>
                 </li>
               ))}
-              <li>
+              <li className="mt-auto pt-2">
                 <Link to="/services" className="text-xs font-bold text-orange-400 hover:text-orange-300 hover:underline">
                   View all 9 services →
                 </Link>
@@ -114,9 +116,9 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 2: Careers & Talent */}
-          <div>
-            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Careers & Talent</h5>
-            <ul className="flex flex-col gap-2 text-slate-300 font-normal">
+          <div className="flex flex-col h-full">
+            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider min-h-[1.75rem] flex items-start">Careers & Talent</h5>
+            <ul className="flex flex-col gap-2 text-slate-300 font-normal flex-1">
               <li>
                 <Link to="/careers" className="hover:text-orange-500 transition-colors flex items-center gap-1.5">
                   <span>Browse All Open Roles</span>
@@ -132,9 +134,9 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 3: Company */}
-          <div>
-            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Company</h5>
-            <ul className="flex flex-col gap-2 text-slate-300 font-normal">
+          <div className="flex flex-col h-full">
+            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider min-h-[1.75rem] flex items-start">Company</h5>
+            <ul className="flex flex-col gap-2 text-slate-300 font-normal flex-1">
               <li><Link to="/about" className="hover:text-orange-500 transition-colors">About Codex</Link></li>
               <li><Link to="/careers" className="hover:text-orange-500 transition-colors">Careers at Codex</Link></li>
               <li><Link to="/refer-earn" className="hover:text-orange-500 transition-colors">Refer & Earn</Link></li>
@@ -145,9 +147,9 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 4: Resources */}
-          <div>
-            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Resources</h5>
-            <ul className="flex flex-col gap-2 text-slate-300 font-normal">
+          <div className="flex flex-col h-full">
+            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider min-h-[1.75rem] flex items-start">Resources</h5>
+            <ul className="flex flex-col gap-2 text-slate-300 font-normal flex-1">
               <li><Link to="/resources/salary-guide" className="hover:text-orange-500 transition-colors">IT Salary Guide 2026</Link></li>
               <li><Link to="/resources/resume-templates" className="hover:text-orange-500 transition-colors">ATS Resume Templates</Link></li>
               <li><Link to="/resources/interview-question-bank" className="hover:text-orange-500 transition-colors">Interview Question Bank</Link></li>
@@ -158,9 +160,9 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Column 5: Legal & Admin */}
-          <div>
-            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider">Legal & Compliance</h5>
-            <ul className="flex flex-col gap-2 text-slate-300 font-normal">
+          <div className="flex flex-col h-full">
+            <h5 className="font-heading font-bold text-white mb-3 text-sm uppercase tracking-wider min-h-[1.75rem] flex items-start">Legal & Compliance</h5>
+            <ul className="flex flex-col gap-2 text-slate-300 font-normal flex-1">
               <li><Link to="/privacy-policy" className="hover:text-orange-500 transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms-and-conditions" className="hover:text-orange-500 transition-colors">Terms of Service</Link></li>
               <li><Link to="/cookie-policy" className="hover:text-orange-500 transition-colors">Cookie Policy</Link></li>

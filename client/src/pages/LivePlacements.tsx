@@ -124,14 +124,14 @@ export const LivePlacements: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {filtered.map((item, idx) => (
                 <Scroll3DCard
                   key={item.id}
                   index={idx}
                   className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:shadow-md hover:border-orange-500/40 transition-all flex flex-col justify-between"
                 >
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     <div className="flex items-center justify-between text-xs mb-3">
                       <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold text-[11px]">
                         {item.company_type}
@@ -142,7 +142,7 @@ export const LivePlacements: React.FC = () => {
                       </span>
                     </div>
 
-                    <h2 className="font-heading font-bold text-lg text-navy-900 mb-2">
+                    <h2 className="font-heading font-bold text-lg text-navy-900 mb-2 min-h-[3rem] flex items-start">
                       {item.role}
                     </h2>
 
@@ -151,12 +151,12 @@ export const LivePlacements: React.FC = () => {
                       {item.package_range}
                     </div>
 
-                    <p className="text-xs text-slate-500 leading-relaxed mb-6">
+                    <p className="text-xs text-slate-500 leading-relaxed mb-6 flex-1">
                       {item.summary}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-slate-400 font-medium mt-auto">
                     <span className="flex items-center gap-1 text-emerald-600 font-semibold">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Offer Verified (SAMPLE)

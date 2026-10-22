@@ -205,7 +205,7 @@ export const Home: React.FC = () => {
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {[
               {
                 icon: GraduationCap,
@@ -237,15 +237,15 @@ export const Home: React.FC = () => {
                 link: '/contact',
               },
             ].map((card, i) => (
-              <Scroll3DCard key={i} index={i} className="glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border border-gray-100 hover:border-orange-500/40">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-5 shadow-sm">
+              <Scroll3DCard key={i} index={i} className="glass-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border border-gray-100 hover:border-orange-500/40 h-full">
+                <div className="flex-1 flex flex-col">
+                  <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-5 shadow-sm shrink-0">
                     <card.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-h3 font-bold text-navy-900 mb-2">{card.title}</h3>
-                  <p className="text-xs text-slate-700 font-medium mb-5 leading-relaxed">{card.sub}</p>
+                  <h3 className="text-h3 font-bold text-navy-900 mb-2 min-h-[3rem] flex items-start">{card.title}</h3>
+                  <p className="text-xs text-slate-700 font-medium mb-4 leading-relaxed min-h-[2.5rem]">{card.sub}</p>
 
-                  <ul className="flex flex-col gap-2.5 mb-8 text-xs text-slate-700 font-medium">
+                  <ul className="flex flex-col gap-2.5 mb-6 text-xs text-slate-700 font-medium flex-1">
                     {card.perks.map((p, pIdx) => (
                       <li key={pIdx} className="flex items-start gap-2">
                         <CheckCircle2 className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" />
@@ -256,12 +256,12 @@ export const Home: React.FC = () => {
                 </div>
 
                 {card.link ? (
-                  <Link to={card.link} className="inline-flex items-center justify-between text-xs font-heading font-bold text-navy-900 hover:text-orange-500 pt-3 border-t border-gray-100 transition-colors">
+                  <Link to={card.link} className="mt-auto inline-flex items-center justify-between text-xs font-heading font-bold text-navy-900 hover:text-orange-500 pt-3 border-t border-gray-100 transition-colors">
                     <span>{card.cta}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-orange-500" />
                   </Link>
                 ) : (
-                  <button onClick={onOpenConsultation} className="inline-flex items-center justify-between text-xs font-heading font-bold text-navy-900 hover:text-orange-500 pt-3 border-t border-gray-100 transition-colors cursor-pointer text-left">
+                  <button onClick={onOpenConsultation} className="mt-auto inline-flex items-center justify-between text-xs font-heading font-bold text-navy-900 hover:text-orange-500 pt-3 border-t border-gray-100 transition-colors cursor-pointer text-left">
                     <span>{card.cta}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-orange-500" />
                   </button>
@@ -289,18 +289,18 @@ export const Home: React.FC = () => {
               </div>
             </SectionReveal>
 
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 items-stretch">
               {[
                 { title: 'Careers, Not Just Jobs', desc: 'We align placement with your 5-year trajectory, focusing on stack relevance and compensation growth.' },
                 { title: 'Deadlines Mean Deadlines', desc: 'We respect your urgency. 48-hour shortlists for employers and 21-day average placements for candidates.' },
                 { title: 'Partnerships, Not Transactions', desc: 'Transparent communication before, during, and long after the onboarding signature.' },
                 { title: 'Always Improving', desc: 'Continuous feedback loops with engineering leaders so our mock interviews match real technical rounds.' },
               ].map((pillar, idx) => (
-                <Scroll3DCard key={idx} index={idx} className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm flex flex-col justify-between">
-                  <div>
-                    <div className="text-2xl font-numbers font-extrabold text-orange-500/30 mb-2">0{idx + 1}</div>
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{pillar.title}</h3>
-                    <p className="text-xs text-slate-700 font-medium leading-relaxed">{pillar.desc}</p>
+                <Scroll3DCard key={idx} index={idx} className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="text-2xl font-numbers font-extrabold text-orange-500/30 mb-2 shrink-0">0{idx + 1}</div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">{pillar.title}</h3>
+                    <p className="text-xs text-slate-700 font-medium leading-relaxed flex-1">{pillar.desc}</p>
                   </div>
                 </Scroll3DCard>
               ))}
@@ -322,24 +322,24 @@ export const Home: React.FC = () => {
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {siteConfig.services.map((service, idx) => (
-              <Scroll3DCard key={service.slug} index={idx} className="p-7 rounded-2xl glass-card border border-gray-100 flex flex-col justify-between group hover:border-orange-500/40">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
+              <Scroll3DCard key={service.slug} index={idx} className="p-7 rounded-2xl glass-card border border-gray-100 flex flex-col justify-between group hover:border-orange-500/40 h-full">
+                <div className="flex-1 flex flex-col">
+                  <div className="flex items-center justify-between mb-4 shrink-0">
                     <span className="text-xs font-numbers font-bold text-slate-500">0{idx + 1}</span>
                     <span className="w-2 h-2 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <h3 className="text-h3 font-bold text-navy-900 mb-2 group-hover:text-orange-500 transition-colors">
+                  <h3 className="text-h3 font-bold text-navy-900 mb-2 group-hover:text-orange-500 transition-colors min-h-[3.25rem] flex items-start">
                     {service.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mb-6 flex-1">
                     {service.desc}
                   </p>
                 </div>
                 <Link
                   to={`/services/${service.slug}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-heading font-bold text-navy-900 group-hover:text-orange-500 transition-colors"
+                  className="mt-auto pt-3 border-t border-gray-100 inline-flex items-center gap-1.5 text-xs font-heading font-bold text-navy-900 group-hover:text-orange-500 transition-colors"
                 >
                   <span>Explore service details</span>
                   <ArrowRight className="w-3.5 h-3.5 text-orange-500 group-hover:translate-x-1 transition-transform" />
@@ -384,53 +384,65 @@ export const Home: React.FC = () => {
             </div>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {whyChooseTab === 'candidates' ? (
               <>
-                <Scroll3DCard index={0} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80">
-                  <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
-                    <Zap className="w-5 h-5" />
+                <Scroll3DCard index={0} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4 shrink-0">
+                      <Zap className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">Faster Interview Scheduling</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">Direct representation bypasses generic HR queues, landing first-round discussions in 10-21 days.</p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">Faster Interview Scheduling</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">Direct representation bypasses generic HR queues, landing first-round discussions in 10-21 days.</p>
                 </Scroll3DCard>
-                <Scroll3DCard index={1} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
-                    <ShieldCheck className="w-5 h-5" />
+                <Scroll3DCard index={1} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4 shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">Verified E-Verified Employers</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">Work exclusively with vetted companies offering legitimate contracts and stable visa sponsorship.</p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">Verified E-Verified Employers</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">Work exclusively with vetted companies offering legitimate contracts and stable visa sponsorship.</p>
                 </Scroll3DCard>
-                <Scroll3DCard index={2} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80">
-                  <div className="w-10 h-10 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center mb-4">
-                    <Star className="w-5 h-5" />
+                <Scroll3DCard index={2} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center mb-4 shrink-0">
+                      <Star className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">Interview Confidence</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">Full mock interview debriefs so you walk into system design and coding assessments fully prepared.</p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">Interview Confidence</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">Full mock interview debriefs so you walk into system design and coding assessments fully prepared.</p>
                 </Scroll3DCard>
               </>
             ) : (
               <>
-                <Scroll3DCard index={0} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80">
-                  <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
-                    <Clock className="w-5 h-5" />
+                <Scroll3DCard index={0} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4 shrink-0">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">48-Hour Shortlists</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">Receive 2-4 pre-vetted candidates who have already passed coding assessments within 2 business days.</p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">48-Hour Shortlists</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">Receive 2-4 pre-vetted candidates who have already passed coding assessments within 2 business days.</p>
                 </Scroll3DCard>
-                <Scroll3DCard index={1} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
-                    <ShieldCheck className="w-5 h-5" />
+                <Scroll3DCard index={1} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4 shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">Technical Pre-Screening</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">Every engineer is vetted by senior developers to guarantee real-world architecture and communication competency.</p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">Technical Pre-Screening</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">Every engineer is vetted by senior developers to guarantee real-world architecture and communication competency.</p>
                 </Scroll3DCard>
-                <Scroll3DCard index={2} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80">
-                  <div className="w-10 h-10 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center mb-4">
-                    <Layers className="w-5 h-5" />
+                <Scroll3DCard index={2} className="p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center mb-4 shrink-0">
+                      <Layers className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">Flexible Hiring Models</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">Contract, contract-to-hire, and full direct placement with multi-state payroll and tax compliance handled.</p>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">Flexible Hiring Models</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">Contract, contract-to-hire, and full direct placement with multi-state payroll and tax compliance handled.</p>
                 </Scroll3DCard>
               </>
             )}
@@ -576,7 +588,7 @@ export const Home: React.FC = () => {
             </Link>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {[
               {
                 title: 'Lead Cloud Solutions Architect',
@@ -610,23 +622,23 @@ export const Home: React.FC = () => {
               <Scroll3DCard
                 key={idx}
                 index={idx}
-                className="p-6 rounded-2xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:border-orange-300 transition-all hover:shadow-md"
+                className="p-6 rounded-2xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:border-orange-300 transition-all hover:shadow-md h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
+                <div className="flex-1 flex flex-col">
+                  <div className="flex items-center justify-between mb-3 shrink-0">
                     <span className="px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-700 text-[10px] font-bold uppercase tracking-wider">
                       {role.tag}
                     </span>
                     <span className="text-xs font-bold text-emerald-700">{role.salary}</span>
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-1 leading-snug">
+                  <h3 className="font-heading font-bold text-base text-navy-900 mb-1 leading-snug min-h-[3rem] flex items-start">
                     {role.title}
                   </h3>
-                  <p className="text-xs text-slate-500 font-medium mb-4">{role.dept} · {role.location}</p>
+                  <p className="text-xs text-slate-500 font-medium mb-4 flex-1">{role.dept} · {role.location}</p>
                 </div>
                 <Link
                   to="/careers"
-                  className="inline-flex items-center justify-between text-xs font-bold text-orange-600 hover:text-orange-700 pt-3 border-t border-gray-100"
+                  className="mt-auto pt-3 border-t border-gray-100 inline-flex items-center justify-between text-xs font-bold text-orange-600 hover:text-orange-700"
                 >
                   <span>Apply with 1-Click</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -652,18 +664,18 @@ export const Home: React.FC = () => {
             </Link>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
             {livePlacements.map((p, idx) => (
-              <Scroll3DCard key={idx} index={idx} className="p-5 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between text-xs text-slate-600 font-medium mb-2">
+              <Scroll3DCard key={idx} index={idx} className="p-5 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between h-full">
+                <div className="flex-1 flex flex-col">
+                  <div className="flex items-center justify-between text-xs text-slate-600 font-medium mb-2 shrink-0">
                     <span className="font-bold text-blue-700">{p.company_type}</span>
                     <span>{p.location}</span>
                   </div>
-                  <h3 className="font-heading font-bold text-sm text-navy-900 mb-1">{p.role}</h3>
-                  <p className="text-xs text-slate-700 font-medium mb-4">{p.summary}</p>
+                  <h3 className="font-heading font-bold text-sm text-navy-900 mb-1 min-h-[2.5rem] flex items-start leading-snug">{p.role}</h3>
+                  <p className="text-xs text-slate-700 font-medium mb-4 flex-1">{p.summary}</p>
                 </div>
-                <div className="pt-3 border-t border-gray-200/60 flex items-center justify-between">
+                <div className="mt-auto pt-3 border-t border-gray-200/60 flex items-center justify-between">
                   <span className="text-xs font-numbers font-bold text-green-800 bg-green-50 px-2.5 py-1 rounded-md border border-green-200">
                     {p.package_range}
                   </span>
@@ -712,7 +724,7 @@ export const Home: React.FC = () => {
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
             {[
               {
                 title: 'US Career Ready',
@@ -739,13 +751,13 @@ export const Home: React.FC = () => {
               <Scroll3DCard
                 key={i}
                 index={i}
-                className={`p-8 rounded-3xl flex flex-col justify-between transition-all duration-300 ${plan.popular
-                    ? 'bg-white border-2 border-orange-500 shadow-elevated relative scale-105 z-10'
+                className={`p-8 rounded-3xl flex flex-col justify-between transition-all duration-300 h-full ${plan.popular
+                    ? 'bg-white border border-orange-500 ring-2 ring-orange-500/30 shadow-elevated relative z-10'
                     : 'bg-white border border-gray-200/80 shadow-sm'
                   }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
+                <div className="flex-1 flex flex-col">
+                  <div className="flex items-center justify-between mb-4 shrink-0 h-7">
                     <span className="text-xs uppercase tracking-wider font-bold text-slate-600">{plan.tag}</span>
                     {plan.popular && (
                       <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-[10px] font-bold uppercase tracking-wider">
@@ -753,15 +765,15 @@ export const Home: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <h3 className="font-heading font-bold text-xl text-navy-900 mb-2">{plan.title}</h3>
-                  <p className="text-xs text-slate-700 font-medium mb-6 leading-relaxed">{plan.sub}</p>
+                  <h3 className="font-heading font-bold text-xl text-navy-900 mb-2 min-h-[2.5rem] flex items-start">{plan.title}</h3>
+                  <p className="text-xs text-slate-700 font-medium mb-6 leading-relaxed min-h-[3rem]">{plan.sub}</p>
 
-                  <div className="mb-6 pb-6 border-b border-gray-100">
+                  <div className="mb-6 pb-6 border-b border-gray-100 shrink-0">
                     <span className="text-2xl font-heading font-bold text-navy-900">Contact Us</span>
                     <span className="text-xs text-slate-600 font-medium ml-2">/ flexible monthly options</span>
                   </div>
 
-                  <ul className="flex flex-col gap-3 mb-8 text-xs text-slate-700 font-medium">
+                  <ul className="flex flex-col gap-3 mb-8 text-xs text-slate-700 font-medium flex-1">
                     {plan.features.map((feat, fIdx) => (
                       <li key={fIdx} className="flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
@@ -775,7 +787,7 @@ export const Home: React.FC = () => {
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   onClick={onOpenConsultation}
-                  className="w-full"
+                  className="mt-auto w-full"
                 >
                   Select {plan.title}
                 </Button>
@@ -798,20 +810,20 @@ export const Home: React.FC = () => {
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {testimonials.map((t, idx) => (
-              <Scroll3DCard key={idx} index={idx} className="p-6 rounded-2xl glass-card border border-gray-100 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div className="flex gap-1 text-orange-400 mb-4">
+              <Scroll3DCard key={idx} index={idx} className="p-6 rounded-2xl glass-card border border-gray-100 flex flex-col justify-between shadow-sm h-full">
+                <div className="flex-1 flex flex-col">
+                  <div className="flex gap-1 text-orange-400 mb-4 shrink-0">
                     {[...Array(5)].map((_, starIdx) => (
                       <Star key={starIdx} className="w-4 h-4 fill-current" />
                     ))}
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed mb-6 flex-1">
                     "{t.quote}"
                   </p>
                 </div>
-                <div className="pt-4 border-t border-gray-100">
+                <div className="mt-auto pt-4 border-t border-gray-100">
                   <div className="font-heading font-bold text-sm text-navy-900">{t.name}</div>
                   <div className="text-xs text-slate-400">{t.role}</div>
                 </div>
@@ -909,26 +921,26 @@ export const Home: React.FC = () => {
             </Link>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {posts.map((post, idx) => (
               <Scroll3DCard
                 key={post.slug}
                 index={idx}
-                className="group p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:border-orange-500/40 transition-colors"
+                className="group p-6 rounded-2xl bg-gray-50 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:border-orange-500/40 transition-colors h-full"
               >
-                <Link to={`/insights/${post.slug}`} className="flex flex-col justify-between h-full">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-orange-600 mb-2 inline-block">
+                <Link to={`/insights/${post.slug}`} className="flex flex-col justify-between h-full flex-1">
+                  <div className="flex-1 flex flex-col">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-orange-600 mb-2 inline-block shrink-0">
                       {post.category}
                     </span>
-                    <h3 className="font-heading font-bold text-base text-navy-900 group-hover:text-orange-600 transition-colors mb-2">
+                    <h3 className="font-heading font-bold text-base text-navy-900 group-hover:text-orange-600 transition-colors mb-2 min-h-[3.25rem] flex items-start leading-snug">
                       {post.title}
                     </h3>
-                    <p className="text-xs text-slate-700 font-medium leading-relaxed mb-6">
+                    <p className="text-xs text-slate-700 font-medium leading-relaxed mb-6 flex-1">
                       {post.excerpt}
                     </p>
                   </div>
-                  <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between text-xs text-slate-600 font-medium">
+                  <div className="mt-auto pt-4 border-t border-gray-200/60 flex items-center justify-between text-xs text-slate-600 font-medium">
                     <span>{post.read_minutes} min read</span>
                     <span className="text-orange-600 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
                       Read article <ArrowRight className="w-3.5 h-3.5" />

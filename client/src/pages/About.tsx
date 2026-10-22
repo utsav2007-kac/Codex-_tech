@@ -211,33 +211,33 @@ export const About: React.FC = () => {
       {/* 4 Foundational Operating Pillars */}
       <Scroll3DSection preset="tilt" className="section-padding bg-slate-50 border-y border-gray-200/70">
         <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-14">
+          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-12">
             <div className="eyebrow justify-center">How We Operate</div>
             <h2 className="text-h2 text-navy-900 mb-3">
               Our 4 Foundational <span className="text-brand-gradient">Pillars.</span>
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-600 text-sm sm:text-base">
               The non-negotiable standards that govern every candidate recommendation and enterprise relationship.
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {pillars.map((pillar, idx) => {
               const Icon = pillar.icon;
               return (
                 <Scroll3DCard
                   key={idx}
                   index={idx}
-                  className="p-7 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+                  className="p-6 sm:p-7 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow h-full"
                 >
-                  <div>
-                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-5">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-5 shrink-0">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2">
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">
                       {pillar.title}
                     </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal flex-1">
                       {pillar.description}
                     </p>
                   </div>
@@ -249,34 +249,78 @@ export const About: React.FC = () => {
       </Scroll3DSection>
 
       {/* Journey Timeline */}
-      <Scroll3DSection preset="lift" className="section-padding bg-white">
+      <Scroll3DSection preset="lift" className="section-padding bg-white relative">
         <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-16">
+          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
             <div className="eyebrow justify-center">Milestones & Growth</div>
-            <h2 className="text-h2 text-navy-900 mb-3">
+            <h2 className="text-h2 text-navy-900 mb-2 sm:mb-3">
               The Codex <span className="text-brand-gradient">Trajectory.</span>
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-600 text-sm sm:text-base">
               From our initial cohort of engineers to a recognized cross-continental staffing powerhouse.
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            {milestones.map((m, idx) => (
-              <Scroll3DCard
-                key={idx}
-                index={idx}
-                className="p-6 rounded-3xl bg-slate-50 border border-gray-200/80 relative flex flex-col justify-between"
-              >
-                <div>
-                  <span className="text-2xl font-numbers font-black text-orange-600 mb-3 block">
-                    {m.year}
+          {/* Desktop Timeline Horizontal Track */}
+          <div className="hidden lg:block relative mb-6 px-6">
+            <div className="absolute top-3 left-12 right-12 h-0.5 bg-gradient-to-r from-orange-500/20 via-orange-500/70 to-orange-500/20" />
+            <div className="relative grid grid-cols-4 gap-6 text-center z-10">
+              {milestones.map((m, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div className="w-6 h-6 rounded-full bg-white border-2 border-orange-500 flex items-center justify-center shadow-md">
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-500" />
+                  </div>
+                  <span className="text-xs font-bold font-numbers text-orange-600 mt-1.5 tracking-wider">
+                    MILESTONE {m.year}
                   </span>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{m.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{m.desc}</p>
                 </div>
-              </Scroll3DCard>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Timeline Cards Container with Mobile Vertical Spine Line */}
+          <div className="relative pl-7 sm:pl-9 lg:pl-0">
+            {/* Mobile Vertical Continuous Timeline Spine Line */}
+            <div
+              className="lg:hidden absolute left-2.5 sm:left-3 top-4 bottom-8 w-0.5 bg-gradient-to-b from-orange-500/40 via-orange-500 to-orange-500/30"
+              aria-hidden="true"
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch relative">
+              {milestones.map((m, idx) => (
+                <div key={idx} className="relative flex flex-col h-full">
+                  {/* Mobile Timeline Node (Dot) connecting to the vertical spine */}
+                  <div
+                    className="lg:hidden absolute -left-[1.85rem] sm:-left-[2.1rem] top-7 w-5 h-5 rounded-full bg-white border-2 border-orange-500 flex items-center justify-center shadow-sm z-10"
+                    aria-hidden="true"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-orange-500" />
+                  </div>
+
+                  <Scroll3DCard
+                    index={idx}
+                    className="p-6 sm:p-7 rounded-3xl bg-slate-50 border border-gray-200/90 relative flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow h-full flex-1"
+                  >
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-2xl font-numbers font-black text-orange-600">
+                          {m.year}
+                        </span>
+                        <span className="text-xs font-bold font-numbers text-slate-500 uppercase tracking-wider">
+                          Phase 0{idx + 1}
+                        </span>
+                      </div>
+                      <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[3rem] flex items-start leading-snug">
+                        {m.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">
+                        {m.desc}
+                      </p>
+                    </div>
+                  </Scroll3DCard>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Scroll3DSection>
@@ -284,25 +328,25 @@ export const About: React.FC = () => {
       {/* Leadership & Advisory Team */}
       <Scroll3DSection preset="lift" className="section-padding bg-slate-50 border-t border-gray-200/70">
         <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-14">
+          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-12">
             <div className="eyebrow justify-center">Meet the Leadership</div>
             <h2 className="text-h2 text-navy-900 mb-3">
               Veterans of <span className="text-brand-gradient">Engineering & Staffing.</span>
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-600 text-sm sm:text-base">
               A leadership team combining deep systems engineering expertise with senior executive search leadership.
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {leadership.map((leader, i) => (
               <Scroll3DCard
                 key={i}
                 index={i}
-                className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between"
+                className="p-6 sm:p-7 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow h-full"
               >
-                <div>
-                  <div className="w-16 h-16 rounded-2xl bg-navy-900 text-orange-400 font-bold font-heading text-xl flex items-center justify-center mb-4 shadow-sm">
+                <div className="flex-1 flex flex-col">
+                  <div className="w-16 h-16 rounded-2xl bg-navy-900 text-orange-400 font-bold font-heading text-xl flex items-center justify-center mb-4 shadow-sm shrink-0">
                     {leader.name
                       .split(' ')
                       .map((n) => n[0])
@@ -312,9 +356,9 @@ export const About: React.FC = () => {
                     {leader.name}
                   </h3>
                   <p className="text-xs font-semibold text-orange-600 mb-3">{leader.role}</p>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">{leader.bio}</p>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">{leader.bio}</p>
                 </div>
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-gray-100">
+                <div className="mt-auto flex flex-wrap gap-1.5 pt-3 border-t border-gray-100">
                   {leader.tags.map((t, idx) => (
                     <span
                       key={idx}

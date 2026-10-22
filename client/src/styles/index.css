@@ -94,8 +94,70 @@
 /* Custom Components & Brand Utilities */
 @layer components {
   .section-padding {
-    padding-top: clamp(4rem, 8vw, 8rem);
-    padding-bottom: clamp(4rem, 8vw, 8rem);
+    padding-top: 3rem; /* 48px mobile */
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 4rem; /* 64px tablet */
+      padding-bottom: 4rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: 6rem; /* 96px desktop */
+      padding-bottom: 6rem;
+    }
+  }
+
+  /* Equal-Height Card Grids & Subgrid Alignment System */
+  .card-grid {
+    display: grid;
+    align-items: stretch;
+  }
+
+  /* Support for CSS Subgrid across modern browsers */
+  @supports (grid-template-rows: subgrid) {
+    .subgrid-rows-4 {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 4;
+    }
+    .subgrid-rows-3 {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 3;
+    }
+  }
+
+  /* Standard Card Content Alignment Slots */
+  .card-slot-header {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-slot-title {
+    min-height: 3rem;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.3;
+  }
+
+  .card-slot-desc {
+    min-height: 3.5rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  .card-slot-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(226, 232, 240, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .container-custom {
@@ -104,6 +166,12 @@
     margin-right: auto;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+  @media (min-width: 1280px) and (max-width: 1536px) {
+    .container-custom {
+      max-width: 1200px;
+      padding-right: 2.25rem;
+    }
   }
 
   /* Eyebrow pattern: 0.75rem | 600 | UPPERCASE | ls 0.14em | high-contrast brand orange (#CA3E12, 4.71:1 on gray-50, 5.01:1 on white), preceded by 24px line */

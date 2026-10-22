@@ -50,27 +50,27 @@ export const Services: React.FC = () => {
       {/* Grid of 9 Services */}
       <Scroll3DSection preset="tilt" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {siteConfig.services.map((service, idx) => (
               <Scroll3DCard
                 key={service.slug}
                 index={idx}
                 className="p-8 rounded-3xl glass-card border border-gray-100 flex flex-col justify-between hover:border-orange-500/40 shadow-sm"
               >
-                <div>
+                <div className="flex-1 flex flex-col">
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-xs font-numbers font-bold text-orange-500">0{idx + 1}</span>
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Codex Solution</span>
                   </div>
-                  <h2 className="font-heading font-bold text-xl text-navy-900 mb-3 hover:text-orange-500 transition-colors">
+                  <h2 className="font-heading font-bold text-xl text-navy-900 mb-3 hover:text-orange-500 transition-colors min-h-[3.25rem] flex items-start">
                     <Link to={`/services/${service.slug}`}>{service.title}</Link>
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mb-6 flex-1">
                     {service.desc}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
                   <Link
                     to={`/services/${service.slug}`}
                     className="inline-flex items-center gap-1.5 text-xs font-heading font-bold text-navy-900 hover:text-orange-500 transition-colors"

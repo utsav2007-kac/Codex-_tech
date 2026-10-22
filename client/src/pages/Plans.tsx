@@ -111,7 +111,7 @@ export const Plans: React.FC = () => {
       {/* 3 Tier Cards */}
       <Scroll3DSection preset="lift" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20 items-stretch">
             {plans.map((p, idx) => (
               <Scroll3DCard
                 key={idx}
@@ -119,12 +119,12 @@ export const Plans: React.FC = () => {
                 maxTilt={p.popular ? 8 : 5}
                 className={`p-8 rounded-3xl flex flex-col justify-between transition-all duration-300 ${
                   p.popular
-                    ? 'bg-white border-2 border-orange-500 shadow-elevated relative scale-105 z-10'
+                    ? 'bg-white border border-orange-500 ring-2 ring-orange-500/30 shadow-xl relative z-10'
                     : 'bg-white border border-gray-200/80 shadow-sm'
                 }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
+                <div className="flex-1 flex flex-col">
+                  <div className="flex items-center justify-between mb-4 h-7">
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{p.tier}</span>
                     {p.popular && (
                       <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-[10px] font-bold uppercase tracking-wider">
@@ -133,8 +133,8 @@ export const Plans: React.FC = () => {
                     )}
                   </div>
 
-                  <h2 className="font-heading font-bold text-2xl text-navy-900 mb-2">{p.name}</h2>
-                  <p className="text-xs text-slate-500 leading-relaxed mb-6">{p.tagline}</p>
+                  <h2 className="font-heading font-bold text-2xl text-navy-900 mb-2 min-h-[2rem] flex items-start">{p.name}</h2>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-6 min-h-[3rem]">{p.tagline}</p>
 
                   <div className="mb-6 pb-6 border-b border-gray-100">
                     <span className="text-3xl font-heading font-black text-navy-900">{p.pricing}</span>
@@ -142,7 +142,7 @@ export const Plans: React.FC = () => {
                   </div>
 
                   {/* Features list */}
-                  <ul className="flex flex-col gap-3 mb-8 text-xs text-slate-600">
+                  <ul className="flex flex-col gap-3 mb-8 text-xs text-slate-600 flex-1">
                     {p.features.map((f, fIdx) => (
                       <li key={fIdx} className="flex items-start gap-2.5">
                         <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
@@ -158,14 +158,16 @@ export const Plans: React.FC = () => {
                   </ul>
                 </div>
 
-                <Button
-                  variant={p.popular ? 'primary' : 'outline'}
-                  size="md"
-                  onClick={onOpenConsultation}
-                  className="w-full"
-                >
-                  Choose {p.name}
-                </Button>
+                <div className="mt-auto">
+                  <Button
+                    variant={p.popular ? 'primary' : 'outline'}
+                    size="md"
+                    onClick={onOpenConsultation}
+                    className="w-full"
+                  >
+                    Choose {p.name}
+                  </Button>
+                </div>
               </Scroll3DCard>
             ))}
           </div>

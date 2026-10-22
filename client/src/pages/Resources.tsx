@@ -81,15 +81,15 @@ export const Resources: React.FC = () => {
       {/* Resources Grid */}
       <section id="resources-grid" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {resourceCards.map((res, idx) => {
               const Icon = res.icon;
               return (
                 <div
                   key={idx}
-                  className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 hover:shadow-md transition-all flex flex-col justify-between"
+                  className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 hover:shadow-md transition-all flex flex-col justify-between h-full"
                 >
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     <div className="flex items-center justify-between mb-6">
                       <div className={`w-12 h-12 rounded-2xl ${res.color} flex items-center justify-center`}>
                         <Icon className="w-6 h-6" />
@@ -99,16 +99,16 @@ export const Resources: React.FC = () => {
                       </span>
                     </div>
 
-                    <h2 className="font-heading font-bold text-2xl text-navy-900 mb-3 hover:text-orange-500 transition-colors">
+                    <h2 className="font-heading font-bold text-2xl text-navy-900 mb-3 hover:text-orange-500 transition-colors min-h-[4rem] flex items-start">
                       <Link to={res.link}>{res.title}</Link>
                     </h2>
 
-                    <p className="text-sm text-slate-600 leading-relaxed mb-8">
+                    <p className="text-sm text-slate-600 leading-relaxed mb-8 flex-1">
                       {res.description}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-4 border-t border-gray-100 mt-auto">
                     <Link
                       to={res.link}
                       className="inline-flex items-center gap-2 text-xs font-heading font-bold text-navy-900 hover:text-orange-500 transition-colors"

@@ -17,7 +17,8 @@
     "test": "npm run test --workspace=server && npm run test --workspace=client",
     "e2e": "npm run test --workspace=e2e",
     "check:links": "node scripts/check-links.mjs",
-    "audit:space": "node scripts/whitespace-audit.mjs"
+    "audit:space": "node scripts/whitespace-audit.mjs",
+    "test:layout": "node scripts/test-card-grid-regression.mjs"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

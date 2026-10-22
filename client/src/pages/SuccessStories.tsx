@@ -113,7 +113,7 @@ export const SuccessStories: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
               {filtered.map((story, idx) => (
                 <Scroll3DCard
                   key={story.slug}
@@ -121,7 +121,7 @@ export const SuccessStories: React.FC = () => {
                   maxTilt={5}
                   className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:border-orange-500/40 transition-colors"
                 >
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
                       <span className="font-bold text-blue-600">{story.company_type}</span>
                       <span className="flex items-center gap-1">
@@ -130,17 +130,17 @@ export const SuccessStories: React.FC = () => {
                       </span>
                     </div>
 
-                    <h2 className="font-heading font-bold text-lg text-navy-900 mb-1 hover:text-orange-500 transition-colors">
+                    <h2 className="font-heading font-bold text-lg text-navy-900 mb-1 hover:text-orange-500 transition-colors min-h-[1.75rem] flex items-start">
                       <Link to={`/success-stories/${story.slug}`}>{story.name}</Link>
                     </h2>
-                    <div className="text-xs font-semibold text-orange-600 mb-4">{story.role}</div>
+                    <div className="text-xs font-semibold text-orange-600 mb-4 min-h-[1.25rem] flex items-start">{story.role}</div>
 
-                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-6">
+                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-6 flex-1">
                       {story.situation}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
                     <Link
                       to={`/success-stories/${story.slug}`}
                       className="inline-flex items-center gap-1.5 text-xs font-heading font-bold text-navy-900 hover:text-orange-500 transition-colors"

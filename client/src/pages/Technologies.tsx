@@ -128,10 +128,10 @@ export const Technologies: React.FC = () => {
       {/* Grid of Tech Stacks */}
       <Scroll3DSection preset="lift" className="section-padding bg-gray-50">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {filtered.map((cat, idx) => (
               <Scroll3DCard key={cat.category} index={idx} maxTilt={5} className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between">
-                <div>
+                <div className="flex-1 flex flex-col">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center">
                       <cat.icon className="w-6 h-6" />
@@ -143,7 +143,7 @@ export const Technologies: React.FC = () => {
                   </div>
 
                   {/* Tech Pills */}
-                  <div className="mb-6">
+                  <div className="mb-6 flex-1">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Core Tools & Frameworks</span>
                     <div className="flex flex-wrap gap-2">
                       {cat.techs.map((t, tIdx) => (
@@ -155,7 +155,7 @@ export const Technologies: React.FC = () => {
                   </div>
 
                   {/* Roles We Fill */}
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-4 border-t border-gray-100 mb-6">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-3">Roles We Commonly Fill</span>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-700 font-medium">
                       {cat.roles.map((r, rIdx) => (
@@ -168,7 +168,7 @@ export const Technologies: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                   <button onClick={onOpenConsultation} className="text-xs font-bold text-orange-500 hover:underline cursor-pointer">
                     Submit profile for this track →
                   </button>

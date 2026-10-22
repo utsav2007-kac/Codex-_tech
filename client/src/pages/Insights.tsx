@@ -127,7 +127,7 @@ export const Insights: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
               {filtered.map((post, idx) => (
                 <Scroll3DCard
                   key={post.slug}
@@ -135,7 +135,7 @@ export const Insights: React.FC = () => {
                   maxTilt={6}
                   className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 hover:shadow-md transition-all flex flex-col justify-between"
                 >
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     <div className="flex items-center justify-between text-xs mb-3">
                       <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-bold text-[11px]">
                         {post.category}
@@ -146,16 +146,16 @@ export const Insights: React.FC = () => {
                       </span>
                     </div>
 
-                    <h2 className="font-heading font-bold text-xl text-navy-900 mb-3 hover:text-orange-500 transition-colors">
+                    <h2 className="font-heading font-bold text-xl text-navy-900 mb-3 hover:text-orange-500 transition-colors min-h-[3.25rem] flex items-start">
                       <Link to={`/insights/${post.slug}`}>{post.title}</Link>
                     </h2>
 
-                    <p className="text-xs text-slate-700 font-medium leading-relaxed mb-6 line-clamp-3">
+                    <p className="text-xs text-slate-700 font-medium leading-relaxed mb-6 line-clamp-3 flex-1">
                       {post.excerpt}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
                     <div className="text-[11px] text-slate-600 font-medium">
                       <span>By {post.author_name}</span>
                     </div>

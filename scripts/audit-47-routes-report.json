@@ -1,0 +1,1347 @@
+{
+  "totalRoutes": 47,
+  "routesWithCards": 35,
+  "routesWithoutCards": 12,
+  "totalCardGroupsMeasured": 158,
+  "passingGroups": 157,
+  "cardGroups": [
+    {
+      "route": "/",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "532, 550",
+      "diffPx": 18,
+      "status": "FAIL ❌"
+    },
+    {
+      "route": "/",
+      "section": "Wherever you are, there’s a next step.",
+      "cardsInRow": 4,
+      "heightsPx": "357, 357, 357, 357",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Technical Staffing with Integrity & Spee",
+      "cardsInRow": 2,
+      "heightsPx": "181, 181",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Technical Staffing with Integrity & Spee",
+      "cardsInRow": 2,
+      "heightsPx": "181, 181",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "End-to-End IT Services.",
+      "cardsInRow": 3,
+      "heightsPx": "226, 226, 226",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "End-to-End IT Services.",
+      "cardsInRow": 3,
+      "heightsPx": "226, 226, 226",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "End-to-End IT Services.",
+      "cardsInRow": 3,
+      "heightsPx": "226, 226, 226",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "The 3-Phase Acceleration Engine",
+      "cardsInRow": 3,
+      "heightsPx": "355, 355, 355",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Why Partner with Codex Tech-IT?",
+      "cardsInRow": 3,
+      "heightsPx": "197, 197, 197",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Featured Technical Openings.",
+      "cardsInRow": 4,
+      "heightsPx": "188, 188, 188, 188",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Recent Career Placements.",
+      "cardsInRow": 4,
+      "heightsPx": "162, 162, 162, 162",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Recent Career Placements.",
+      "cardsInRow": 4,
+      "heightsPx": "162, 162, 162, 162",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Simple, Transparent Career Plans.",
+      "cardsInRow": 3,
+      "heightsPx": "525, 525, 525",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Candidate & Employer Perspectives.",
+      "cardsInRow": 3,
+      "heightsPx": "214, 214, 214",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Candidate & Employer Perspectives.",
+      "cardsInRow": 3,
+      "heightsPx": "214, 214, 214",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Latest Hiring Insights.",
+      "cardsInRow": 3,
+      "heightsPx": "235, 235, 235",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "73, 73",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "73, 73",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Our 4 Foundational Pillars.",
+      "cardsInRow": 4,
+      "heightsPx": "279, 279, 279, 279",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "The Codex Trajectory.",
+      "cardsInRow": 4,
+      "heightsPx": "44, 44, 44, 44",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "The Codex Trajectory.",
+      "cardsInRow": 4,
+      "heightsPx": "246, 246, 246, 246",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Veterans of Engineering & Staffing.",
+      "cardsInRow": 4,
+      "heightsPx": "342, 342, 342, 342",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Headquartered in Texas. Operating Global",
+      "cardsInRow": 2,
+      "heightsPx": "79, 79",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/about",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services",
+      "section": "Job Placement",
+      "cardsInRow": 3,
+      "heightsPx": "225, 225, 225",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services",
+      "section": "Job Placement",
+      "cardsInRow": 3,
+      "heightsPx": "225, 225, 225",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services",
+      "section": "Job Placement",
+      "cardsInRow": 3,
+      "heightsPx": "242, 242, 242",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/technologies",
+      "section": "Backend & Microservices",
+      "cardsInRow": 2,
+      "heightsPx": "361, 361",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/technologies",
+      "section": "Backend & Microservices",
+      "cardsInRow": 2,
+      "heightsPx": "361, 361",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/technologies",
+      "section": "Backend & Microservices",
+      "cardsInRow": 2,
+      "heightsPx": "376, 376",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/technologies",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/technologies",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/plans",
+      "section": "US Career Ready",
+      "cardsInRow": 3,
+      "heightsPx": "631, 631, 631",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/plans",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/plans",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "100, 100",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers",
+      "section": "How We Land You In 18 Days.",
+      "cardsInRow": 4,
+      "heightsPx": "228, 228, 228, 228",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers",
+      "section": "Comprehensive Support For Engineers.",
+      "cardsInRow": 4,
+      "heightsPx": "267, 267, 267, 267",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories",
+      "section": "Alex Chen",
+      "cardsInRow": 3,
+      "heightsPx": "249, 249, 249",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories",
+      "section": "Alex Chen",
+      "cardsInRow": 3,
+      "heightsPx": "249, 249, 249",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories",
+      "section": "Alex Chen",
+      "cardsInRow": 2,
+      "heightsPx": "249, 249",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/live-placements",
+      "section": "QA Automation Lead",
+      "cardsInRow": 3,
+      "heightsPx": "229, 229, 229",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/live-placements",
+      "section": "QA Automation Lead",
+      "cardsInRow": 3,
+      "heightsPx": "236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/live-placements",
+      "section": "QA Automation Lead",
+      "cardsInRow": 3,
+      "heightsPx": "229, 229, 229",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/live-placements",
+      "section": "QA Automation Lead",
+      "cardsInRow": 3,
+      "heightsPx": "229, 229, 229",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/live-placements",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/live-placements",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Three Straightforward Steps",
+      "cardsInRow": 3,
+      "heightsPx": "217, 217, 217",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Transparent Placement Payouts",
+      "cardsInRow": 3,
+      "heightsPx": "230, 230, 230",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Refer a Colleague Today",
+      "cardsInRow": 3,
+      "heightsPx": "58, 58, 58",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Refer a Colleague Today",
+      "cardsInRow": 2,
+      "heightsPx": "58, 58",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Refer a Colleague Today",
+      "cardsInRow": 2,
+      "heightsPx": "58, 58",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refer-earn",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "78, 78",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "78, 78",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources",
+      "section": "2026 Tech Salary & Compensation Guide",
+      "cardsInRow": 2,
+      "heightsPx": "333, 333",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources",
+      "section": "2026 Tech Salary & Compensation Guide",
+      "cardsInRow": 2,
+      "heightsPx": "333, 333",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights",
+      "section": "How to Choose the Right IT Talent Acquis",
+      "cardsInRow": 3,
+      "heightsPx": "307, 307, 307",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights",
+      "section": "How to Choose the Right IT Talent Acquis",
+      "cardsInRow": 3,
+      "heightsPx": "307, 307, 307",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights",
+      "section": "How to Choose the Right IT Talent Acquis",
+      "cardsInRow": 2,
+      "heightsPx": "282, 282",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/contact",
+      "section": "Global Offices",
+      "cardsInRow": 2,
+      "heightsPx": "61, 61",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/contact",
+      "section": "Global Offices",
+      "cardsInRow": 2,
+      "heightsPx": "61, 61",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/contact",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/contact",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/job-placement",
+      "section": "How the Process Works.",
+      "cardsInRow": 5,
+      "heightsPx": "237, 237, 237, 237, 237",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/job-placement",
+      "section": "Core Benefits & Advantages.",
+      "cardsInRow": 4,
+      "heightsPx": "191, 191, 191, 191",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/job-placement",
+      "section": "Card Grid",
+      "cardsInRow": 3,
+      "heightsPx": "117, 117, 117",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/job-placement",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/job-placement",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/it-training/cloud-aws-azure",
+      "section": "Tools & Technologies Mastered",
+      "cardsInRow": 3,
+      "heightsPx": "66, 66, 66",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/it-training/cloud-aws-azure",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/services/it-training/cloud-aws-azure",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers/senior-technical-recruiter",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "100, 100",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers/senior-technical-recruiter",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/careers/senior-technical-recruiter",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories/priya-sharma-f1-opt-fintech",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/success-stories/priya-sharma-f1-opt-fintech",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights/ats-proof-resume-12-fixes",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/insights/ats-proof-resume-12-fixes",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/faq",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/faq",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/salary-guide",
+      "section": "What's Inside the 2026 Guide",
+      "cardsInRow": 2,
+      "heightsPx": "98, 98",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/salary-guide",
+      "section": "What's Inside the 2026 Guide",
+      "cardsInRow": 2,
+      "heightsPx": "98, 98",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/salary-guide",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/salary-guide",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/resume-templates",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/resume-templates",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/interview-question-bank",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/interview-question-bank",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/webinars",
+      "section": "Upcoming Webinars",
+      "cardsInRow": 2,
+      "heightsPx": "316, 316",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/webinars",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/resources/webinars",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/privacy-policy",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/privacy-policy",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/terms-and-conditions",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/terms-and-conditions",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/cookie-policy",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/cookie-policy",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refund-policy",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/refund-policy",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/accessibility-statement",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/accessibility-statement",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/thank-you",
+      "section": "What Happens Next?",
+      "cardsInRow": 3,
+      "heightsPx": "216, 216, 216",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/thank-you",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/thank-you",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/components",
+      "section": "Card Grid",
+      "cardsInRow": 3,
+      "heightsPx": "114, 114, 114",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/components",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/components",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "188, 188",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "188, 188",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "188, 188",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "198, 198",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "179, 179",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "179, 179",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "179, 179",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "198, 198",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "198, 198",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "179, 179",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/dev/motion",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/404-test-page",
+      "section": "Where would you like to go next?",
+      "cardsInRow": 2,
+      "heightsPx": "82, 82",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/404-test-page",
+      "section": "Where would you like to go next?",
+      "cardsInRow": 2,
+      "heightsPx": "82, 82",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/404-test-page",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/404-test-page",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "73, 73",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Card Grid",
+      "cardsInRow": 2,
+      "heightsPx": "73, 73",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Our 4 Foundational Pillars.",
+      "cardsInRow": 4,
+      "heightsPx": "279, 279, 279, 279",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "The Codex Trajectory.",
+      "cardsInRow": 4,
+      "heightsPx": "44, 44, 44, 44",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "The Codex Trajectory.",
+      "cardsInRow": 4,
+      "heightsPx": "246, 246, 246, 246",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Veterans of Engineering & Staffing.",
+      "cardsInRow": 4,
+      "heightsPx": "342, 342, 342, 342",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Headquartered in Texas. Operating Global",
+      "cardsInRow": 2,
+      "heightsPx": "79, 79",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/how-it-works",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/employers",
+      "section": "Global Offices",
+      "cardsInRow": 2,
+      "heightsPx": "61, 61",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/employers",
+      "section": "Global Offices",
+      "cardsInRow": 2,
+      "heightsPx": "61, 61",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/employers",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/employers",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/tools",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/tools",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/industries",
+      "section": "Job Placement",
+      "cardsInRow": 3,
+      "heightsPx": "225, 225, 225",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/industries",
+      "section": "Job Placement",
+      "cardsInRow": 3,
+      "heightsPx": "225, 225, 225",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/industries",
+      "section": "Job Placement",
+      "cardsInRow": 3,
+      "heightsPx": "242, 242, 242",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/industries",
+      "section": "Footer Newsletter & Brand Grid",
+      "cardsInRow": 2,
+      "heightsPx": "196, 196",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    },
+    {
+      "route": "/industries",
+      "section": "Footer Navigation Sitemapped Columns",
+      "cardsInRow": 5,
+      "heightsPx": "236, 236, 236, 236, 236",
+      "diffPx": 0,
+      "status": "PASS ✅"
+    }
+  ],
+  "routesWithoutCardGroups": [
+    {
+      "path": "/admin/login",
+      "name": "Admin Login",
+      "type": "Admin Auth",
+      "reason": "Single centered login authentication box"
+    },
+    {
+      "path": "/admin",
+      "name": "Admin Dashboard",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/submissions",
+      "name": "Admin Submissions",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/leads",
+      "name": "Admin Leads",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/contacts",
+      "name": "Admin Contacts",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/employer-requests",
+      "name": "Admin Employer Requests",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/applications",
+      "name": "Admin Applications",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/referrals",
+      "name": "Admin Referrals",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/subscribers",
+      "name": "Admin Subscribers",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/enrollments",
+      "name": "Admin Enrollments",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/content",
+      "name": "Admin Content Editor",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    },
+    {
+      "path": "/admin/settings",
+      "name": "Admin Settings",
+      "type": "Admin Suite",
+      "reason": "Single column layout or form"
+    }
+  ]
+}

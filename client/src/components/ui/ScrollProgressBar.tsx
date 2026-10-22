@@ -43,9 +43,9 @@ export const ScrollProgressBar: React.FC = () => {
         />
       </div>
 
-      {/* 2. Subtle Desktop Section Rail Indicator (Right Margin on XL displays) */}
+      {/* 2. Subtle Desktop Section Rail Indicator (Visible on 1280px+ displays with safe right margin in container-custom) */}
       <nav
-        className="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-3 z-30 pointer-events-none"
+        className="hidden xl:flex fixed right-3 xl:right-4 2xl:right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-3 z-30 pointer-events-none"
         aria-label="Page scroll position"
       >
         {[0, 1, 2, 3, 4].map((idx) => (

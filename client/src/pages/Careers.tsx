@@ -461,19 +461,19 @@ export const Careers: React.FC = () => {
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {workflowSteps.map((step, idx) => (
               <Scroll3DCard
                 key={idx}
                 index={idx}
-                className="p-6 rounded-3xl bg-slate-50 border border-gray-200/80 relative flex flex-col justify-between"
+                className="p-6 rounded-3xl bg-slate-50 border border-gray-200/80 relative flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-shadow"
               >
-                <div>
-                  <div className="w-10 h-10 rounded-2xl bg-orange-500 text-white font-bold font-mono text-sm flex items-center justify-center mb-5 shadow-sm">
+                <div className="flex-1 flex flex-col">
+                  <div className="w-10 h-10 rounded-2xl bg-orange-500 text-white font-bold font-mono text-sm flex items-center justify-center mb-5 shadow-sm shrink-0">
                     {step.num}
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{step.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{step.desc}</p>
+                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">{step.title}</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">{step.desc}</p>
                 </div>
               </Scroll3DCard>
             ))}
@@ -489,26 +489,26 @@ export const Careers: React.FC = () => {
             <h2 className="text-h2 text-navy-900 mb-3">
               Comprehensive Support For <span className="text-brand-gradient">Engineers.</span>
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-600 text-sm sm:text-base">
               We advocate for competitive packages and continuous career advancement.
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {perks.map((p, i) => {
               const Icon = p.icon;
               return (
                 <Scroll3DCard
                   key={i}
                   index={i}
-                  className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between"
+                  className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between h-full hover:shadow-md transition-shadow"
                 >
-                  <div>
-                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-5">
+                  <div className="flex-1 flex flex-col">
+                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-5 shrink-0">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{p.title}</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">{p.desc}</p>
+                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[3rem] flex items-start">{p.title}</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">{p.desc}</p>
                   </div>
                 </Scroll3DCard>
               );

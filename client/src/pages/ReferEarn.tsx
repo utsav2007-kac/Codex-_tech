@@ -138,12 +138,12 @@ export const ReferEarn: React.FC = () => {
             <h2 className="text-h2 text-navy-900">Three Straightforward Steps</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {steps.map((s) => (
-              <div key={s.num} className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm relative">
+              <div key={s.num} className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm relative flex flex-col h-full">
                 <div className="text-4xl font-heading font-extrabold text-orange-500/20 mb-4">{s.num}</div>
-                <h3 className="font-heading font-bold text-lg text-navy-900 mb-2">{s.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+                <h3 className="font-heading font-bold text-lg text-navy-900 mb-2 min-h-[1.75rem] flex items-start">{s.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed flex-1">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -158,18 +158,18 @@ export const ReferEarn: React.FC = () => {
             <h2 className="text-h2 text-navy-900">Transparent Placement Payouts</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {tiers.map((tier, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 transition-colors flex flex-col justify-between"
+                className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 transition-colors flex flex-col justify-between h-full"
               >
-                <div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{tier.level}</h3>
+                <div className="flex-1 flex flex-col">
+                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[1.5rem] flex items-start">{tier.level}</h3>
                   <div className="text-3xl font-heading font-extrabold text-orange-500 mb-4">{tier.reward}</div>
-                  <p className="text-xs text-slate-500 leading-relaxed mb-6">{tier.description}</p>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-6 flex-1">{tier.description}</p>
                 </div>
-                <div className="text-[11px] text-slate-400 font-medium">Direct ACH or wire payout upon qualification</div>
+                <div className="text-[11px] text-slate-400 font-medium mt-auto">Direct ACH or wire payout upon qualification</div>
               </div>
             ))}
           </div>
