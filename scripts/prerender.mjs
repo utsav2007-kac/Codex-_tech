@@ -1,8 +1,13 @@
 import { createServer } from 'vite';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const DIST_DIR = 'd:/web devlopment/client/dist';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.resolve(__dirname, '..');
+const CLIENT_DIR = path.join(ROOT_DIR, 'client');
+const DIST_DIR = path.join(CLIENT_DIR, 'dist');
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html');
 
 async function prerender() {
@@ -28,7 +33,7 @@ async function prerender() {
 
   // Create temporary Vite server for SSR execution of real React components
   const vite = await createServer({
-    root: 'd:/web devlopment/client',
+    root: CLIENT_DIR,
     server: { middlewareMode: true },
     appType: 'custom',
   });
@@ -44,8 +49,11 @@ async function prerender() {
   }
 
   // Copy 3D monogram image assets to dist/assets
-  const publicAssetsDir = 'd:/web devlopment/client/public/assets';
+  const publicAssetsDir = path.join(CLIENT_DIR, 'public', 'assets');
   const distAssetsDir = path.join(DIST_DIR, 'assets');
+  if (!fs.existsSync(distAssetsDir)) {
+    fs.mkdirSync(distAssetsDir, { recursive: true });
+  }
   if (fs.existsSync(path.join(publicAssetsDir, 'codex-3d-monogram.webp'))) {
     fs.copyFileSync(path.join(publicAssetsDir, 'codex-3d-monogram.webp'), path.join(distAssetsDir, 'codex-3d-monogram.webp'));
   }

@@ -1,8 +1,14 @@
 import { createServer } from 'vite';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const CLIENT_DIR = path.resolve(__dirname, '../client');
 
 async function testSSR() {
   const vite = await createServer({
-    root: 'd:/web devlopment/client',
+    root: CLIENT_DIR,
     server: { middlewareMode: true },
     appType: 'custom',
   });
