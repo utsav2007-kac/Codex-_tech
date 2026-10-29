@@ -1,0 +1,210 @@
+{
+  "timestamp": "2026-10-29T05:50:09.700Z",
+  "tests": {
+    "1.1_home_chart": {
+      "passed": true,
+      "chartFound": true,
+      "isRightAfterTimelineAndBeforeReviews": true,
+      "timelineIndex": 5,
+      "chartIndex": 6,
+      "reviewsIndex": -1,
+      "tabs": [
+        "Placement Rate by Track",
+        "Compensation Ranges",
+        "Interview Velocity"
+      ],
+      "badges": [
+        "Offer Acceptance Rate by Technical PracticePercentage of actively coached candidates securing offers within 60 days.Sample dataCloud Solutions & AWS Architecture94%DevOps, SRE & Kubernetes91%Full Stack Java / Node.js89%Data & AI / Snowflake Engineering87%QA & Test Automation (Playwright)85%Codex Tech-IT Engineering Placement and Compensation BenchmarksTechnical PracticePlacement Rate (%)Base Salary Range (USD)Cloud Solutions & AWS Architecture94%$145,000 - $175,000DevOps, SRE & Kubernetes91%$135,000 - $170,000Full Stack Java / Node.js89%$130,000 - $160,000Data & AI / Snowflake Engineering87%$135,000 - $165,000QA & Test Automation (Playwright)85%$110,000 - $140,000",
+        "Sample data"
+      ],
+      "headings": []
+    },
+    "1.2_toolbar_buttons": {
+      "passed": true,
+      "forbiddenFound": [],
+      "verifiedBadgesCount": 0
+    },
+    "1.3_light_colors": {
+      "passed": true,
+      "darkSectionsCount": 0,
+      "isCenterCardDark": false,
+      "sectionLuminances": [
+        {
+          "idx": 0,
+          "tag": "SECTION",
+          "className": "hero-section relative pt-[calc(var(--nav-h)+var(--",
+          "bg": "rgba(0, 0, 0, 0)",
+          "lum": 1,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 1,
+          "tag": "SECTION",
+          "className": "relative overflow-hidden bg-slate-50/70 border-b b",
+          "bg": "rgba(248, 250, 252, 0.7)",
+          "lum": 0.9535594780808019,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 2,
+          "tag": "SECTION",
+          "className": "section-padding bg-white border-b border-gray-200/",
+          "bg": "rgb(255, 255, 255)",
+          "lum": 1,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 3,
+          "tag": "SECTION",
+          "className": "section-padding bg-slate-50/60 border-b border-gra",
+          "bg": "rgba(248, 250, 252, 0.6)",
+          "lum": 0.9535594780808019,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 4,
+          "tag": "SECTION",
+          "className": "section-padding bg-white border-b border-gray-200/",
+          "bg": "rgb(255, 255, 255)",
+          "lum": 1,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 5,
+          "tag": "SECTION",
+          "className": "section-padding bg-slate-50/70 border-b border-gra",
+          "bg": "rgba(248, 250, 252, 0.7)",
+          "lum": 0.9535594780808019,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 6,
+          "tag": "SECTION",
+          "className": "section-padding bg-white border-b border-gray-200/",
+          "bg": "rgb(255, 255, 255)",
+          "lum": 1,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 7,
+          "tag": "SECTION",
+          "className": "relative w-full bg-[#F25C2A] text-[#0F172A] overfl",
+          "bg": "rgb(242, 92, 42)",
+          "lum": 0.26698705114982263,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 8,
+          "tag": "SECTION",
+          "className": "section-padding bg-white border-b border-gray-200/",
+          "bg": "rgb(255, 255, 255)",
+          "lum": 1,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 9,
+          "tag": "SECTION",
+          "className": "section-padding bg-white border-b border-[#E2E8F0]",
+          "bg": "rgb(255, 255, 255)",
+          "lum": 1,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 10,
+          "tag": "SECTION",
+          "className": "py-20 bg-[#F8FAFC] border-b border-[#E2E8F0] relat",
+          "bg": "rgb(248, 250, 252)",
+          "lum": 0.9535594780808019,
+          "isDarkNavy": false
+        },
+        {
+          "idx": 11,
+          "tag": "SECTION",
+          "className": "py-20 bg-gradient-to-r from-[#FFF7ED] via-[#FFF4D6",
+          "bg": "rgba(0, 0, 0, 0)",
+          "lum": 1,
+          "isDarkNavy": false
+        }
+      ],
+      "centerCardBg": "rgba(0, 0, 0, 0)",
+      "navStyles": {
+        "bg": "rgba(0, 0, 0, 0)",
+        "backdropFilter": "none",
+        "position": "fixed"
+      }
+    },
+    "1.4_faq_section": {
+      "passed": true,
+      "headingText": "Frequently Asked Questions",
+      "headingAlignment": "center",
+      "tabsFound": [
+        "All Questions",
+        "Candidates",
+        "Employers",
+        "Process"
+      ],
+      "hasSearchInput": true,
+      "itemCount": 12,
+      "isFirstItemOpenByDefault": true,
+      "hasFaqPageJsonLd": true
+    },
+    "home_blog_teaser": {
+      "passed": true,
+      "found": true,
+      "cardCount": 3,
+      "titles": [
+        "The 2026 Engineer's Guide to Beating ATS Resumes: Parser Algorithms, Keyword Calibration, and Formatting Traps",
+        "Deconstructing the Senior System Design Interview: A Principal Engineer's 45-Minute Blueprint",
+        "Contract-to-Hire vs. Direct-Hire in US Tech: Compensation, Conversion Realities, and Career Risk"
+      ]
+    },
+    "1.5_blog_listing": {
+      "passed": true,
+      "status": 200,
+      "title": "Blogs | Codex Tech-IT",
+      "h1": "Blogs",
+      "hasRecentSection": true,
+      "allBlogsCountLabel": "(12 total)",
+      "totalCardsRendered": 8,
+      "hasSearchInput": true
+    },
+    "1.5_blog_detail": {
+      "passed": true,
+      "title": "The 2026 Engineer's Guide to Beating ATS Resumes: Parser Algorithms, Keyword Calibration, and Formatting Traps | Codex Tech-IT",
+      "h1": "The 2026 Engineer's Guide to Beating ATS Resumes: Parser Algorithms, Keyword Calibration, and Formatting Traps",
+      "hasCover": true,
+      "coverSrc": "/assets/blog/blog-1.webp",
+      "tocLinksCount": 15,
+      "tocLinks": [
+        "Understanding the Mechanical Pipeline of Modern Parsing Engines",
+        "The Anatomy of Automated Document Filtering",
+        "Major ATS Platforms Compared: Ingestion Behavior and Tolerances",
+        "Critical Formatting Traps That Sabotage Parsing Accuracy",
+        "1. Multi-Column Geometries and Text Boxes"
+      ],
+      "hasAuthor": true,
+      "canonical": "https://codextechit.com/blog/ats-resume-optimization-guide-2026",
+      "codeBlockStyles": null,
+      "hasBlogPostingSchema": true,
+      "hasBreadcrumbSchema": true,
+      "hasFaqPageSchema": true
+    },
+    "insights_independent": {
+      "passed": true,
+      "title": "Technical Career Insights & Hiring Strategies | Codex Tech-IT | Codex Tech-IT",
+      "h1": "Engineering Careers & Hiring Intelligence."
+    }
+  },
+  "measurements": {},
+  "screenshots": {
+    "hero": "D:\\web devlopment\\scripts\\screenshots\\phase1\\01_home_hero_light.png",
+    "chart": "D:\\web devlopment\\scripts\\screenshots\\phase1\\02_home_chart_section.png",
+    "faq": "D:\\web devlopment\\scripts\\screenshots\\phase1\\05_faq_section_interactive.png",
+    "faqMobile": "D:\\web devlopment\\scripts\\screenshots\\phase1\\06_faq_mobile_390px.png",
+    "teaser": "D:\\web devlopment\\scripts\\screenshots\\phase1\\07_home_blog_teaser.png",
+    "closingCta": "D:\\web devlopment\\scripts\\screenshots\\phase1\\08_closing_cta_light.png",
+    "blogList": "D:\\web devlopment\\scripts\\screenshots\\phase1\\09_blog_listing_page.png",
+    "blogDetail": "D:\\web devlopment\\scripts\\screenshots\\phase1\\10_blog_detail_page.png",
+    "insights": "D:\\web devlopment\\scripts\\screenshots\\phase1\\11_insights_independent_page.png"
+  }
+}

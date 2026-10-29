@@ -68,13 +68,23 @@ export const Button: React.FC<ButtonProps> = ({
   const combinedClass = `${baseStyles} ${sizeStyles} ${variantStyles} ${className}`;
 
   if (href) {
-    if (isExternal) {
+    if (isExternal || href.startsWith('http') || href.startsWith('#')) {
       return (
         <a
           href={href}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={isExternal || href.startsWith('http') ? '_blank' : undefined}
+          rel={isExternal || href.startsWith('http') ? 'noopener noreferrer' : undefined}
           className={combinedClass}
+          onClick={(e) => {
+            if (href.startsWith('#')) {
+              e.preventDefault();
+              const target = document.querySelector(href);
+              if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+            onClick?.(e as any);
+          }}
           onMouseDown={handlePointerDown}
         >
           {children}
@@ -83,7 +93,7 @@ export const Button: React.FC<ButtonProps> = ({
       );
     }
     return (
-      <Link to={href} className={combinedClass} onMouseDown={handlePointerDown}>
+      <Link to={href} className={combinedClass} onClick={onClick as any} onMouseDown={handlePointerDown}>
         {children}
         {rippleElements}
       </Link>

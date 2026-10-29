@@ -80,6 +80,8 @@ export const adminController = {
         totalSubscribers,
         totalEnrollments,
         totalStories,
+        totalLivePlacements,
+        totalReferrals,
       ] = await Promise.all([
         prisma.lead.count(),
         prisma.lead.count({ where: { status: 'NEW' } }),
@@ -89,15 +91,17 @@ export const adminController = {
         prisma.subscriber.count({ where: { is_active: true } }),
         prisma.enrollment.count(),
         prisma.successStory.count(),
+        prisma.livePlacement.count(),
+        prisma.referral.count(),
       ]);
 
       const recentLeads = await prisma.lead.findMany({
-        take: 5,
+        take: 6,
         orderBy: { created_at: 'desc' },
       });
 
       const recentApplications = await prisma.application.findMany({
-        take: 5,
+        take: 6,
         orderBy: { created_at: 'desc' },
         include: { job: { select: { title: true } } },
       });
@@ -114,7 +118,19 @@ export const adminController = {
             totalSubscribers,
             totalEnrollments,
             totalStories,
+            totalLivePlacements,
+            totalReferrals,
           },
+          leads: totalLeads,
+          new_leads: newLeads,
+          contacts: totalContacts,
+          employer_requests: totalEmployerRequests,
+          applications: totalApplications,
+          subscribers: totalSubscribers,
+          enrollments: totalEnrollments,
+          stories: totalStories,
+          live_placements: totalLivePlacements,
+          referrals: totalReferrals,
           recentLeads,
           recentApplications,
         },
@@ -212,6 +228,14 @@ export const adminController = {
         case 'enrollments':
           updated = await prisma.enrollment.update({ where: { id: parsedId }, data: { status } });
           break;
+        case 'subscribers': {
+          const isActive = status === 'ACTIVE' || status === 'true' || status === true;
+          updated = await prisma.subscriber.update({
+            where: { id: parsedId },
+            data: { is_active: isActive },
+          });
+          break;
+        }
         default:
           return res.status(400).json({ success: false, error: { code: 'INVALID_TYPE', message: 'Unsupported type' } });
       }
@@ -284,8 +308,14 @@ export const adminController = {
         case 'applications':
           rows = await prisma.application.findMany({ orderBy: { created_at: 'desc' } });
           break;
+        case 'referrals':
+          rows = await prisma.referral.findMany({ orderBy: { created_at: 'desc' } });
+          break;
         case 'subscribers':
           rows = await prisma.subscriber.findMany({ orderBy: { created_at: 'desc' } });
+          break;
+        case 'enrollments':
+          rows = await prisma.enrollment.findMany({ orderBy: { created_at: 'desc' } });
           break;
         default:
           return res.status(400).send('Invalid export type');
@@ -340,7 +370,32 @@ export const adminController = {
   async getSettings(req: AuthRequest, res: Response, next: NextFunction) {
     try {
       const settings = await prisma.siteSetting.findMany();
-      res.json({ success: true, data: settings });
+      const mapped: Record<string, any> = {};
+      settings.forEach((s) => {
+        mapped[s.key] = s.value;
+      });
+
+      const general = mapped['general'] || {};
+      const stats = mapped['stats'] || {};
+      const socials = mapped['socials'] || {};
+
+      res.json({
+        success: true,
+        data: {
+          ...general,
+          site_name: general.site_name || 'Codex Tech-IT',
+          tagline: general.tagline || 'We Deliver Jobs Faster',
+          notify_email: general.notify_email || general.careers_email || 'admin@codextechit.com',
+          primary_email: general.primary_email || 'contact@codextechit.com',
+          phone_usa: general.primary_phone || '+1 (469) 555-0198',
+          phone_india: general.phone_india || '+91 40 6789 0123',
+          announcement: general.announcement || '',
+          general,
+          stats,
+          socials,
+          raw: settings,
+        },
+      });
     } catch (err) {
       next(err);
     }
@@ -349,11 +404,300 @@ export const adminController = {
   async updateSettings(req: AuthRequest, res: Response, next: NextFunction) {
     try {
       const { key, value } = req.body;
-      const updated = await prisma.siteSetting.upsert({
-        where: { key },
-        update: { value },
-        create: { key, value },
+
+      if (key && value !== undefined) {
+        const updated = await prisma.siteSetting.upsert({
+          where: { key },
+          update: { value },
+          create: { key, value },
+        });
+        return res.json({ success: true, data: updated });
+      }
+
+      // Handle general multi-field update payload
+      const generalRow = await prisma.siteSetting.findUnique({ where: { key: 'general' } });
+      const currentGeneral = (generalRow?.value as Record<string, any>) || {};
+
+      const newGeneral = {
+        ...currentGeneral,
+        site_name: req.body.site_name ?? currentGeneral.site_name ?? 'Codex Tech-IT',
+        tagline: req.body.tagline ?? currentGeneral.tagline ?? 'We Deliver Jobs Faster',
+        primary_phone: req.body.phone_usa ?? currentGeneral.primary_phone ?? '+1 (469) 555-0198',
+        phone_usa: req.body.phone_usa ?? currentGeneral.phone_usa ?? '+1 (469) 555-0198',
+        phone_india: req.body.phone_india ?? currentGeneral.phone_india ?? '+91 40 6789 0123',
+        notify_email: req.body.notify_email ?? currentGeneral.notify_email ?? 'admin@codextechit.com',
+        primary_email: req.body.primary_email ?? currentGeneral.primary_email ?? 'contact@codextechit.com',
+        careers_email: req.body.careers_email ?? req.body.notify_email ?? currentGeneral.careers_email,
+        announcement: req.body.announcement ?? currentGeneral.announcement,
+      };
+
+      const updatedGeneral = await prisma.siteSetting.upsert({
+        where: { key: 'general' },
+        update: { value: newGeneral },
+        create: { key: 'general', value: newGeneral },
       });
+
+      // Update socials if provided
+      if (req.body.socials) {
+        await prisma.siteSetting.upsert({
+          where: { key: 'socials' },
+          update: { value: req.body.socials },
+          create: { key: 'socials', value: req.body.socials },
+        });
+      }
+
+      // Update stats if provided
+      if (req.body.stats) {
+        await prisma.siteSetting.upsert({
+          where: { key: 'stats' },
+          update: { value: req.body.stats },
+          create: { key: 'stats', value: req.body.stats },
+        });
+      }
+
+      return res.json({
+        success: true,
+        data: {
+          ...newGeneral,
+          general: updatedGeneral.value,
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  // Create Content Item
+  async createContentItem(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const { model } = req.params;
+      const data = req.body;
+      let created;
+
+      switch (model) {
+        case 'jobs': {
+          const slug = data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') + `-${Date.now().toString().slice(-4)}`;
+          created = await prisma.jobOpening.create({
+            data: {
+              slug,
+              title: data.title,
+              department: data.department || 'Engineering',
+              location: data.location || 'Remote, US',
+              type: data.type || 'Full-time',
+              description: data.description || '',
+              requirements: data.requirements || '',
+              is_active: data.is_active !== undefined ? Boolean(data.is_active) : true,
+            },
+          });
+          break;
+        }
+        case 'stories': {
+          const slug = data.slug || data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') + `-${Date.now().toString().slice(-4)}`;
+          created = await prisma.successStory.create({
+            data: {
+              slug,
+              name: data.name,
+              role: data.role || 'Software Engineer',
+              company_type: data.company_type || 'Fortune 500 Enterprise',
+              location: data.location || 'USA',
+              situation: data.situation || '',
+              approach: data.approach || '',
+              results: data.results || '',
+              is_sample: false,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : true,
+            },
+          });
+          break;
+        }
+        case 'live-placements': {
+          created = await prisma.livePlacement.create({
+            data: {
+              role: data.role,
+              company_type: data.company_type || 'Tech Enterprise',
+              location: data.location || 'Remote, US',
+              package_range: data.package_range || '$110k - $130k',
+              summary: data.summary || '',
+              is_sample: false,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : true,
+            },
+          });
+          break;
+        }
+        case 'faqs': {
+          created = await prisma.faq.create({
+            data: {
+              category: data.category || 'General',
+              question: data.question,
+              answer: data.answer,
+              sort_order: data.sort_order ? parseInt(data.sort_order, 10) : 0,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : true,
+            },
+          });
+          break;
+        }
+        case 'testimonials': {
+          created = await prisma.testimonial.create({
+            data: {
+              name: data.name,
+              role: data.role || 'Alumni / Placed Candidate',
+              quote: data.quote,
+              is_sample: false,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : true,
+            },
+          });
+          break;
+        }
+        default:
+          return res.status(400).json({ success: false, error: { code: 'INVALID_MODEL', message: 'Unknown content model' } });
+      }
+
+      res.status(201).json({ success: true, data: created });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  // Update Content Item
+  async updateContentItem(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const { model, id } = req.params;
+      const parsedId = parseInt(id, 10);
+      const data = req.body;
+      let updated;
+
+      switch (model) {
+        case 'jobs':
+          updated = await prisma.jobOpening.update({
+            where: { id: parsedId },
+            data: {
+              title: data.title,
+              department: data.department,
+              location: data.location,
+              type: data.type,
+              description: data.description,
+              requirements: data.requirements,
+              is_active: data.is_active !== undefined ? Boolean(data.is_active) : undefined,
+            },
+          });
+          break;
+        case 'stories':
+          updated = await prisma.successStory.update({
+            where: { id: parsedId },
+            data: {
+              name: data.name,
+              role: data.role,
+              company_type: data.company_type,
+              location: data.location,
+              situation: data.situation,
+              approach: data.approach,
+              results: data.results,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : undefined,
+            },
+          });
+          break;
+        case 'live-placements':
+          updated = await prisma.livePlacement.update({
+            where: { id: parsedId },
+            data: {
+              role: data.role,
+              company_type: data.company_type,
+              location: data.location,
+              package_range: data.package_range,
+              summary: data.summary,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : undefined,
+            },
+          });
+          break;
+        case 'faqs':
+          updated = await prisma.faq.update({
+            where: { id: parsedId },
+            data: {
+              category: data.category,
+              question: data.question,
+              answer: data.answer,
+              sort_order: data.sort_order !== undefined ? parseInt(data.sort_order, 10) : undefined,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : undefined,
+            },
+          });
+          break;
+        case 'testimonials':
+          updated = await prisma.testimonial.update({
+            where: { id: parsedId },
+            data: {
+              name: data.name,
+              role: data.role,
+              quote: data.quote,
+              is_published: data.is_published !== undefined ? Boolean(data.is_published) : undefined,
+            },
+          });
+          break;
+        default:
+          return res.status(400).json({ success: false, error: { code: 'INVALID_MODEL', message: 'Unknown content model' } });
+      }
+
+      res.json({ success: true, data: updated });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  // Toggle Content Status (Active/Published)
+  async toggleContentStatus(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const { model, id } = req.params;
+      const parsedId = parseInt(id, 10);
+      let updated;
+
+      switch (model) {
+        case 'jobs': {
+          const item = await prisma.jobOpening.findUnique({ where: { id: parsedId } });
+          if (!item) return res.status(404).json({ success: false, error: { message: 'Item not found' } });
+          updated = await prisma.jobOpening.update({
+            where: { id: parsedId },
+            data: { is_active: !item.is_active },
+          });
+          break;
+        }
+        case 'stories': {
+          const item = await prisma.successStory.findUnique({ where: { id: parsedId } });
+          if (!item) return res.status(404).json({ success: false, error: { message: 'Item not found' } });
+          updated = await prisma.successStory.update({
+            where: { id: parsedId },
+            data: { is_published: !item.is_published },
+          });
+          break;
+        }
+        case 'live-placements': {
+          const item = await prisma.livePlacement.findUnique({ where: { id: parsedId } });
+          if (!item) return res.status(404).json({ success: false, error: { message: 'Item not found' } });
+          updated = await prisma.livePlacement.update({
+            where: { id: parsedId },
+            data: { is_published: !item.is_published },
+          });
+          break;
+        }
+        case 'faqs': {
+          const item = await prisma.faq.findUnique({ where: { id: parsedId } });
+          if (!item) return res.status(404).json({ success: false, error: { message: 'Item not found' } });
+          updated = await prisma.faq.update({
+            where: { id: parsedId },
+            data: { is_published: !item.is_published },
+          });
+          break;
+        }
+        case 'testimonials': {
+          const item = await prisma.testimonial.findUnique({ where: { id: parsedId } });
+          if (!item) return res.status(404).json({ success: false, error: { message: 'Item not found' } });
+          updated = await prisma.testimonial.update({
+            where: { id: parsedId },
+            data: { is_published: !item.is_published },
+          });
+          break;
+        }
+        default:
+          return res.status(400).json({ success: false, error: { code: 'INVALID_MODEL', message: 'Unknown content model' } });
+      }
+
       res.json({ success: true, data: updated });
     } catch (err) {
       next(err);

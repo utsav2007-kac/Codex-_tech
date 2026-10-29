@@ -18,6 +18,15 @@ const StoryDetail = lazy(() => import('./pages/StoryDetail').then((m) => ({ defa
 const LivePlacements = lazy(() => import('./pages/LivePlacements').then((m) => ({ default: m.LivePlacements })));
 const Careers = lazy(() => import('./pages/Careers').then((m) => ({ default: m.Careers })));
 const CareerDetail = lazy(() => import('./pages/CareerDetail').then((m) => ({ default: m.CareerDetail })));
+const HowItWorks = lazy(() => import('./pages/HowItWorks').then((m) => ({ default: m.HowItWorks })));
+const Employers = lazy(() => import('./pages/Employers').then((m) => ({ default: m.Employers })));
+const Industries = lazy(() => import('./pages/Industries').then((m) => ({ default: m.Industries })));
+const IndustryDetail = lazy(() => import('./pages/IndustryDetail').then((m) => ({ default: m.IndustryDetail })));
+const Tools = lazy(() => import('./pages/Tools').then((m) => ({ default: m.Tools })));
+const ResumeAnalyzer = lazy(() => import('./pages/tools/ResumeAnalyzer').then((m) => ({ default: m.ResumeAnalyzer })));
+const LinkedInAnalyzer = lazy(() => import('./pages/tools/LinkedInAnalyzer').then((m) => ({ default: m.LinkedInAnalyzer })));
+const JobMatchScore = lazy(() => import('./pages/tools/JobMatchScore').then((m) => ({ default: m.JobMatchScore })));
+const InterviewReadiness = lazy(() => import('./pages/tools/InterviewReadiness').then((m) => ({ default: m.InterviewReadiness })));
 const ReferEarn = lazy(() => import('./pages/ReferEarn').then((m) => ({ default: m.ReferEarn })));
 const Resources = lazy(() => import('./pages/Resources').then((m) => ({ default: m.Resources })));
 const SalaryGuide = lazy(() => import('./pages/resources/SalaryGuide').then((m) => ({ default: m.SalaryGuide })));
@@ -26,6 +35,8 @@ const InterviewQuestionBank = lazy(() => import('./pages/resources/InterviewQues
 const Webinars = lazy(() => import('./pages/resources/Webinars').then((m) => ({ default: m.Webinars })));
 const Insights = lazy(() => import('./pages/Insights').then((m) => ({ default: m.Insights })));
 const InsightDetail = lazy(() => import('./pages/InsightDetail').then((m) => ({ default: m.InsightDetail })));
+const BlogList = lazy(() => import('./pages/blog/BlogList').then((m) => ({ default: m.BlogList })));
+const BlogDetail = lazy(() => import('./pages/blog/BlogDetail').then((m) => ({ default: m.BlogDetail })));
 const Faq = lazy(() => import('./pages/Faq').then((m) => ({ default: m.Faq })));
 const Contact = lazy(() => import('./pages/Contact').then((m) => ({ default: m.Contact })));
 const Legal = lazy(() => import('./pages/Legal').then((m) => ({ default: m.Legal })));
@@ -33,6 +44,7 @@ const ThankYou = lazy(() => import('./pages/ThankYou').then((m) => ({ default: m
 const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })));
 const DevComponents = lazy(() => import('./pages/DevComponents').then((m) => ({ default: m.DevComponents })));
 const DevMotion = lazy(() => import('./pages/DevMotion').then((m) => ({ default: m.DevMotion })));
+const DevTypography = lazy(() => import('./pages/DevTypography').then((m) => ({ default: m.DevTypography })));
 
 // Lazy-loaded Admin Suite
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin').then((m) => ({ default: m.AdminLogin })));
@@ -65,13 +77,18 @@ export const App: React.FC = () => {
             <Route path="/careers" element={<Careers />} />
             <Route path="/careers/:slug" element={<CareerDetail />} />
 
-            {/* Graceful Redirects for Removed Pages */}
-            <Route path="/how-it-works" element={<Navigate to="/about" replace />} />
-            <Route path="/employers" element={<Navigate to="/contact" replace />} />
-            <Route path="/tools" element={<Navigate to="/services" replace />} />
-            <Route path="/tools/*" element={<Navigate to="/services" replace />} />
-            <Route path="/industries" element={<Navigate to="/services" replace />} />
-            <Route path="/industries/*" element={<Navigate to="/services" replace />} />
+            {/* Full Functional Solutions & Candidate Pages */}
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/employers" element={<Employers />} />
+            <Route path="/industries" element={<Industries />} />
+            <Route path="/industries/:industry" element={<IndustryDetail />} />
+            <Route path="/tools" element={<Tools />} />
+            <Route path="/tools/resume-analyzer" element={<ResumeAnalyzer />} />
+            <Route path="/tools/linkedin-profile-analyzer" element={<LinkedInAnalyzer />} />
+            <Route path="/tools/linkedin-analyzer" element={<LinkedInAnalyzer />} />
+            <Route path="/tools/job-match-score" element={<JobMatchScore />} />
+            <Route path="/tools/job-match" element={<JobMatchScore />} />
+            <Route path="/tools/interview-readiness" element={<InterviewReadiness />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/success-stories" element={<SuccessStories />} />
             <Route path="/success-stories/:slug" element={<StoryDetail />} />
@@ -84,6 +101,8 @@ export const App: React.FC = () => {
             <Route path="/resources/webinars" element={<Webinars />} />
             <Route path="/insights" element={<Insights />} />
             <Route path="/insights/:slug" element={<InsightDetail />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy-policy" element={<Legal />} />
@@ -94,10 +113,12 @@ export const App: React.FC = () => {
             <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/dev/components" element={<DevComponents />} />
             <Route path="/dev/motion" element={<DevMotion />} />
+            <Route path="/dev/typography" element={<DevTypography />} />
             <Route path="*" element={<NotFound />} />
           </Route>
 
           {/* Admin Authentication */}
+          <Route path="/login" element={<AdminLogin />} />
           <Route path="/admin/login" element={<AdminLogin />} />
 
           {/* Protected Admin Suite wrapped in AdminLayout */}
@@ -112,6 +133,7 @@ export const App: React.FC = () => {
             <Route path="subscribers" element={<AdminSubmissions />} />
             <Route path="enrollments" element={<AdminSubmissions />} />
             <Route path="content" element={<AdminContent />} />
+            <Route path="blog" element={<AdminContent />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>

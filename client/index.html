@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,13 +12,350 @@
     <meta property="og:title" content="Codex Tech-IT | We Deliver Jobs Faster" />
     <meta
       property="og:description"
-      content="IT Recruitment, Technical Staffing, Job Placement, and Industr
-      
-      y-Led IT Training."
+      content="IT Recruitment, Technical Staffing, Job Placement, and Industry-Led IT Training."
     />
     <meta property="og:image" content="/assets/logo.png" />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#F15A34" />
+
+    <link rel="preload" as="image" href="/assets/codex-3d-monogram.webp" type="image/webp" fetchpriority="high">
+
+
+
+    <!-- Critical Inlined CSS for Instant Hero Entrance on First Paint (0ms) -->
+    <style id="critical-hero-css">
+      /* Font fallbacks with size-adjust to prevent text jump */
+      @font-face {
+        font-family: 'Sora Fallback';
+        src: local('Arial');
+        ascent-override: 96%;
+        descent-override: 24%;
+        line-gap-override: 0%;
+        size-adjust: 102%;
+      }
+      @font-face {
+        font-family: 'Inter Fallback';
+        src: local('Arial');
+        ascent-override: 90%;
+        descent-override: 22.5%;
+        line-gap-override: 0%;
+        size-adjust: 107.5%;
+      }
+
+      :root {
+        --orange-500: #D14316;
+        --navy-900: #0B1B2E;
+        --blue-600: #1F6AA5;
+        --announcement-h: 37px;
+        --navbar-h: 80px;
+        --hero-pt-desktop: 112px;
+        --hero-pt-mobile: 64px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      aside[aria-label="Announcement"] {
+        height: var(--announcement-h);
+        min-height: var(--announcement-h);
+        max-height: var(--announcement-h);
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      header {
+        height: var(--navbar-h);
+        min-height: var(--navbar-h);
+        box-sizing: border-box;
+      }
+
+      .hero-section {
+        padding-top: var(--hero-pt-mobile);
+      }
+      @media (min-width: 1024px) {
+        .hero-section {
+          padding-top: var(--hero-pt-desktop);
+        }
+      }
+
+      body {
+        margin: 0;
+        background-color: #FFFFFF;
+        color: #475569;
+        font-family: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Navbar Logo strictly constrained so it can never render giant */
+      header img[alt*="Codex Tech-IT"] {
+        height: 48px !important;
+        width: 168px !important;
+        max-width: 200px !important;
+        object-fit: contain !important;
+        display: block !important;
+      }
+
+      /* 3D Monogram Fallback image matches exact WebGL canvas dimensions */
+      [data-hero-scene="codex-stage"] img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 548px !important;
+        max-height: 550px !important;
+        object-fit: contain !important;
+        display: block !important;
+      }
+
+      /* Prevent default unstyled browser blue underlined links */
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      header a {
+        color: #0B1B2E;
+        text-decoration: none;
+      }
+
+      h1, h2, h3 {
+        font-family: 'Sora', 'Sora Fallback', system-ui, -apple-system, sans-serif;
+        color: #0B1B2E;
+      }
+
+      .text-display {
+        font-size: clamp(2.75rem, 1.6rem + 5vw, 5.5rem);
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+        font-weight: 800;
+        color: #0B1B2E;
+      }
+
+      .text-brand-gradient {
+        background: linear-gradient(135deg, #F15A34 0%, #D14316 45%, #1F6AA5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .text-body-lg {
+        font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+        line-height: 1.7;
+        font-weight: 400;
+      }
+
+      .max-w-xl {
+        max-width: 36rem;
+      }
+
+      .hero-anim-para {
+        max-width: 36rem;
+        font-family: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
+        font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+        line-height: 1.625;
+        font-weight: 500;
+        margin-bottom: 2rem;
+      }
+
+      .hero-anim-cta {
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-entrance-cta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .hero-entrance-cta a,
+      .hero-entrance-cta button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Sora', 'Sora Fallback', system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 1rem;
+        box-sizing: border-box;
+        text-decoration: none;
+      }
+
+      @media (max-width: 639px) {
+        .hero-entrance-cta {
+          flex-direction: column;
+          align-items: stretch;
+          width: 100%;
+        }
+        .hero-entrance-cta > div {
+          width: 100%;
+        }
+        .hero-entrance-cta a,
+        .hero-entrance-cta button {
+          width: 100%;
+        }
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Sora', 'Sora Fallback', system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #D14316;
+        margin-bottom: 1rem;
+      }
+
+      /* Smooth Hero Entrance Keyframes (Transform & Opacity: Visible at First Paint) */
+      @keyframes heroTextRise {
+        0% { opacity: 0.88; transform: translateY(6px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes heroCardRise {
+        0% { opacity: 0.85; transform: translateY(5px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes heroLogoScale {
+        0% { opacity: 0.90; transform: scale(0.98); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      .hero-entrance-eyebrow {
+        animation: heroTextRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 0ms both;
+      }
+
+      .hero-anim-line-1 {
+        animation: heroTextRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 0ms both;
+      }
+
+      .hero-anim-line-2 {
+        animation: heroTextRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 20ms both;
+      }
+
+      .hero-entrance-para {
+        animation: heroTextRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
+      }
+
+      .hero-entrance-cta {
+        animation: heroTextRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+      }
+
+      .hero-entrance-chips {
+        animation: heroTextRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+      }
+
+      .hero-entrance-logo {
+        animation: heroLogoScale 800ms cubic-bezier(0.22, 1, 0.36, 1) 0ms both;
+      }
+
+      .hero-card-inner-1 {
+        animation: heroCardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+      }
+
+      .hero-card-inner-2 {
+        animation: heroCardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
+      }
+
+      .hero-card-inner-3 {
+        animation: heroCardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 320ms both;
+      }
+
+      .hero-card-inner-4 {
+        animation: heroCardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) 380ms both;
+      }
+
+      .hero-entrance-eyebrow,
+      .hero-anim-line-1,
+      .hero-anim-line-2,
+      .hero-entrance-para,
+      .hero-entrance-cta,
+      .hero-entrance-chips,
+      .hero-entrance-logo,
+      .hero-card-inner-1,
+      .hero-card-inner-2,
+      .hero-card-inner-3,
+      .hero-card-inner-4 {
+        animation-fill-mode: forwards;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-entrance-eyebrow,
+        .hero-anim-line-1,
+        .hero-anim-line-2,
+        .hero-entrance-para,
+        .hero-entrance-cta,
+        .hero-entrance-chips,
+        .hero-entrance-logo,
+        .hero-card-inner-1,
+        .hero-card-inner-2,
+        .hero-card-inner-3,
+        .hero-card-inner-4 {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+
+      /* Motion System Failsafe and Reduced Motion Rules */
+      html.motion-failsafe-revealed [data-anim] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        [data-anim] {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
+
+    <!-- Motion System Early Initialization & Failsafe -->
+    <script>
+      (function() {
+        try {
+          var doc = document.documentElement;
+          doc.classList.add('js-motion-ready');
+          
+          var saved = localStorage.getItem('codex_motion_pref');
+          if (saved === 'full' || saved === 'lite' || saved === 'off') {
+            doc.setAttribute('data-motion', saved);
+          } else if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            doc.setAttribute('data-motion', 'off');
+          } else if (window.innerWidth < 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4)) {
+            doc.setAttribute('data-motion', 'lite');
+          } else {
+            doc.setAttribute('data-motion', 'full');
+          }
+
+          // 1.5s failsafe reveals all content if motion scripts are blocked
+          setTimeout(function() {
+            doc.classList.add('motion-failsafe-revealed');
+          }, 1500);
+        } catch(e) {}
+      })();
+    </script>
+    <noscript>
+      <style>
+        [data-anim] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body class="bg-white text-slate-600 antialiased font-sans selection:bg-orange-500/20 selection:text-orange-600 overflow-x-hidden min-h-screen">
     <div id="root"></div>

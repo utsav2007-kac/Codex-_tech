@@ -3,11 +3,19 @@ import { publicController } from '../controllers/publicController';
 import { formsController } from '../controllers/formsController';
 import { toolsController } from '../controllers/toolsController';
 import { adminController } from '../controllers/adminController';
+import { blogController } from '../controllers/blogController';
 import { requireAdminAuth } from '../middleware/auth';
 import { formLimiter, loginLimiter } from '../middleware/rateLimit';
-import { uploadResume } from '../middleware/upload';
+import { uploadResume, uploadBlogImage } from '../middleware/upload';
 
 const router = Router();
+
+// --- PUBLIC BLOG ENDPOINTS ---
+router.get('/blog/posts', blogController.getPosts);
+router.get('/blog/posts/:slug', blogController.getPostBySlug);
+router.get('/blog/categories', blogController.getCategories);
+router.get('/blog/featured', blogController.getFeatured);
+router.post('/blog/posts/:slug/view', blogController.recordPostView);
 
 // --- PUBLIC READ ENDPOINTS ---
 router.get('/health', publicController.health);
@@ -61,12 +69,25 @@ router.patch('/admin/:type(leads|contacts|employer-requests|applications|referra
 router.put('/admin/:type(leads|contacts|employer-requests|applications|referrals|subscribers|enrollments)/:id/status', requireAdminAuth, adminController.updateStatus);
 router.delete('/admin/:type(leads|contacts|employer-requests|applications|referrals|subscribers|enrollments)/:id', requireAdminAuth, adminController.deleteSubmission);
 
-// Content management delete aliases
+// Content management CRUD routes
+router.post('/admin/:model(jobs|stories|live-placements|faqs|testimonials)', requireAdminAuth, adminController.createContentItem);
+router.put('/admin/:model(jobs|stories|live-placements|faqs|testimonials)/:id', requireAdminAuth, adminController.updateContentItem);
+router.patch('/admin/:model(jobs|stories|live-placements|faqs|testimonials)/:id/status', requireAdminAuth, adminController.toggleContentStatus);
 router.delete('/admin/:model(posts|jobs|courses|stories|live-placements|faqs|testimonials)/:id', requireAdminAuth, adminController.deleteContentItem);
 
 router.get('/admin/export/:type', requireAdminAuth, adminController.exportCsv);
 router.get('/admin/resume/:id', requireAdminAuth, adminController.downloadResume);
 router.get('/admin/settings', requireAdminAuth, adminController.getSettings);
 router.put('/admin/settings', requireAdminAuth, adminController.updateSettings);
+
+// --- ADMIN BLOG MANAGEMENT ---
+router.get('/admin/blog/posts', requireAdminAuth, blogController.adminGetPosts);
+router.get('/admin/blog/posts/:id', requireAdminAuth, blogController.adminGetPost);
+router.post('/admin/blog/posts', requireAdminAuth, blogController.adminCreatePost);
+router.put('/admin/blog/posts/:id', requireAdminAuth, blogController.adminUpdatePost);
+router.delete('/admin/blog/posts/:id', requireAdminAuth, blogController.adminDeletePost);
+router.patch('/admin/blog/posts/:id/status', requireAdminAuth, blogController.adminUpdateStatus);
+router.post('/admin/blog/upload-image', requireAdminAuth, uploadBlogImage.single('image'), blogController.adminUploadImage);
+router.get('/admin/blog/meta', requireAdminAuth, blogController.adminGetMeta);
 
 export default router;

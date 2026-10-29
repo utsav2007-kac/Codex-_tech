@@ -10,11 +10,12 @@ interface BreadcrumbItem {
 
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
+  className?: string;
 }
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' }) => {
   return (
-    <nav aria-label="Breadcrumb" className="py-3 text-xs text-slate-500 font-medium">
+    <nav aria-label="Breadcrumb" className={`py-3 text-xs text-slate-500 font-medium ${className}`}>
       <ol className="flex items-center flex-wrap gap-2">
         <li className="flex items-center">
           <Link to="/" className="hover:text-orange-500 transition-colors flex items-center gap-1">

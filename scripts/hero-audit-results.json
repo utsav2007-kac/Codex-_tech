@@ -1,0 +1,16 @@
+{
+  "unthrottled": {
+    "cls": 0.002,
+    "lcp": 1088,
+    "headlineMs": 920,
+    "threeMs": 1672,
+    "longTasks": 7
+  },
+  "throttled": {
+    "cls": 0.0002,
+    "lcp": 0,
+    "headlineMs": 8161,
+    "threeMs": null,
+    "longTasks": 5
+  }
+}

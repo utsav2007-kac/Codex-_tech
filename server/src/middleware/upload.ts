@@ -41,6 +41,21 @@ export const uploadResume = multer({
   },
 });
 
+const imageMemoryStorage = multer.memoryStorage();
+export const uploadBlogImage = multer({
+  storage: imageMemoryStorage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (_req, file, cb) => {
+    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+    if (!allowed.includes(file.mimetype)) {
+      return cb(new Error('Invalid image file. Only JPEG, PNG, WebP, or SVG files up to 5MB are allowed.'));
+    }
+    cb(null, true);
+  },
+});
+
 // Storage abstraction interface for future S3/Cloudinary swapping
 export const storageService = {
   getFilePath(filename: string): string {

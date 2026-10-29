@@ -1,0 +1,18 @@
+{
+  "unthrottled": {
+    "lcp": 1616,
+    "cls": 0.0111,
+    "fp": 784,
+    "fcp": 784,
+    "headlineVisibleMs": 110,
+    "buttonsClickableMs": 110
+  },
+  "throttled": {
+    "lcp": 4740,
+    "cls": 0.0112,
+    "fp": 4740,
+    "fcp": 4740,
+    "headlineVisibleMs": 1008,
+    "buttonsClickableMs": 1008
+  }
+}

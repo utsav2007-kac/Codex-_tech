@@ -184,7 +184,7 @@ describe('Codex Tech-IT API Comprehensive Test Suite', () => {
       .post('/api/admin/login')
       .send({
         email: 'admin@codextechit.com',
-        password: 'CodexAdmin2026!',
+        password: 'CodexAdmin2026',
       });
 
     expect(res.status).toBe(200);

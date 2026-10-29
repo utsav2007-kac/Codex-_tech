@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { Search, Clock, Calendar, User, ArrowRight, Loader2, Sparkles, BookOpen } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
@@ -12,6 +12,7 @@ import { SectionReveal } from '../components/motion/SectionReveal';
 import { PageHero } from '../components/layout/PageHero';
 
 export const Insights: React.FC = () => {
+  const navigate = useNavigate();
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
   const [posts, setPosts] = useState<InsightPost[]>(FALLBACK_INSIGHTS);
   const [loading, setLoading] = useState(false);
@@ -66,6 +67,10 @@ export const Insights: React.FC = () => {
         secondaryCta={{
           label: 'Explore Latest Articles',
           href: '#articles-section',
+          onClick: () => {
+            const el = document.getElementById('articles-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          },
         }}
         facts={[
           { label: 'Intelligence Reports', value: `${safePosts.length}+` },
@@ -133,7 +138,8 @@ export const Insights: React.FC = () => {
                   key={post.slug}
                   index={idx}
                   maxTilt={6}
-                  className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 hover:shadow-md transition-all flex flex-col justify-between"
+                  onClick={() => navigate(`/insights/${post.slug}`)}
+                  className="p-8 rounded-3xl bg-white border border-gray-200/80 shadow-sm hover:border-orange-500/40 hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer group"
                 >
                   <div className="flex-1 flex flex-col">
                     <div className="flex items-center justify-between text-xs mb-3">

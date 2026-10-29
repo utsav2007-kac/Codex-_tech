@@ -30,6 +30,8 @@
     "pdf-parse": "^1.1.1",
     "pino": "^8.19.0",
     "pino-http": "^9.0.0",
+    "sanitize-html": "^2.18.1",
+    "sharp": "^0.35.5",
     "zod": "^3.22.4"
   },
   "devDependencies": {

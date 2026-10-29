@@ -8,13 +8,31 @@ export const api = axios.create({
   },
 });
 
+// Request interceptor to attach admin JWT if present
+api.interceptors.request.use((reqConfig) => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('codex_admin_token') : null;
+  if (token && reqConfig.headers) {
+    reqConfig.headers.Authorization = `Bearer ${token}`;
+  }
+  return reqConfig;
+});
+
 // Response error formatting interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const errorData = error.response?.data?.error || {
-      code: 'NETWORK_ERROR',
-      message: error.message || 'Unable to connect to server. Please check your connection.',
+    const rawError = error.response?.data?.error;
+    const message =
+      (typeof rawError === 'object' && rawError?.message) ||
+      (typeof rawError === 'string' && rawError) ||
+      error.response?.data?.message ||
+      error.message ||
+      'Unable to connect to server. Please check your connection.';
+
+    const errorData: any = {
+      code: error.response?.data?.error?.code || 'REQUEST_ERROR',
+      message,
+      response: error.response,
     };
     return Promise.reject(errorData);
   }

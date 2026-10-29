@@ -117,6 +117,30 @@ export const publicController = {
       });
 
       if (!post || !post.is_published) {
+        // Fallback: Check if this article exists in the blog system
+        const blogPost = await prisma.blogPost.findUnique({
+          where: { slug },
+          include: {
+            author: true,
+            category: true,
+          },
+        });
+
+        if (blogPost && blogPost.status === 'published') {
+          return res.json({
+            success: true,
+            redirect: `/blog/${slug}`,
+            data: {
+              ...blogPost,
+              author_name: blogPost.author?.name || 'Codex Editorial',
+              author_role: blogPost.author?.role || 'Staff Advisor',
+              category: blogPost.category?.name || 'Career Strategy',
+              content: blogPost.content_html,
+              read_minutes: blogPost.reading_time_min || 5,
+            },
+          });
+        }
+
         return res.status(404).json({
           success: false,
           error: { code: 'NOT_FOUND', message: 'Article not found' },

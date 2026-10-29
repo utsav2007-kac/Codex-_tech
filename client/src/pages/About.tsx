@@ -120,28 +120,224 @@ export const About: React.FC = () => {
         canonical="/about"
       />
 
-      {/* Hero Header */}
-      <PageHero
-        breadcrumbs={[{ label: 'About Us' }]}
-        badge="Our Mission & Operating Philosophy"
-        title="Engineering Careers with Purpose & Velocity."
-        titleGradientWords={['Purpose & Velocity.']}
-        subtitle="Codex Tech-IT was founded to eliminate the disconnect in modern IT hiring: transactional recruiters who don’t understand architecture, and extraordinary engineers invisible to automated screening algorithms."
-        primaryCta={{
-          label: 'Book Advisory Consultation',
-          onClick: onOpenConsultation,
-        }}
-        secondaryCta={{
-          label: 'Explore Placements',
-          href: '/live-placements',
-        }}
-        facts={[
-          { label: 'Time to Offer', value: '18 Days' },
-          { label: 'Placed Engineers', value: '2,400+' },
-          { label: '12-Mo Retention', value: '94.8%' },
-        ]}
-        visual="about-journey"
-      />
+      {/* ── 1. CUSTOM DEEP NAVY TO BLUE GRADIENT HERO ── */}
+      <section className="relative bg-gradient-to-br from-[#060D24] via-[#0A173D] to-[#0E2A66] text-white pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden border-b border-white/10">
+        {/* Ambient lighting glows */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 left-10 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+
+        <div className="container-custom relative z-10">
+          {/* Breadcrumbs & Coloured Page Label Chip */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <Breadcrumbs items={[{ label: 'About Us' }]} className="text-blue-200/80" />
+            <span className="hidden sm:inline text-white/30">•</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+              <span>About Codex Tech-IT</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Frosted Capsule Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold uppercase tracking-wider text-blue-100 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
+                ABOUT CODEX TECH-IT · SINCE 2021
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight leading-[1.1] text-white">
+                Connecting Talent with Opportunity{' '}
+                <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
+                  Since 2021.
+                </span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-slate-200/90 leading-relaxed font-normal max-w-2xl">
+                We are a premier technical staffing and career solutions ecosystem dedicated to empowering ambitious engineers and connecting innovative enterprise companies with pre-vetted, high-impact talent across North America and India.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={onOpenConsultation}
+                  className="shadow-lg shadow-orange-500/25 group"
+                >
+                  <span>Join Our Team</span>
+                  <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Link
+                  to="/services"
+                  className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-heading font-bold text-sm transition-all border border-white/20 backdrop-blur-md hover:border-white/40 flex items-center justify-center"
+                >
+                  Explore Services
+                </Link>
+              </div>
+
+              {/* Quick Metrics Bar */}
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-lg">
+                <div>
+                  <div className="text-2xl sm:text-3xl font-numbers font-black text-orange-400">18 Days</div>
+                  <div className="text-xs text-slate-300 font-medium">Avg Offer Turnaround</div>
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-numbers font-black text-blue-300">2,400+</div>
+                  <div className="text-xs text-slate-300 font-medium">Engineers Placed</div>
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-numbers font-black text-emerald-400">94.8%</div>
+                  <div className="text-xs text-slate-300 font-medium">12-Mo Retention</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Visual Column: Large Original Connected People SVG Illustration */}
+            <div className="lg:col-span-5 flex items-center justify-center relative">
+              <div className="relative w-full max-w-[440px] aspect-square flex items-center justify-center">
+                {/* Rotating background orbital glow */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-orange-500/20 via-blue-500/20 to-purple-500/20 blur-2xl animate-pulse" />
+
+                {/* Original SVG: Interlocking Ribbons with Stylized Connected Avatars */}
+                <svg
+                  viewBox="0 0 500 500"
+                  className="w-full h-full drop-shadow-2xl relative z-10"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="Connected engineering talent network illustration"
+                >
+                  <defs>
+                    <linearGradient id="aboutRibbon1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#F25C2A" />
+                      <stop offset="100%" stopColor="#F59E0B" />
+                    </linearGradient>
+                    <linearGradient id="aboutRibbon2" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#2563EB" />
+                      <stop offset="100%" stopColor="#38BDF8" />
+                    </linearGradient>
+                    <linearGradient id="aboutRibbon3" x1="100%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#10B981" />
+                      <stop offset="100%" stopColor="#059669" />
+                    </linearGradient>
+                    <linearGradient id="aboutRibbon4" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#8B5CF6" />
+                      <stop offset="100%" stopColor="#EC4899" />
+                    </linearGradient>
+                    <filter id="shadowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#0F172A" floodOpacity="0.4" />
+                    </filter>
+                  </defs>
+
+                  {/* Outer Intertwined Torus Ribbon Paths */}
+                  <g filter="url(#shadowFilter)">
+                    {/* Ring 1 - Orange Arch */}
+                    <path
+                      d="M 120,250 C 120,150 200,90 280,110 C 360,130 400,210 380,290 C 360,370 280,410 200,390"
+                      fill="none"
+                      stroke="url(#aboutRibbon1)"
+                      strokeWidth="38"
+                      strokeLinecap="round"
+                    />
+                    {/* Ring 2 - Blue Interlock */}
+                    <path
+                      d="M 380,250 C 380,150 300,90 220,110 C 140,130 100,210 120,290 C 140,370 220,410 300,390"
+                      fill="none"
+                      stroke="url(#aboutRibbon2)"
+                      strokeWidth="34"
+                      strokeLinecap="round"
+                      opacity="0.95"
+                    />
+                    {/* Ring 3 - Emerald Accent */}
+                    <path
+                      d="M 250,110 C 340,110 400,180 390,260 C 380,340 310,400 230,390"
+                      fill="none"
+                      stroke="url(#aboutRibbon3)"
+                      strokeWidth="24"
+                      strokeLinecap="round"
+                      opacity="0.85"
+                    />
+                  </g>
+
+                  {/* Center Core Badge */}
+                  <circle cx="250" cy="250" r="48" fill="#0A173D" stroke="#38BDF8" strokeWidth="3" />
+                  <circle cx="250" cy="250" r="38" fill="#060D24" />
+                  <text x="250" y="244" textAnchor="middle" fill="#F25C2A" fontSize="13" fontWeight="900" fontFamily="sans-serif">
+                    CODEX
+                  </text>
+                  <text x="250" y="262" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold" fontFamily="sans-serif">
+                    2021-2026
+                  </text>
+
+                  {/* Stylized Avatars positioned on the ribbon nodes */}
+                  {/* Top Avatar (Engineer 1) */}
+                  <g transform="translate(250, 75)">
+                    <circle cx="0" cy="0" r="28" fill="#FFF3E8" stroke="#F25C2A" strokeWidth="3.5" />
+                    {/* Head/Hair */}
+                    <path d="M -16,-6 C -16,-22 16,-22 16,-6 Z" fill="#F25C2A" />
+                    <circle cx="0" cy="-2" r="14" fill="#FCD34D" />
+                    <circle cx="-5" cy="-2" r="2.5" fill="#0F172A" />
+                    <circle cx="5" cy="-2" r="2.5" fill="#0F172A" />
+                    <path d="M -4,5 Q 0,9 4,5" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                    {/* Glasses */}
+                    <circle cx="-5" cy="-2" r="5" fill="none" stroke="#2563EB" strokeWidth="1.5" />
+                    <circle cx="5" cy="-2" r="5" fill="none" stroke="#2563EB" strokeWidth="1.5" />
+                    <line x1="-0.5" y1="-2" x2="0.5" y2="-2" stroke="#2563EB" strokeWidth="1.5" />
+                  </g>
+
+                  {/* Right Avatar (Candidate 2) */}
+                  <g transform="translate(405, 230)">
+                    <circle cx="0" cy="0" r="28" fill="#EEF0FF" stroke="#2563EB" strokeWidth="3.5" />
+                    <path d="M -18,-4 C -18,-20 18,-20 18,-4 Z" fill="#1E293B" />
+                    <circle cx="0" cy="0" r="14" fill="#FBBF24" />
+                    <circle cx="-5" cy="0" r="2" fill="#0F172A" />
+                    <circle cx="5" cy="0" r="2" fill="#0F172A" />
+                    <path d="M -4,6 Q 0,10 4,6" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                  </g>
+
+                  {/* Bottom Avatar (Candidate 3) */}
+                  <g transform="translate(250, 425)">
+                    <circle cx="0" cy="0" r="28" fill="#E3F6EC" stroke="#10B981" strokeWidth="3.5" />
+                    <path d="M -16,-8 C -16,-24 16,-24 16,-8 Z" fill="#065F46" />
+                    <circle cx="0" cy="0" r="14" fill="#FDE68A" />
+                    <circle cx="-5" cy="0" r="2" fill="#0F172A" />
+                    <circle cx="5" cy="0" r="2" fill="#0F172A" />
+                    <path d="M -4,6 Q 0,10 4,6" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                  </g>
+
+                  {/* Left Avatar (Candidate 4) */}
+                  <g transform="translate(95, 250)">
+                    <circle cx="0" cy="0" r="28" fill="#FFE6E6" stroke="#EC4899" strokeWidth="3.5" />
+                    <path d="M -18,-6 C -18,-22 18,-22 18,-6 Z" fill="#9D174D" />
+                    <circle cx="0" cy="0" r="14" fill="#FED7AA" />
+                    <circle cx="-5" cy="0" r="2" fill="#0F172A" />
+                    <circle cx="5" cy="0" r="2" fill="#0F172A" />
+                    <path d="M -4,6 Q 0,10 4,6" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                  </g>
+
+                  {/* Orbiting Connection Nodes */}
+                  <circle cx="160" cy="140" r="8" fill="#38BDF8" />
+                  <circle cx="340" cy="360" r="8" fill="#F25C2A" />
+                  <circle cx="340" cy="140" r="7" fill="#10B981" />
+                  <circle cx="160" cy="360" r="7" fill="#F59E0B" />
+                </svg>
+
+                {/* Floating pill badge on the illustration */}
+                <div className="absolute -bottom-4 right-2 sm:right-6 bg-navy-900/90 border border-white/20 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-xl flex items-center gap-3 z-20">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-white">Active Placement Mesh</div>
+                    <div className="text-[11px] text-slate-300">USA & India Teams Connected</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Metrics Banner Section */}
       <section className="py-12 bg-slate-50 border-b border-gray-200">
@@ -224,20 +420,49 @@ export const About: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {pillars.map((pillar, idx) => {
               const Icon = pillar.icon;
+              // Card styles with one highlighted card (index 1) for strong visual hierarchy
+              const isHighlighted = idx === 1;
+              const cardStyles = isHighlighted
+                ? 'bg-[#0F172A] text-white border-blue-500/30 shadow-xl ring-1 ring-blue-500/20'
+                : idx === 0
+                ? 'bg-[#EEF0FF] text-navy-900 border-[#D8DBFF]'
+                : idx === 2
+                ? 'bg-[#E3F6EC] text-navy-900 border-[#C4EED8]'
+                : 'bg-[#FFF3E8] text-navy-900 border-[#FFE3CA]';
+
+              const iconStyles = isHighlighted
+                ? 'bg-blue-500/20 text-blue-300'
+                : idx === 0
+                ? 'bg-blue-600/10 text-blue-700'
+                : idx === 2
+                ? 'bg-emerald-600/10 text-emerald-700'
+                : 'bg-orange-600/10 text-orange-700';
+
               return (
                 <Scroll3DCard
                   key={idx}
                   index={idx}
-                  className="p-6 sm:p-7 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow h-full"
+                  className={`p-6 sm:p-7 rounded-3xl border shadow-xs flex flex-col justify-between hover:shadow-md transition-all h-full ${cardStyles}`}
                 >
                   <div className="flex-1 flex flex-col">
-                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mb-5 shrink-0">
-                      <Icon className="w-6 h-6" />
+                    <div className="flex items-center justify-between mb-5">
+                      <div className={`w-12 h-12 rounded-2xl ${iconStyles} flex items-center justify-center shrink-0`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className={`text-[11px] font-bold font-numbers tracking-wider uppercase px-2.5 py-0.5 rounded-full ${
+                        isHighlighted ? 'bg-white/10 text-blue-200' : 'bg-black/5 text-slate-600'
+                      }`}>
+                        Pillar 0{idx + 1}
+                      </span>
                     </div>
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[2.85rem] flex items-start">
+                    <h3 className={`font-heading font-bold text-lg mb-2 min-h-[3.25rem] flex items-start ${
+                      isHighlighted ? 'text-white' : 'text-navy-900'
+                    }`}>
                       {pillar.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal flex-1">
+                    <p className={`text-xs sm:text-sm leading-relaxed font-normal flex-1 ${
+                      isHighlighted ? 'text-slate-200' : 'text-slate-700'
+                    }`}>
                       {pillar.description}
                     </p>
                   </div>

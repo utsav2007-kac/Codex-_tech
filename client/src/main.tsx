@@ -1,16 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-
-// Import Typography Fonts
-import '@fontsource/sora/400.css';
-import '@fontsource/sora/600.css';
-import '@fontsource/sora/700.css';
-import '@fontsource/sora/800.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
+import * as pkg from 'react-helmet-async';
+const HelmetProvider: any = (pkg as any).HelmetProvider || (pkg as any).default?.HelmetProvider || (pkg as any).default || pkg;
 
 // Import Global Styles
 import './styles/index.css';
@@ -18,7 +10,9 @@ import './styles/index.css';
 import { App } from './App';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root')!;
+
+const appNode = (
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -29,3 +23,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// If SSR content exists in #root on home route, hydrate cleanly to preserve DOM and prevent reload flash
+if (window.location.pathname === '/' && rootElement.hasChildNodes() && rootElement.firstElementChild) {
+  ReactDOM.hydrateRoot(rootElement, appNode);
+} else {
+  rootElement.innerHTML = '';
+  ReactDOM.createRoot(rootElement).render(appNode);
+}

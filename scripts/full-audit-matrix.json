@@ -1,0 +1,1464 @@
+{
+  "results": {
+    "runs": [
+      {
+        "viewport": "1440px",
+        "throttled": false,
+        "mode": "Unthrottled",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 237,
+            "200ms (y)": 237,
+            "600ms (y)": 237,
+            "1200ms (y)": 237,
+            "2000ms (y)": 237,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 271,
+            "200ms (y)": 271,
+            "600ms (y)": 271,
+            "1200ms (y)": 271,
+            "2000ms (y)": 271,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 607,
+            "200ms (y)": 607,
+            "600ms (y)": 607,
+            "1200ms (y)": 607,
+            "2000ms (y)": 607,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 769,
+            "200ms (y)": 769,
+            "600ms (y)": 769,
+            "1200ms (y)": 769,
+            "2000ms (y)": 769,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 308,
+            "200ms (y)": 308,
+            "600ms (y)": 308,
+            "1200ms (y)": 308,
+            "2000ms (y)": 308,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 288,
+            "200ms (y)": 288,
+            "600ms (y)": 288,
+            "1200ms (y)": 288,
+            "2000ms (y)": 288,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0109,
+          "lcp": 1888,
+          "headlineMs": 753,
+          "longTasks": [
+            {
+              "duration": 467,
+              "startTime": 313
+            },
+            {
+              "duration": 105,
+              "startTime": 789
+            },
+            {
+              "duration": 85,
+              "startTime": 896
+            },
+            {
+              "duration": 742,
+              "startTime": 1012
+            },
+            {
+              "duration": 60,
+              "startTime": 1919
+            },
+            {
+              "duration": 84,
+              "startTime": 1979
+            },
+            {
+              "duration": 117,
+              "startTime": 2091
+            },
+            {
+              "duration": 63,
+              "startTime": 2209
+            },
+            {
+              "duration": 102,
+              "startTime": 2387
+            },
+            {
+              "duration": 354,
+              "startTime": 2499
+            },
+            {
+              "duration": 388,
+              "startTime": 2854
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "1280px",
+        "throttled": false,
+        "mode": "Unthrottled",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 237,
+            "200ms (y)": 237,
+            "600ms (y)": 237,
+            "1200ms (y)": 237,
+            "2000ms (y)": 237,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 271,
+            "200ms (y)": 271,
+            "600ms (y)": 271,
+            "1200ms (y)": 271,
+            "2000ms (y)": 271,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 607,
+            "200ms (y)": 607,
+            "600ms (y)": 607,
+            "1200ms (y)": 607,
+            "2000ms (y)": 607,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 769,
+            "200ms (y)": 769,
+            "600ms (y)": 769,
+            "1200ms (y)": 769,
+            "2000ms (y)": 769,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 308,
+            "200ms (y)": 308,
+            "600ms (y)": 308,
+            "1200ms (y)": 308,
+            "2000ms (y)": 308,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 288,
+            "200ms (y)": 288,
+            "600ms (y)": 288,
+            "1200ms (y)": 288,
+            "2000ms (y)": 288,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0116,
+          "lcp": 1568,
+          "headlineMs": 654,
+          "longTasks": [
+            {
+              "duration": 70,
+              "startTime": 116
+            },
+            {
+              "duration": 503,
+              "startTime": 193
+            },
+            {
+              "duration": 149,
+              "startTime": 706
+            },
+            {
+              "duration": 111,
+              "startTime": 865
+            },
+            {
+              "duration": 401,
+              "startTime": 1013
+            },
+            {
+              "duration": 58,
+              "startTime": 1419
+            },
+            {
+              "duration": 64,
+              "startTime": 1568
+            },
+            {
+              "duration": 64,
+              "startTime": 1635
+            },
+            {
+              "duration": 136,
+              "startTime": 1723
+            },
+            {
+              "duration": 54,
+              "startTime": 1859
+            },
+            {
+              "duration": 86,
+              "startTime": 2088
+            },
+            {
+              "duration": 120,
+              "startTime": 2184
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "1024px",
+        "throttled": false,
+        "mode": "Unthrottled",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 237,
+            "200ms (y)": 237,
+            "600ms (y)": 237,
+            "1200ms (y)": 237,
+            "2000ms (y)": 237,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 271,
+            "200ms (y)": 271,
+            "600ms (y)": 271,
+            "1200ms (y)": 271,
+            "2000ms (y)": 271,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 568,
+            "200ms (y)": 568,
+            "600ms (y)": 568,
+            "1200ms (y)": 568,
+            "2000ms (y)": 568,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 730,
+            "200ms (y)": 730,
+            "600ms (y)": 730,
+            "1200ms (y)": 730,
+            "2000ms (y)": 730,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 309,
+            "200ms (y)": 309,
+            "600ms (y)": 309,
+            "1200ms (y)": 309,
+            "2000ms (y)": 309,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 289,
+            "200ms (y)": 289,
+            "600ms (y)": 289,
+            "1200ms (y)": 289,
+            "2000ms (y)": 289,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0013,
+          "lcp": 1232,
+          "headlineMs": 543,
+          "longTasks": [
+            {
+              "duration": 427,
+              "startTime": 151
+            },
+            {
+              "duration": 134,
+              "startTime": 590
+            },
+            {
+              "duration": 92,
+              "startTime": 728
+            },
+            {
+              "duration": 288,
+              "startTime": 845
+            },
+            {
+              "duration": 86,
+              "startTime": 1373
+            },
+            {
+              "duration": 70,
+              "startTime": 1706
+            },
+            {
+              "duration": 128,
+              "startTime": 1786
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "768px",
+        "throttled": false,
+        "mode": "Unthrottled",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 189,
+            "200ms (y)": 189,
+            "600ms (y)": 189,
+            "1200ms (y)": 189,
+            "2000ms (y)": 189,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 223,
+            "200ms (y)": 223,
+            "600ms (y)": 223,
+            "1200ms (y)": 223,
+            "2000ms (y)": 223,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 325,
+            "200ms (y)": 325,
+            "600ms (y)": 325,
+            "1200ms (y)": 325,
+            "2000ms (y)": 325,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 450,
+            "200ms (y)": 450,
+            "600ms (y)": 450,
+            "1200ms (y)": 450,
+            "2000ms (y)": 450,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 638,
+            "200ms (y)": 638,
+            "600ms (y)": 638,
+            "1200ms (y)": 638,
+            "2000ms (y)": 638,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 618,
+            "200ms (y)": 618,
+            "600ms (y)": 618,
+            "1200ms (y)": 618,
+            "2000ms (y)": 618,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0038,
+          "lcp": 1284,
+          "headlineMs": 543,
+          "longTasks": [
+            {
+              "duration": 409,
+              "startTime": 162
+            },
+            {
+              "duration": 115,
+              "startTime": 585
+            },
+            {
+              "duration": 75,
+              "startTime": 703
+            },
+            {
+              "duration": 315,
+              "startTime": 798
+            },
+            {
+              "duration": 60,
+              "startTime": 1507
+            },
+            {
+              "duration": 192,
+              "startTime": 1579
+            },
+            {
+              "duration": 71,
+              "startTime": 1772
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "390px",
+        "throttled": false,
+        "mode": "Unthrottled",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 189,
+            "200ms (y)": 189,
+            "600ms (y)": 189,
+            "1200ms (y)": 189,
+            "2000ms (y)": 189,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 223,
+            "200ms (y)": 223,
+            "600ms (y)": 223,
+            "1200ms (y)": 223,
+            "2000ms (y)": 223,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 411,
+            "200ms (y)": 411,
+            "600ms (y)": 411,
+            "1200ms (y)": 411,
+            "2000ms (y)": 411,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 585,
+            "200ms (y)": 585,
+            "600ms (y)": 585,
+            "1200ms (y)": 585,
+            "2000ms (y)": 585,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 0,
+            "200ms (y)": 0,
+            "600ms (y)": 0,
+            "1200ms (y)": 0,
+            "2000ms (y)": 0,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 861,
+            "200ms (y)": 861,
+            "600ms (y)": 861,
+            "1200ms (y)": 861,
+            "2000ms (y)": 861,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0615,
+          "lcp": 1356,
+          "headlineMs": 691,
+          "longTasks": [
+            {
+              "duration": 542,
+              "startTime": 188
+            },
+            {
+              "duration": 132,
+              "startTime": 739
+            },
+            {
+              "duration": 79,
+              "startTime": 874
+            },
+            {
+              "duration": 296,
+              "startTime": 974
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "1440px",
+        "throttled": true,
+        "mode": "Fast 3G + 4x CPU",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 237,
+            "200ms (y)": 237,
+            "600ms (y)": 237,
+            "1200ms (y)": 237,
+            "2000ms (y)": 237,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 271,
+            "200ms (y)": 271,
+            "600ms (y)": 271,
+            "1200ms (y)": 271,
+            "2000ms (y)": 271,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 607,
+            "200ms (y)": 607,
+            "600ms (y)": 607,
+            "1200ms (y)": 607,
+            "2000ms (y)": 607,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 769,
+            "200ms (y)": 769,
+            "600ms (y)": 769,
+            "1200ms (y)": 769,
+            "2000ms (y)": 769,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 308,
+            "200ms (y)": 308,
+            "600ms (y)": 308,
+            "1200ms (y)": 308,
+            "2000ms (y)": 308,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 288,
+            "200ms (y)": 288,
+            "600ms (y)": 288,
+            "1200ms (y)": 288,
+            "2000ms (y)": 288,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0112,
+          "lcp": 3668,
+          "headlineMs": 3364,
+          "longTasks": [
+            {
+              "duration": 2588,
+              "startTime": 991
+            },
+            {
+              "duration": 1078,
+              "startTime": 3696
+            },
+            {
+              "duration": 742,
+              "startTime": 4938
+            },
+            {
+              "duration": 2115,
+              "startTime": 5735
+            },
+            {
+              "duration": 229,
+              "startTime": 7855
+            },
+            {
+              "duration": 56,
+              "startTime": 8211
+            },
+            {
+              "duration": 358,
+              "startTime": 8360
+            },
+            {
+              "duration": 409,
+              "startTime": 8719
+            },
+            {
+              "duration": 73,
+              "startTime": 9190
+            },
+            {
+              "duration": 56,
+              "startTime": 9295
+            },
+            {
+              "duration": 61,
+              "startTime": 9366
+            },
+            {
+              "duration": 61,
+              "startTime": 9440
+            },
+            {
+              "duration": 57,
+              "startTime": 9519
+            },
+            {
+              "duration": 351,
+              "startTime": 9577
+            },
+            {
+              "duration": 224,
+              "startTime": 9929
+            },
+            {
+              "duration": 62,
+              "startTime": 10168
+            },
+            {
+              "duration": 58,
+              "startTime": 10248
+            },
+            {
+              "duration": 59,
+              "startTime": 10348
+            },
+            {
+              "duration": 64,
+              "startTime": 10437
+            },
+            {
+              "duration": 62,
+              "startTime": 10520
+            },
+            {
+              "duration": 59,
+              "startTime": 10593
+            },
+            {
+              "duration": 65,
+              "startTime": 10681
+            },
+            {
+              "duration": 63,
+              "startTime": 10767
+            },
+            {
+              "duration": 62,
+              "startTime": 10842
+            },
+            {
+              "duration": 54,
+              "startTime": 10914
+            },
+            {
+              "duration": 52,
+              "startTime": 10978
+            },
+            {
+              "duration": 51,
+              "startTime": 11039
+            },
+            {
+              "duration": 56,
+              "startTime": 11098
+            },
+            {
+              "duration": 55,
+              "startTime": 11162
+            },
+            {
+              "duration": 55,
+              "startTime": 11464
+            },
+            {
+              "duration": 53,
+              "startTime": 11531
+            },
+            {
+              "duration": 59,
+              "startTime": 11592
+            },
+            {
+              "duration": 58,
+              "startTime": 11662
+            },
+            {
+              "duration": 54,
+              "startTime": 11735
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "1280px",
+        "throttled": true,
+        "mode": "Fast 3G + 4x CPU",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 237,
+            "200ms (y)": 237,
+            "600ms (y)": 237,
+            "1200ms (y)": 237,
+            "2000ms (y)": 237,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 271,
+            "200ms (y)": 271,
+            "600ms (y)": 271,
+            "1200ms (y)": 271,
+            "2000ms (y)": 271,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 607,
+            "200ms (y)": 607,
+            "600ms (y)": 607,
+            "1200ms (y)": 607,
+            "2000ms (y)": 607,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 769,
+            "200ms (y)": 769,
+            "600ms (y)": 769,
+            "1200ms (y)": 769,
+            "2000ms (y)": 769,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 308,
+            "200ms (y)": 308,
+            "600ms (y)": 308,
+            "1200ms (y)": 308,
+            "2000ms (y)": 308,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 288,
+            "200ms (y)": 288,
+            "600ms (y)": 288,
+            "1200ms (y)": 288,
+            "2000ms (y)": 288,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0119,
+          "lcp": 3644,
+          "headlineMs": 3340,
+          "longTasks": [
+            {
+              "duration": 2570,
+              "startTime": 986
+            },
+            {
+              "duration": 998,
+              "startTime": 3656
+            },
+            {
+              "duration": 772,
+              "startTime": 4837
+            },
+            {
+              "duration": 63,
+              "startTime": 5609
+            },
+            {
+              "duration": 2307,
+              "startTime": 5679
+            },
+            {
+              "duration": 214,
+              "startTime": 7991
+            },
+            {
+              "duration": 339,
+              "startTime": 8448
+            },
+            {
+              "duration": 374,
+              "startTime": 8788
+            },
+            {
+              "duration": 74,
+              "startTime": 9220
+            },
+            {
+              "duration": 60,
+              "startTime": 9327
+            },
+            {
+              "duration": 60,
+              "startTime": 9402
+            },
+            {
+              "duration": 55,
+              "startTime": 9477
+            },
+            {
+              "duration": 56,
+              "startTime": 9550
+            },
+            {
+              "duration": 291,
+              "startTime": 9607
+            },
+            {
+              "duration": 223,
+              "startTime": 9899
+            },
+            {
+              "duration": 52,
+              "startTime": 10142
+            },
+            {
+              "duration": 57,
+              "startTime": 10213
+            },
+            {
+              "duration": 61,
+              "startTime": 10286
+            },
+            {
+              "duration": 59,
+              "startTime": 10359
+            },
+            {
+              "duration": 57,
+              "startTime": 10522
+            },
+            {
+              "duration": 58,
+              "startTime": 10591
+            },
+            {
+              "duration": 58,
+              "startTime": 10666
+            },
+            {
+              "duration": 61,
+              "startTime": 10740
+            },
+            {
+              "duration": 56,
+              "startTime": 10816
+            },
+            {
+              "duration": 59,
+              "startTime": 10884
+            },
+            {
+              "duration": 54,
+              "startTime": 10954
+            },
+            {
+              "duration": 52,
+              "startTime": 11017
+            },
+            {
+              "duration": 59,
+              "startTime": 11252
+            },
+            {
+              "duration": 57,
+              "startTime": 11318
+            },
+            {
+              "duration": 53,
+              "startTime": 11383
+            },
+            {
+              "duration": 56,
+              "startTime": 11444
+            },
+            {
+              "duration": 53,
+              "startTime": 11564
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "1024px",
+        "throttled": true,
+        "mode": "Fast 3G + 4x CPU",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 237,
+            "200ms (y)": 237,
+            "600ms (y)": 237,
+            "1200ms (y)": 237,
+            "2000ms (y)": 237,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 271,
+            "200ms (y)": 271,
+            "600ms (y)": 271,
+            "1200ms (y)": 271,
+            "2000ms (y)": 271,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 568,
+            "200ms (y)": 568,
+            "600ms (y)": 568,
+            "1200ms (y)": 568,
+            "2000ms (y)": 568,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 730,
+            "200ms (y)": 730,
+            "600ms (y)": 730,
+            "1200ms (y)": 730,
+            "2000ms (y)": 730,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 309,
+            "200ms (y)": 309,
+            "600ms (y)": 309,
+            "1200ms (y)": 309,
+            "2000ms (y)": 309,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 289,
+            "200ms (y)": 289,
+            "600ms (y)": 289,
+            "1200ms (y)": 289,
+            "2000ms (y)": 289,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0013,
+          "lcp": 3808,
+          "headlineMs": 3521,
+          "longTasks": [
+            {
+              "duration": 2747,
+              "startTime": 984
+            },
+            {
+              "duration": 952,
+              "startTime": 3833
+            },
+            {
+              "duration": 764,
+              "startTime": 4956
+            },
+            {
+              "duration": 71,
+              "startTime": 5721
+            },
+            {
+              "duration": 1857,
+              "startTime": 5797
+            },
+            {
+              "duration": 229,
+              "startTime": 7662
+            },
+            {
+              "duration": 51,
+              "startTime": 8013
+            },
+            {
+              "duration": 315,
+              "startTime": 8151
+            },
+            {
+              "duration": 362,
+              "startTime": 8466
+            },
+            {
+              "duration": 64,
+              "startTime": 8880
+            },
+            {
+              "duration": 58,
+              "startTime": 8974
+            },
+            {
+              "duration": 66,
+              "startTime": 9049
+            },
+            {
+              "duration": 57,
+              "startTime": 9122
+            },
+            {
+              "duration": 289,
+              "startTime": 9180
+            },
+            {
+              "duration": 230,
+              "startTime": 9470
+            },
+            {
+              "duration": 55,
+              "startTime": 9718
+            },
+            {
+              "duration": 61,
+              "startTime": 9778
+            },
+            {
+              "duration": 58,
+              "startTime": 9847
+            },
+            {
+              "duration": 59,
+              "startTime": 9914
+            },
+            {
+              "duration": 57,
+              "startTime": 9999
+            },
+            {
+              "duration": 55,
+              "startTime": 10075
+            },
+            {
+              "duration": 58,
+              "startTime": 10140
+            },
+            {
+              "duration": 63,
+              "startTime": 10208
+            },
+            {
+              "duration": 60,
+              "startTime": 10284
+            },
+            {
+              "duration": 54,
+              "startTime": 10359
+            },
+            {
+              "duration": 55,
+              "startTime": 10424
+            },
+            {
+              "duration": 57,
+              "startTime": 10488
+            },
+            {
+              "duration": 56,
+              "startTime": 10555
+            },
+            {
+              "duration": 53,
+              "startTime": 10624
+            },
+            {
+              "duration": 54,
+              "startTime": 10684
+            },
+            {
+              "duration": 55,
+              "startTime": 10807
+            },
+            {
+              "duration": 57,
+              "startTime": 10872
+            },
+            {
+              "duration": 55,
+              "startTime": 10938
+            },
+            {
+              "duration": 56,
+              "startTime": 11002
+            },
+            {
+              "duration": 56,
+              "startTime": 11070
+            },
+            {
+              "duration": 54,
+              "startTime": 11137
+            },
+            {
+              "duration": 67,
+              "startTime": 11207
+            },
+            {
+              "duration": 61,
+              "startTime": 11319
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "768px",
+        "throttled": true,
+        "mode": "Fast 3G + 4x CPU",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 189,
+            "200ms (y)": 189,
+            "600ms (y)": 189,
+            "1200ms (y)": 189,
+            "2000ms (y)": 189,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 223,
+            "200ms (y)": 223,
+            "600ms (y)": 223,
+            "1200ms (y)": 223,
+            "2000ms (y)": 223,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 325,
+            "200ms (y)": 325,
+            "600ms (y)": 325,
+            "1200ms (y)": 325,
+            "2000ms (y)": 325,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 450,
+            "200ms (y)": 450,
+            "600ms (y)": 450,
+            "1200ms (y)": 450,
+            "2000ms (y)": 450,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 638,
+            "200ms (y)": 638,
+            "600ms (y)": 638,
+            "1200ms (y)": 638,
+            "2000ms (y)": 638,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 618,
+            "200ms (y)": 618,
+            "600ms (y)": 618,
+            "1200ms (y)": 618,
+            "2000ms (y)": 618,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0038,
+          "lcp": 3752,
+          "headlineMs": 3444,
+          "longTasks": [
+            {
+              "duration": 2651,
+              "startTime": 996
+            },
+            {
+              "duration": 905,
+              "startTime": 3748
+            },
+            {
+              "duration": 748,
+              "startTime": 4825
+            },
+            {
+              "duration": 2158,
+              "startTime": 5621
+            },
+            {
+              "duration": 197,
+              "startTime": 7786
+            },
+            {
+              "duration": 322,
+              "startTime": 8218
+            },
+            {
+              "duration": 369,
+              "startTime": 8542
+            },
+            {
+              "duration": 70,
+              "startTime": 8989
+            },
+            {
+              "duration": 69,
+              "startTime": 9102
+            },
+            {
+              "duration": 54,
+              "startTime": 9187
+            },
+            {
+              "duration": 55,
+              "startTime": 9253
+            },
+            {
+              "duration": 59,
+              "startTime": 9445
+            },
+            {
+              "duration": 59,
+              "startTime": 10147
+            },
+            {
+              "duration": 66,
+              "startTime": 10239
+            },
+            {
+              "duration": 54,
+              "startTime": 10317
+            },
+            {
+              "duration": 248,
+              "startTime": 10472
+            },
+            {
+              "duration": 947,
+              "startTime": 10773
+            },
+            {
+              "duration": 116,
+              "startTime": 11721
+            },
+            {
+              "duration": 56,
+              "startTime": 11898
+            },
+            {
+              "duration": 84,
+              "startTime": 12000
+            },
+            {
+              "duration": 94,
+              "startTime": 12084
+            }
+          ]
+        }
+      },
+      {
+        "viewport": "390px",
+        "throttled": true,
+        "mode": "Fast 3G + 4x CPU",
+        "tableData": [
+          {
+            "Element": "Hero Label (.eyebrow)",
+            "0ms (y)": 189,
+            "200ms (y)": 189,
+            "600ms (y)": 189,
+            "1200ms (y)": 189,
+            "2000ms (y)": 189,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Headline (h1)",
+            "0ms (y)": 223,
+            "200ms (y)": 223,
+            "600ms (y)": 223,
+            "1200ms (y)": 223,
+            "2000ms (y)": 223,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Paragraph (.hero-anim-para)",
+            "0ms (y)": 411,
+            "200ms (y)": 411,
+            "600ms (y)": 411,
+            "1200ms (y)": 411,
+            "2000ms (y)": 411,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "CTA Buttons (.hero-anim-cta)",
+            "0ms (y)": 585,
+            "200ms (y)": 585,
+            "600ms (y)": 585,
+            "1200ms (y)": 585,
+            "2000ms (y)": 585,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Card 1",
+            "0ms (y)": 0,
+            "200ms (y)": 0,
+            "600ms (y)": 0,
+            "1200ms (y)": 0,
+            "2000ms (y)": 0,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          },
+          {
+            "Element": "Logo Stage",
+            "0ms (y)": 861,
+            "200ms (y)": 861,
+            "600ms (y)": 861,
+            "1200ms (y)": 861,
+            "2000ms (y)": 861,
+            "Max Shift": "0px",
+            "Status": "✅ PASS"
+          }
+        ],
+        "gap": 32,
+        "perf": {
+          "cls": 0.0623,
+          "lcp": 8640,
+          "headlineMs": 3399,
+          "longTasks": [
+            {
+              "duration": 2706,
+              "startTime": 943
+            },
+            {
+              "duration": 948,
+              "startTime": 3754
+            },
+            {
+              "duration": 783,
+              "startTime": 4812
+            },
+            {
+              "duration": 2719,
+              "startTime": 5648
+            },
+            {
+              "duration": 212,
+              "startTime": 8371
+            },
+            {
+              "duration": 312,
+              "startTime": 8830
+            },
+            {
+              "duration": 345,
+              "startTime": 9144
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "hydration": {
+    "consoleErrors": [
+      "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "Minified React error #423; visit https://reactjs.org/docs/error-decoder.html?invariant=423 for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+    ],
+    "consoleWarnings": [],
+    "hydrationMismatches": []
+  },
+  "scrollTest": {
+    "restorationMode": "auto",
+    "homeEyebrowTop": 237
+  }
+}

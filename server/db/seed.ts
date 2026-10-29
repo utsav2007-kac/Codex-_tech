@@ -6,8 +6,20 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding Codex Tech-IT Database...');
 
-  // 1. Admin User
-  const adminPasswordHash = await bcrypt.hash('CodexAdmin2026!', 10);
+  // 1. Admin Users
+  const codexPasswordHash = await bcrypt.hash('admin@123', 10);
+  await prisma.adminUser.upsert({
+    where: { email: 'admin@codex.com' },
+    update: { password_hash: codexPasswordHash },
+    create: {
+      email: 'admin@codex.com',
+      password_hash: codexPasswordHash,
+      name: 'Codex Administrator',
+      role: 'SUPERADMIN',
+    },
+  });
+
+  const adminPasswordHash = await bcrypt.hash('CodexAdmin2026', 10);
   await prisma.adminUser.upsert({
     where: { email: 'admin@codextechit.com' },
     update: { password_hash: adminPasswordHash },
@@ -66,6 +78,35 @@ async function main() {
         github: 'https://github.com/codextechit',
         youtube: 'https://youtube.com/@codextechit',
       },
+    },
+    {
+      key: 'referral_tiers',
+      value: [
+        {
+          level: 'Associate & Entry Engineers',
+          max_reward: '$500',
+          amount: 500,
+          experience: '0 - 2 Years Experience',
+          timeline: 'Payable after 60-day placement verification',
+          description: 'Awarded when your referred associate engineer, QA analyst, or junior developer successfully completes 60 days on assignment.',
+        },
+        {
+          level: 'Mid-Level Technical Roles',
+          max_reward: '$1,000',
+          amount: 1000,
+          experience: '3 - 6 Years Experience',
+          timeline: 'Payable after 60-day placement verification',
+          description: 'Awarded for full-time mid-level Full Stack Java/Node, DevOps, Data Engineers, and Cloud Specialists.',
+        },
+        {
+          level: 'Senior, Lead & Enterprise Architects',
+          max_reward: '$1,500',
+          amount: 1500,
+          experience: '7+ Years Experience',
+          timeline: 'Payable after 60-day placement verification',
+          description: 'Awarded for high-impact Lead Cloud Architects, Principal AI/ML Engineers, and Engineering Directors.',
+        },
+      ],
     },
   ];
 
@@ -684,12 +725,14 @@ Financial institutions, healthcare providers, and defense contractors require ex
 
   // 9. Testimonials (8 Testimonials)
   const testimonialsData = [
-    { name: 'Michael R.', role: 'Senior AWS DevOps Engineer', quote: 'Codex Tech-IT did not just find me a job—they completely revamped how I present my architectural experience. I landed an offer with a $35k jump in 3 weeks.', is_sample: true },
-    { name: 'Swetha K.', role: 'Full Stack Java Developer', quote: 'As an F1-OPT graduate, finding a genuine employer willing to sponsor was overwhelming. Codex connected me directly with an e-verified financial institution in under a month.', is_sample: true },
-    { name: 'Jason Miller', role: 'VP of Engineering, CloudScale Systems', quote: 'Most staffing firms spam us with 50 irrelevant resumes. Codex sent us 3 pre-screened candidates, and we hired 2 of them within 10 days. Outstanding quality.', is_sample: true },
-    { name: 'Anita Deshmukh', role: 'Data Engineer', quote: 'The PySpark and Snowflake training gave me the exact hands-on ammunition I needed for technical grilling rounds. Their interview coaching is gold.', is_sample: true },
-    { name: 'Robert C.', role: 'SRE / Kubernetes Specialist', quote: 'The resume review tool gave me concrete fixes that immediately doubled my LinkedIn inbound recruiter messages. Highly recommended.', is_sample: true },
-    { name: 'Tanya Gomez', role: 'QA Automation Engineer', quote: 'Switching from manual testing felt daunting. Codex taught me Playwright, helped me build a live portfolio, and backed me through every interview round.', is_sample: true },
+    { name: 'Michael R.', role: 'Senior AWS DevOps Engineer', quote: 'Codex Tech-IT did not just find me a job—they completely revamped how I present my architectural experience. I landed an offer with a $35k jump in 3 weeks.', rating: 5, source: 'LinkedIn Review', date: 'October 2026', is_sample: true },
+    { name: 'Swetha K.', role: 'Full Stack Java Developer', quote: 'As an F1-OPT graduate, finding a genuine employer willing to sponsor was overwhelming. Codex connected me directly with an e-verified financial institution in under a month.', rating: 5, source: 'Google Review', date: 'September 2026', is_sample: true },
+    { name: 'Jason Miller', role: 'VP of Engineering, CloudScale Systems', quote: 'Most staffing firms spam us with 50 irrelevant resumes. Codex sent us 3 pre-screened candidates, and we hired 2 of them within 10 days. Outstanding quality.', rating: 5, source: 'Client Testimonial', date: 'August 2026', is_sample: true },
+    { name: 'Anita Deshmukh', role: 'Data Engineer', quote: 'The PySpark and Snowflake training gave me the exact hands-on ammunition I needed for technical grilling rounds. Their interview coaching is gold.', rating: 5, source: 'LinkedIn Review', date: 'September 2026', is_sample: true },
+    { name: 'Robert C.', role: 'SRE / Kubernetes Specialist', quote: 'The resume review tool gave me concrete fixes that immediately doubled my LinkedIn inbound recruiter messages. Highly recommended.', rating: 4, source: 'Google Review', date: 'July 2026', is_sample: true },
+    { name: 'Tanya Gomez', role: 'QA Automation Engineer', quote: 'Switching from manual testing felt daunting. Codex taught me Playwright, helped me build a live portfolio, and backed me through every interview round.', rating: 5, source: 'LinkedIn Review', date: 'October 2026', is_sample: true },
+    { name: 'David L.', role: 'Cloud Infrastructure Director', quote: 'Their direct client representation helped me negotiate a compensation package 22% higher than my initial target. A true partner in senior tech placements.', rating: 5, source: 'Direct Feedback', date: 'September 2026', is_sample: true },
+    { name: 'Priya Patel', role: 'Solutions Architect', quote: 'The system design coaching transformed how I tackle whiteboard architectural challenges. Placed within 18 days of starting.', rating: 5, source: 'Google Review', date: 'October 2026', is_sample: true },
   ];
 
   for (const t of testimonialsData) {
@@ -699,6 +742,11 @@ Financial institutions, healthcare providers, and defense contractors require ex
     if (!existing) {
       await prisma.testimonial.create({
         data: { ...t, is_published: true },
+      });
+    } else {
+      await prisma.testimonial.update({
+        where: { id: existing.id },
+        data: { rating: t.rating, source: t.source, date: t.date, is_sample: t.is_sample },
       });
     }
   }

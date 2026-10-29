@@ -11,7 +11,10 @@ export interface AuthRequest extends Request {
 }
 
 export function requireAdminAuth(req: AuthRequest, res: Response, next: NextFunction) {
-  const token = req.cookies?.codex_admin_token || req.headers.authorization?.replace('Bearer ', '');
+  const token =
+    req.cookies?.codex_admin_token ||
+    req.headers.authorization?.replace('Bearer ', '') ||
+    (req.query?.token as string);
 
   if (!token) {
     return res.status(401).json({

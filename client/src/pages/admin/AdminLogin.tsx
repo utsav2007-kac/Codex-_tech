@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -34,6 +34,9 @@ export const AdminLogin: React.FC = () => {
     try {
       const res = await api.post('/admin/login', data);
       if (res.data?.success) {
+        if (res.data.data.token) {
+          localStorage.setItem('codex_admin_token', res.data.data.token);
+        }
         localStorage.setItem('codex_admin_user', JSON.stringify(res.data.data.user));
         navigate('/admin');
       } else {
@@ -52,9 +55,15 @@ export const AdminLogin: React.FC = () => {
 
       <div className="max-w-md w-full bg-white rounded-3xl p-8 md:p-10 shadow-2xl">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-7 h-7" />
-          </div>
+          <Link to="/" className="inline-block mb-6 hover:opacity-90 transition-opacity" title="Return to Codex Tech-IT Home">
+            <img
+              src="/assets/logo.svg"
+              alt="Codex Tech-IT"
+              width="180"
+              height="50"
+              className="h-11 w-auto mx-auto object-contain"
+            />
+          </Link>
           <h1 className="font-heading font-extrabold text-2xl text-navy-900">Admin Portal</h1>
           <p className="text-xs text-slate-500 mt-1">
             Authorized Codex Tech-IT personnel only.
@@ -76,7 +85,7 @@ export const AdminLogin: React.FC = () => {
               <input
                 type="email"
                 {...register('email')}
-                placeholder="admin@codextechit.com"
+                placeholder="name@company.com"
                 className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-gray-200 text-xs text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-200 bg-white"
               />
             </div>
@@ -116,10 +125,6 @@ export const AdminLogin: React.FC = () => {
             )}
           </Button>
         </form>
-
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center text-[11px] text-slate-400">
-          Default seed credentials: <strong>admin@codextechit.com</strong>
-        </div>
       </div>
     </div>
   );

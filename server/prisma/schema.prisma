@@ -4,7 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex"]
 }
 
 enum VisaStatus {
@@ -319,12 +320,17 @@ model Faq {
 }
 
 model Testimonial {
-  id           Int     @id @default(autoincrement())
-  name         String  @db.VarChar(100)
-  role         String  @db.VarChar(100)
-  quote        String  @db.Text
-  is_sample    Boolean @default(true)
-  is_published Boolean @default(true)
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(100)
+  role         String   @db.VarChar(100)
+  quote        String   @db.Text
+  rating       Int      @default(5)
+  source       String   @default("LinkedIn") @db.VarChar(50)
+  avatar       String?  @db.VarChar(255)
+  date         String?  @db.VarChar(50)
+  is_sample    Boolean  @default(true)
+  is_published Boolean  @default(true)
+  created_at   DateTime @default(now())
 
   @@index([is_published])
   @@map("testimonials")
@@ -401,3 +407,111 @@ model ChatFaq {
 
   @@map("chat_faq")
 }
+
+// ══════════════════════════════════════════════════════════════════════
+// BLOG SYSTEM (Codex Tech-IT Engineering Insights & Career Blog)
+// ══════════════════════════════════════════════════════════════════════
+
+enum BlogStatus {
+  draft
+  published
+  scheduled
+}
+
+model BlogCategory {
+  id          Int        @id @default(autoincrement())
+  slug        String     @unique @db.VarChar(191)
+  name        String     @db.VarChar(100)
+  description String?    @db.Text
+  created_at  DateTime   @default(now())
+  posts       BlogPost[]
+
+  @@index([slug])
+  @@map("blog_categories")
+}
+
+model BlogAuthor {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(100)
+  role       String     @db.VarChar(100)
+  avatar     String     @db.VarChar(255)
+  bio        String     @db.Text
+  created_at DateTime   @default(now())
+  posts      BlogPost[]
+
+  @@map("blog_authors")
+}
+
+model BlogTag {
+  id         Int           @id @default(autoincrement())
+  slug       String        @unique @db.VarChar(191)
+  name       String        @db.VarChar(100)
+  created_at DateTime      @default(now())
+  posts      BlogPostTag[]
+
+  @@index([slug])
+  @@map("blog_tags")
+}
+
+model BlogPost {
+  id               Int        @id @default(autoincrement())
+  slug             String     @unique @db.VarChar(191)
+  title            String     @db.VarChar(255)
+  excerpt          String     @db.Text
+  content_html     String     @db.LongText
+  cover_image      String     @db.VarChar(255)
+  cover_alt        String     @db.VarChar(255)
+  category_id      Int
+  author_id        Int
+  status           BlogStatus @default(draft)
+  published_at     DateTime?
+  updated_at       DateTime   @updatedAt
+  reading_time_min Int        @default(5)
+  view_count       Int        @default(0)
+  seo_title        String?    @db.VarChar(255)
+  seo_description  String?    @db.Text
+  canonical_url    String?    @db.VarChar(255)
+  og_image         String?    @db.VarChar(255)
+  featured         Int        @default(0) @db.TinyInt
+  created_at       DateTime   @default(now())
+
+  category BlogCategory  @relation(fields: [category_id], references: [id], onDelete: Restrict)
+  author   BlogAuthor    @relation(fields: [author_id], references: [id], onDelete: Restrict)
+  tags     BlogPostTag[]
+  faqs     BlogFaq[]
+
+  @@index([slug])
+  @@index([status, published_at])
+  @@index([category_id])
+  @@index([author_id])
+  @@fulltext([title, excerpt, content_html])
+  @@map("blog_posts")
+}
+
+model BlogPostTag {
+  post_id Int
+  tag_id  Int
+
+  post BlogPost @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  tag  BlogTag  @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([post_id, tag_id])
+  @@index([tag_id])
+  @@index([post_id])
+  @@map("blog_post_tags")
+}
+
+model BlogFaq {
+  id         Int    @id @default(autoincrement())
+  post_id    Int
+  question   String @db.VarChar(255)
+  answer     String @db.Text
+  sort_order Int    @default(0)
+
+  post BlogPost @relation(fields: [post_id], references: [id], onDelete: Cascade)
+
+  @@index([post_id])
+  @@index([sort_order])
+  @@map("blog_faqs")
+}
+

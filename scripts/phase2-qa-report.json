@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-10-29T06:13:04.485Z",
+  "tests": [
+    {
+      "name": "Workforce Solutions heading is visible",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Workforce Solutions heading text matches reference",
+      "passed": true,
+      "details": {
+        "headingText": "Workforce Solutions for Businesses and Job Seekers"
+      }
+    },
+    {
+      "name": "Job Placement hero card is present",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Recruitment & Staffing hero card is present",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "All 4 specialized service cards are present",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Bidirectional showcase streams are actively rendered",
+      "passed": true,
+      "details": {
+        "streamCount": 50
+      }
+    },
+    {
+      "name": "Reviews section background is light (NOT solid orange)",
+      "passed": true,
+      "details": {
+        "reviewsBg": "rgb(248, 250, 252)"
+      }
+    },
+    {
+      "name": "Featured Spotlight quote is visible",
+      "passed": true,
+      "details": {
+        "quoteSnippet": "\"As an F1-OPT graduate, finding a genuine employer"
+      }
+    },
+    {
+      "name": "Tab switching updates reviews successfully",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "All 4 Featured Technical Openings cards are visible (Zero Blank Gap)",
+      "passed": true,
+      "details": {
+        "cardsCount": 4
+      }
+    },
+    {
+      "name": "First opening card opacity is 1.0 (Crisp & Visible)",
+      "passed": true,
+      "details": {
+        "opacity": "1"
+      }
+    },
+    {
+      "name": "USA Sky tint boarding pass is rendered",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "India Butter tint boarding pass is rendered",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Both analog SVG clocks are active in footer",
+      "passed": true,
+      "details": {
+        "clockCount": 2
+      }
+    },
+    {
+      "name": "Direct Talent Corridor with time difference is displayed",
+      "passed": true,
+      "details": {
+        "routeText": "Direct Talent Corridor: DFW / ORD ⇄ HYD"
+      }
+    },
+    {
+      "name": "Truth-rule legal disclaimer is visible in footer",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Quality governor toggle button is present",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Quality governor toggle cycles mode on click",
+      "passed": true,
+      "details": {
+        "initialToggleText": "Motion: LITE (Click to toggle)",
+        "updatedToggleText": "Motion: OFF (Click to toggle)"
+      }
+    },
+    {
+      "name": "/dev/typography loads and renders specimen title",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Both Sora and Inter family specimens are documented",
+      "passed": true,
+      "details": {}
+    }
+  ]
+}

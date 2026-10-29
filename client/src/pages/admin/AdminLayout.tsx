@@ -20,8 +20,9 @@ export const AdminLayout: React.FC = () => {
 
     api.get('/admin/me')
       .then((res) => {
-        if (res.data?.success && res.data?.data?.user) {
-          setCurrentUser(res.data.data.user);
+        const userData = res.data?.data?.user || res.data?.data;
+        if (res.data?.success && userData) {
+          setCurrentUser(userData);
         } else {
           localStorage.removeItem('codex_admin_user');
           navigate('/admin/login', { replace: true });
@@ -37,7 +38,7 @@ export const AdminLayout: React.FC = () => {
   const handleLogout = async () => {
     try {
       await api.post('/admin/logout');
-    } catch (_) {}
+    } catch (_) { }
     localStorage.removeItem('codex_admin_user');
     navigate('/admin/login');
   };
@@ -68,14 +69,19 @@ export const AdminLayout: React.FC = () => {
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-navy-900 text-white shrink-0">
-        <div className="p-6 border-b border-navy-800 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-blue-600 flex items-center justify-center font-heading font-black text-white text-base">
-            CX
-          </div>
-          <div>
-            <div className="font-heading font-bold text-sm tracking-wide">CODEX TECH-IT</div>
-            <div className="text-[10px] text-orange-400 font-semibold uppercase tracking-wider">Admin Center</div>
-          </div>
+        <div className="p-5 border-b border-navy-800 flex items-center justify-between">
+          <Link to="/admin" className="flex items-center gap-2">
+            <img
+              src="/assets/logo-white.svg"
+              alt="Codex Tech-IT"
+              width="148"
+              height="40"
+              className="h-8 w-auto object-contain"
+            />
+          </Link>
+          <span className="text-[10px] px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold uppercase tracking-wider">
+            Admin
+          </span>
         </div>
 
         <nav className="p-4 flex-1 space-y-1">
@@ -86,11 +92,10 @@ export const AdminLayout: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-heading font-semibold transition-all ${
-                  active
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-heading font-semibold transition-all ${active
                     ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
                     : 'text-slate-300 hover:bg-navy-800 hover:text-white'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4" />
                 <span>{item.label}</span>
@@ -118,6 +123,80 @@ export const AdminLayout: React.FC = () => {
         </div>
       </aside>
 
+      {/* Mobile Drawer Backdrop & Sidebar */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex">
+          <div
+            className="fixed inset-0 bg-navy-950/70 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileOpen(false)}
+          />
+          <aside className="relative flex flex-col w-72 max-w-[85%] bg-navy-900 text-white z-10 shadow-2xl">
+            <div className="p-5 border-b border-navy-800 flex items-center justify-between">
+              <Link to="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
+                <img
+                  src="/assets/logo-white.svg"
+                  alt="Codex Tech-IT"
+                  width="136"
+                  height="36"
+                  className="h-7 w-auto object-contain"
+                />
+              </Link>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <nav className="p-4 flex-1 space-y-1.5 overflow-y-auto">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const active = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-heading font-semibold transition-all ${
+                      active
+                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                        : 'text-slate-300 hover:bg-navy-800 hover:text-white'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="p-4 border-t border-navy-800 space-y-2">
+              <div className="px-3 py-2 rounded-xl bg-navy-800/60 mb-2">
+                <div className="text-xs font-heading font-bold text-white truncate">{currentUser?.name || 'Administrator'}</div>
+                <div className="text-[10px] text-slate-400 truncate">{currentUser?.email}</div>
+              </div>
+              <Link
+                to="/"
+                target="_blank"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white hover:bg-navy-800 transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>View Public Site</span>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-red-400 hover:bg-red-500/10 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </aside>
+        </div>
+      )}
+
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top Navbar */}
@@ -126,6 +205,7 @@ export const AdminLayout: React.FC = () => {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden text-slate-600 p-1"
+              aria-label="Toggle navigation menu"
             >
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

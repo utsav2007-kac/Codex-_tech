@@ -80,14 +80,14 @@ A high-performance, animated multi-page web platform and recruitment operations 
 | :--- | :--- | :--- |
 | **Frontend Website** | `http://localhost:5173` | Public client application |
 | **Backend API Health** | `http://localhost:5000/api/health` | System and MySQL database health check |
-| **Admin Portal** | `http://localhost:5173/admin/login` | Backoffice dashboard for inquiries and content |
+| **Admin Portal** | `http://localhost:5173/login` | Backoffice dashboard for inquiries and content |
 | **Dynamic Sitemap** | `http://localhost:5000/sitemap.xml` | Generated dynamically from MySQL records |
 | **Robots.txt** | `http://localhost:5000/robots.txt` | Crawler directives |
 
 ### Default Admin Credentials (Seed)
-- **Login URL**: `http://localhost:5173/admin/login`
-- **Email**: `admin@codextechit.com`
-- **Password**: `CodexAdmin2026!`
+- **Login URL**: `http://localhost:5173/login` (or `http://localhost:5173/admin/login`)
+- **Email**: `admin@codex.com`
+- **Password**: `admin@123`
 
 ---
 

@@ -10,8 +10,8 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET || 'codex_jwt_secret_dev_key',
   databaseUrl: process.env.DATABASE_URL || 'mysql://root:@localhost:3306/codex_tech_it',
   admin: {
-    email: process.env.ADMIN_EMAIL || 'admin@codextechit.com',
-    password: process.env.ADMIN_PASSWORD || 'CodexAdmin2026!',
+    email: process.env.ADMIN_EMAIL || 'admin@codex.com',
+    password: process.env.ADMIN_PASSWORD || 'admin@123',
   },
   smtp: {
     host: process.env.SMTP_HOST || 'smtp.example.com',

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import {
   Briefcase,
   MapPin,
@@ -17,16 +17,21 @@ import {
   X,
   UploadCloud,
   FileText,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
+import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { PageHero } from '../components/layout/PageHero';
 import { Button } from '../components/ui/Button';
 import { Scroll3DSection } from '../components/motion/Scroll3DSection';
 import { Scroll3DCard } from '../components/motion/Scroll3DCard';
 import { SectionReveal } from '../components/motion/SectionReveal';
+import { api } from '../services/api';
 
 interface JobListing {
   id: string;
+  dbId?: number;
   title: string;
   department: string;
   location: string;
@@ -53,11 +58,15 @@ export const Careers: React.FC = () => {
   const [applicantLinkedIn, setApplicantLinkedIn] = useState('');
   const [applicantVisa, setApplicantVisa] = useState('US_CITIZEN_GC');
   const [applicantFile, setApplicantFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const jobs: JobListing[] = useMemo(
     () => [
       {
         id: 'job-1',
+        dbId: 7,
         title: 'Lead AWS Cloud Solutions Architect',
         department: 'Cloud & Infrastructure',
         location: 'Dallas, TX (Hybrid) / Remote',
@@ -72,6 +81,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-2',
+        dbId: 8,
         title: 'Senior Full-Stack Engineer (React & Node.js)',
         department: 'Software Engineering',
         location: 'Plano, TX / Remote USA',
@@ -86,6 +96,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-3',
+        dbId: 9,
         title: 'DevOps & Platform Automation Specialist',
         department: 'Cloud & Infrastructure',
         location: 'Atlanta, GA / Remote',
@@ -99,6 +110,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-4',
+        dbId: 10,
         title: 'Senior Data Engineer (Snowflake & PySpark)',
         department: 'Data & AI',
         location: 'Chicago, IL (Hybrid) / Remote',
@@ -113,6 +125,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-5',
+        dbId: 11,
         title: 'AI / Machine Learning Solutions Specialist',
         department: 'Data & AI',
         location: 'San Jose, CA / Remote USA',
@@ -126,6 +139,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-6',
+        dbId: 12,
         title: 'QA Lead Automation Engineer (Playwright & TypeScript)',
         department: 'Quality Engineering',
         location: 'Remote USA',
@@ -139,6 +153,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-7',
+        dbId: 13,
         title: 'Cybersecurity SOC Lead & Threat Analyst',
         department: 'Security & Compliance',
         location: 'Plano, TX (Onsite/Hybrid)',
@@ -152,6 +167,7 @@ export const Careers: React.FC = () => {
       },
       {
         id: 'job-8',
+        dbId: 1,
         title: 'Senior Technical Recruiter (IT Placement)',
         department: 'Talent Acquisition Operations',
         location: 'Plano, TX or Hyderabad Hub',
@@ -226,19 +242,57 @@ export const Careers: React.FC = () => {
     },
   ];
 
-  const handleApplySubmit = (e: React.FormEvent) => {
+  const handleApplySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setApplicationSubmitted(true);
-    setTimeout(() => {
-      // Auto close after 3s
-      setApplicationSubmitted(false);
-      setActiveJobForModal(null);
-      setApplicantName('');
-      setApplicantEmail('');
-      setApplicantPhone('');
-      setApplicantLinkedIn('');
-      setApplicantFile(null);
-    }, 2800);
+    if (!applicantFile) {
+      setSubmitError('Please select your resume file (PDF or DOCX).');
+      return;
+    }
+    if (!activeJobForModal) return;
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const formData = new FormData();
+    formData.append('name', applicantName);
+    formData.append('email', applicantEmail);
+    formData.append('phone', applicantPhone);
+    if (applicantLinkedIn) formData.append('linkedin_url', applicantLinkedIn);
+    formData.append(
+      'cover_note',
+      `[Visa Authorization: ${applicantVisa}] Fast-track requisition application for ${activeJobForModal.title} (${activeJobForModal.department})`
+    );
+    formData.append('job_id', String(activeJobForModal.dbId || 7));
+    formData.append('job_title', activeJobForModal.title);
+    formData.append('resume', applicantFile);
+
+    try {
+      const res = await api.post('/applications', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      if (res.data?.success) {
+        setApplicationSubmitted(true);
+        setTimeout(() => {
+          setApplicationSubmitted(false);
+          setActiveJobForModal(null);
+          setApplicantName('');
+          setApplicantEmail('');
+          setApplicantPhone('');
+          setApplicantLinkedIn('');
+          setApplicantFile(null);
+          setSubmitError(null);
+        }, 3200);
+      } else {
+        setSubmitError(res.data?.error?.message || 'Failed to submit application. Please try again.');
+      }
+    } catch (err: any) {
+      setSubmitError(
+        err.response?.data?.error?.message ||
+        'An error occurred while submitting your application. Please check your connection and try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -249,74 +303,110 @@ export const Careers: React.FC = () => {
         canonical="/careers"
       />
 
-      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Grid with Life at Codex Visual) ── */}
-      <PageHero
-        eyebrow="Active Open Requisitions · Verified Partners"
-        title={
-          <>
-            Find Your Next Role <span className="text-brand-gradient">Faster.</span>
-          </>
-        }
-        tagline="Direct Decision-Maker Access & 18-Day Average Placement"
-        summary="Join leading enterprise engineering teams and high-growth technology companies. Every role listed here is backed by direct hiring manager access and dedicated candidate advocacy."
-        breadcrumbs={[{ label: 'Careers' }]}
-        primaryCta={{
-          label: 'Explore Open Roles',
-          onClick: () => {
-            const el = document.getElementById('jobs-board');
-            el?.scrollIntoView({ behavior: 'smooth' });
-          },
-        }}
-        secondaryCta={{
-          label: 'Submit Resume Directly',
-          onClick: () => setActiveJobForModal(jobs[0]),
-        }}
-        facts={[
-          { icon: Briefcase, label: 'Active Requisitions', value: `${jobs.length} Openings` },
-          { icon: Clock, label: 'Hiring Turnaround', value: '18 Days' },
-          { icon: ShieldCheck, label: 'Candidate Representation', value: '100% Free' },
-        ]}
-        visual="careers-life"
-      />
+      {/* ── 1. SEARCH-FIRST HERO (Warm yellow & orange accents) ── */}
+      <section className="relative bg-gradient-to-br from-[#FFFBEB] via-[#FFF7ED] to-white border-b border-amber-200/70 pt-24 sm:pt-32 pb-14 sm:pb-20 overflow-hidden">
+        {/* Warm radial glows */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 left-10 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Search & Filter Bar */}
-      <section id="jobs-board" className="py-8 bg-slate-50/80 border-b border-slate-200/60">
-        <div className="container-custom">
-          <div className="flex flex-col sm:flex-row gap-3 bg-white p-3 rounded-2xl border border-gray-200 shadow-sm">
-            <div className="relative flex-1">
-              <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search by job title, skill (e.g. AWS, React, Python) or location..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-transparent hover:border-gray-200 focus:border-orange-500 text-sm text-navy-900 placeholder-slate-400 focus:outline-none transition-colors"
-              />
+        <div className="container-custom relative z-10">
+          {/* Breadcrumbs and Coloured Page Label Chip */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <Breadcrumbs items={[{ label: 'Careers' }]} />
+            <span className="hidden sm:inline text-slate-300">•</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-900 text-xs font-semibold">
+              <Briefcase className="w-3.5 h-3.5 text-amber-600" />
+              <span>Careers & Openings</span>
+            </div>
+          </div>
+
+          <div className="max-w-3xl mb-8">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-600 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-amber-300 animate-pulse" />
+              ACTIVE REQUISITIONS · DIRECT HIRING ACCESS
             </div>
 
-            <select
-              value={selectedDept}
-              onChange={(e) => setSelectedDept(e.target.value)}
-              className="py-3 px-4 rounded-xl border border-gray-200 text-xs sm:text-sm font-semibold text-navy-900 bg-gray-50/70 focus:outline-none focus:ring-2 focus:ring-orange-200"
-            >
-              {departments.map((d) => (
-                <option key={d} value={d}>
-                  {d === 'ALL' ? 'All Departments' : d}
-                </option>
-              ))}
-            </select>
+            <h1 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-navy-900 leading-[1.15] mb-4">
+              Find Your Next Engineering Role{' '}
+              <span className="bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent">
+                Faster.
+              </span>
+            </h1>
 
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-              className="py-3 px-4 rounded-xl border border-gray-200 text-xs sm:text-sm font-semibold text-navy-900 bg-gray-50/70 focus:outline-none focus:ring-2 focus:ring-orange-200"
-            >
-              {employmentTypes.map((t) => (
-                <option key={t} value={t}>
-                  {t === 'ALL' ? 'All Contract Types' : t}
-                </option>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
+              Explore high-compensation roles backed by direct decision-maker access, zero placement fees for candidates, and an average 18-day turnaround from application to signed offer letter.
+            </p>
+          </div>
+
+          {/* SEARCH-FIRST FILTER COMPONENT EMBEDDED IN HERO */}
+          <div className="bg-white p-4 sm:p-6 rounded-3xl border border-amber-200/90 shadow-xl shadow-amber-900/5 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+              {/* Keyword Search Input */}
+              <div className="md:col-span-5 relative">
+                <Search className="w-5 h-5 text-amber-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Job title, skill (e.g. AWS, React, Python)..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 text-sm text-navy-900 placeholder-slate-400 focus:outline-none transition-colors"
+                />
+              </div>
+
+              {/* Department Filter */}
+              <div className="md:col-span-4">
+                <select
+                  value={selectedDept}
+                  onChange={(e) => setSelectedDept(e.target.value)}
+                  className="w-full py-3 px-3.5 rounded-xl border border-gray-200 text-xs sm:text-sm font-semibold text-navy-900 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                >
+                  {departments.map((d) => (
+                    <option key={d} value={d}>
+                      {d === 'ALL' ? 'All Departments' : d}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Type Filter */}
+              <div className="md:col-span-3">
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value)}
+                  className="w-full py-3 px-3.5 rounded-xl border border-gray-200 text-xs sm:text-sm font-semibold text-navy-900 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                >
+                  {employmentTypes.map((t) => (
+                    <option key={t} value={t}>
+                      {t === 'ALL' ? 'All Contract Types' : t}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Quick Skill Tags */}
+            <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-gray-100 text-xs">
+              <span className="text-slate-500 font-medium">Quick filters:</span>
+              {['AWS', 'Kubernetes', 'Python', 'React', 'DevOps', 'Data Engineer'].map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => setSearchTerm(tag)}
+                  className="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 font-semibold transition-colors cursor-pointer"
+                >
+                  +{tag}
+                </button>
               ))}
-            </select>
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="ml-auto text-orange-600 font-bold hover:underline cursor-pointer"
+                >
+                  Clear search
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -624,34 +714,72 @@ export const Careers: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-bold text-navy-900 mb-1">Upload Resume (PDF, DOCX) *</label>
-                    <div className="border-2 border-dashed border-gray-200 hover:border-orange-400 rounded-2xl p-4 text-center cursor-pointer transition-colors bg-gray-50/50">
+                    <div
+                      onClick={() => fileInputRef.current?.click()}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                          setApplicantFile(e.dataTransfer.files[0]);
+                          setSubmitError(null);
+                        }
+                      }}
+                      className="border-2 border-dashed border-gray-200 hover:border-orange-400 rounded-2xl p-5 text-center cursor-pointer transition-colors bg-gray-50/50 hover:bg-orange-50/10 flex flex-col items-center justify-center group"
+                    >
                       <input
+                        ref={fileInputRef}
                         type="file"
-                        required
-                        accept=".pdf,.doc,.docx"
-                        onChange={(e) => setApplicantFile(e.target.files?.[0] || null)}
+                        accept=".pdf,.docx,application/pdf"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            setApplicantFile(e.target.files[0]);
+                            setSubmitError(null);
+                          }
+                        }}
                         className="hidden"
                         id="resume-file-input"
                       />
-                      <label htmlFor="resume-file-input" className="cursor-pointer flex flex-col items-center">
-                        <UploadCloud className="w-8 h-8 text-orange-500 mb-2" />
-                        <span className="text-xs font-bold text-navy-900">
-                          {applicantFile ? applicantFile.name : 'Click to select resume file'}
-                        </span>
-                        <span className="text-[10px] text-slate-500 mt-0.5">Maximum file size 10MB</span>
-                      </label>
+                      <UploadCloud className="w-8 h-8 text-orange-500 mb-2 group-hover:scale-110 transition-transform pointer-events-none" />
+                      <span className="text-xs font-bold text-navy-900 pointer-events-none">
+                        {applicantFile ? (
+                          <span className="text-orange-600 font-extrabold flex items-center gap-1.5">
+                            <FileText className="w-3.5 h-3.5" />
+                            {applicantFile.name} ({(applicantFile.size / 1024).toFixed(0)} KB)
+                          </span>
+                        ) : (
+                          'Click to select or drag & drop resume file'
+                        )}
+                      </span>
+                      <span className="text-[10px] text-slate-500 mt-1 pointer-events-none">
+                        PDF or DOCX (Maximum file size 10MB) · Instant file selection
+                      </span>
                     </div>
+
+                    {submitError && (
+                      <div className="p-3 mt-2.5 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2 text-red-600 text-xs font-semibold">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                        <span>{submitError}</span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm transition-all shadow-md shadow-orange-500/25 cursor-pointer"
+                      disabled={isSubmitting}
+                      className="w-full py-3 rounded-2xl bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-bold text-sm transition-all shadow-md shadow-orange-500/25 cursor-pointer flex items-center justify-center gap-2"
                     >
-                      Submit Application to Codex Tech-IT
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Submitting Application to Database...</span>
+                        </>
+                      ) : (
+                        <span>Submit Application to Codex Tech-IT</span>
+                      )}
                     </button>
                     <p className="text-[10px] text-slate-400 text-center mt-2">
-                      🔒 Your contact information and resume are kept strictly confidential under our strict candidate privacy policy.
+                      🔒 Your contact information and resume are kept strictly confidential under our candidate privacy policy.
                     </p>
                   </div>
                 </form>

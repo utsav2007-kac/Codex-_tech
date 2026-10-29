@@ -9,6 +9,7 @@ export interface Scroll3DCardProps {
   maxTilt?: number;
   reverse?: boolean; // reverse animation when scrolling back up
   index?: number;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export const Scroll3DCard: React.FC<Scroll3DCardProps> = ({
@@ -19,6 +20,7 @@ export const Scroll3DCard: React.FC<Scroll3DCardProps> = ({
   maxTilt = 7,
   reverse = true,
   index = 0,
+  onClick,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tiltStyle, setTiltStyle] = useState({ rotateX: 0, rotateY: 0, scale: 1 });
@@ -107,6 +109,7 @@ export const Scroll3DCard: React.FC<Scroll3DCardProps> = ({
     >
       <div
         ref={cardRef}
+        onClick={onClick}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{

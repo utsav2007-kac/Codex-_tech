@@ -1,0 +1,22 @@
+{
+  "unthrottled": {
+    "lcp": 2076,
+    "cls": 0.0233,
+    "fp": 676,
+    "fcp": 2076,
+    "headlineVisibleTime": 1229,
+    "buttonsClickableTime": 1229,
+    "threeDVisibleTime": 1229,
+    "heroAnimCompleteTime": null
+  },
+  "throttled": {
+    "lcp": 0,
+    "cls": 0.0073,
+    "fp": 1004,
+    "fcp": 0,
+    "headlineVisibleTime": 8285,
+    "buttonsClickableTime": 8285,
+    "threeDVisibleTime": 8285,
+    "heroAnimCompleteTime": null
+  }
+}

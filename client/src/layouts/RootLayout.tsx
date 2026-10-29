@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnnouncementBar } from '../components/layout/AnnouncementBar';
 import { Navbar } from '../components/layout/Navbar';
@@ -12,26 +12,51 @@ import { FloatingWhatsApp } from '../components/ui/FloatingWhatsApp';
 import { CookieConsent } from '../components/ui/CookieConsent';
 import { ConsultationModal } from '../components/forms/ConsultationModal';
 import { useLenisScroll } from '../hooks/useLenisScroll';
-import { UnifiedGlobalCanvas3D } from '../components/3d/UnifiedGlobalCanvas3D';
+const UnifiedGlobalCanvas3D = React.lazy(() =>
+  import('../components/3d/UnifiedGlobalCanvas3D').then((m) => ({ default: m.UnifiedGlobalCanvas3D }))
+);
 import { ScrollProgressBar } from '../components/ui/ScrollProgressBar';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 
 export const RootLayout: React.FC = () => {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [loadGlobalCanvas, setLoadGlobalCanvas] = useState(false);
+  const [loadDeferredWidgets, setLoadDeferredWidgets] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   // Initialize smooth scroll & ScrollTrigger lifecycle
   useLenisScroll();
+
+  useEffect(() => {
+    // Defer global background canvas and non-hero widgets until hero entrance finishes (after 1s)
+    const timer = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => {
+          setLoadGlobalCanvas(true);
+          setLoadDeferredWidgets(true);
+        }, { timeout: 2000 });
+      } else {
+        setLoadGlobalCanvas(true);
+        setLoadDeferredWidgets(true);
+      }
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col relative selection:bg-orange-500/20 selection:text-orange-600">
       {/* Scroll Progress Bar & Desktop Rail Indicator */}
       <ScrollProgressBar />
 
-      {/* Unified Global 3D Canvas (Ambient background + Dual-gutter scenes rendered via 1 shared WebGL context) */}
-      <ErrorBoundary fallback={null}>
-        <UnifiedGlobalCanvas3D />
-      </ErrorBoundary>
+      {/* Unified Global 3D Canvas (Deferred after hero entrance for 60 FPS zero-shift) */}
+      {loadGlobalCanvas && (
+        <ErrorBoundary fallback={null}>
+          <React.Suspense fallback={null}>
+            <UnifiedGlobalCanvas3D />
+          </React.Suspense>
+        </ErrorBoundary>
+      )}
       {/* Skip to Content Accessibility Link */}
       <a
         href="#main-content"
@@ -49,11 +74,10 @@ export const RootLayout: React.FC = () => {
       {/* E15 Custom Desktop Cursor */}
       <CustomCursor />
 
-      {/* Global Announcement Header */}
-      <AnnouncementBar onOpenConsultation={() => setIsConsultationOpen(true)} />
-
-      {/* Global Navbar */}
-      <Navbar onOpenConsultation={() => setIsConsultationOpen(true)} />
+      {/* Global Navbar (Fixed pill across all public routes, never moves, never shrinks) */}
+      <Navbar
+        onOpenConsultation={() => setIsConsultationOpen(true)}
+      />
 
       {/* Main Content Area */}
       <main id="main-content" className="flex-1">
@@ -63,11 +87,15 @@ export const RootLayout: React.FC = () => {
       {/* Global Footer (E13 Curtain) */}
       <Footer />
 
-      {/* Interactive Global Elements */}
-      <ChatWidget onOpenConsultation={() => setIsConsultationOpen(true)} />
-      <StickyMobileCTA onOpenConsultation={() => setIsConsultationOpen(true)} />
-      <FloatingWhatsApp />
-      <CookieConsent />
+      {/* Interactive Global Elements (Deferred after Hero Entrance for 0 Long Tasks) */}
+      {loadDeferredWidgets && (
+        <>
+          <ChatWidget onOpenConsultation={() => setIsConsultationOpen(true)} />
+          <StickyMobileCTA onOpenConsultation={() => setIsConsultationOpen(true)} />
+          <FloatingWhatsApp />
+          <CookieConsent />
+        </>
+      )}
 
       {/* Global Consultation Modal */}
       <ConsultationModal

@@ -172,9 +172,25 @@ export const formsController = {
 
       const data = applicationSchema.parse(req.body);
 
+      // Resolve valid job_id to guarantee foreign key integrity
+      let targetJobId = data.job_id;
+      const existingJob = await prisma.jobOpening.findUnique({ where: { id: targetJobId } });
+      if (!existingJob) {
+        if (req.body.job_title) {
+          const byTitle = await prisma.jobOpening.findFirst({
+            where: { title: { contains: String(req.body.job_title).trim() }, is_active: true }
+          });
+          if (byTitle) targetJobId = byTitle.id;
+        }
+        if (!existingJob && (!targetJobId || targetJobId <= 0)) {
+          const fallbackJob = await prisma.jobOpening.findFirst({ where: { is_active: true } });
+          targetJobId = fallbackJob ? fallbackJob.id : 1;
+        }
+      }
+
       const application = await prisma.application.create({
         data: {
-          job_id: data.job_id,
+          job_id: targetJobId,
           name: data.name,
           email: data.email,
           phone: data.phone,

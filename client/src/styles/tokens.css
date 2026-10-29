@@ -1,0 +1,187 @@
+/**
+ * Codex Tech-IT Design System Tokens (Light Theme Only)
+ * Palette Tokens, Text Contrast, and Fluid Typography Scale
+ */
+
+:root {
+  /* ── Background & Surface Palette ── */
+  --color-page: #FFFFFF;
+  --color-paper: #F8FAFC;
+  --color-hairline: #E2E8F0;
+  
+  /* Tint Accents */
+  --color-sky: #E8F2FF;
+  --color-butter: #FFF4D6;
+  --color-mint: #E4F6EC;
+  --color-blush: #FFE9E6;
+  --color-lavender: #EFEEFF;
+  --color-cream: #FFF7ED;
+
+  /* ── Text Tokens (Contrast >= 4.5:1) ── */
+  --color-ink: #0F172A;       /* Primary text */
+  --color-graphite: #475569;  /* Secondary text / lead copy */
+  --color-muted: #64748B;     /* Labels & sub-captions (always >= 14px for body, >= 4.5:1 on light) */
+
+  /* ── Brand Action Tokens ── */
+  --color-orange-fill: #F25C2A; /* For fills, badges, icons and large decorative shapes only */
+  --color-orange-text: #C2410C; /* For orange TEXT and primary action button (white on #C2410C = 5.2:1) */
+  --color-orange-btn: #C2410C;
+  --color-orange-btn-hover: #9A3412;
+
+  --color-cobalt-fill: #2563EB; /* For blue fills & large icons */
+  --color-cobalt-text: #1D4ED8; /* For blue text on light tints */
+
+  /* ── Semantic / Status Accents ── */
+  --color-success-bg: #E4F6EC;
+  --color-success-text: #166534;
+  --color-warning-bg: #FFF4D6;
+  --color-warning-text: #854D0E;
+
+  /* ── Navbar Layout Dimensions ── */
+  --nav-h: 68px;
+  --nav-top: 0px;
+  --nav-scroll-threshold: 24px;
+
+  /* ── Fluid Typography Scale (Sora Headings + Inter Body) ── */
+  --font-heading: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Display: clamp(40px, 6vw, 80px) / 1.05 / -0.03em / 700 */
+  --text-display-size: clamp(2.5rem, 6vw, 5rem);
+  --text-display-lh: 1.05;
+  --text-display-ls: -0.03em;
+  --text-display-weight: 700;
+
+  /* H1: clamp(36px, 5vw, 64px) / 1.08 / -0.025em / 700 */
+  --text-h1-size: clamp(2.25rem, 5vw, 4rem);
+  --text-h1-lh: 1.08;
+  --text-h1-ls: -0.025em;
+  --text-h1-weight: 700;
+
+  /* H2: clamp(28px, 3.6vw, 44px) / 1.15 / -0.02em / 700 */
+  --text-h2-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  --text-h2-lh: 1.15;
+  --text-h2-ls: -0.02em;
+  --text-h2-weight: 700;
+
+  /* H3: clamp(20px, 2vw, 26px) / 1.25 / 600 */
+  --text-h3-size: clamp(1.25rem, 2vw, 1.625rem);
+  --text-h3-lh: 1.25;
+  --text-h3-ls: -0.01em;
+  --text-h3-weight: 600;
+
+  /* Card Title: 18-20px / 1.3 / 600 */
+  --text-card-title: clamp(1.125rem, 1.5vw, 1.25rem);
+  --text-card-lh: 1.3;
+  --text-card-weight: 600;
+
+  /* Lead paragraph: 18-20px / 1.6 */
+  --text-lead: clamp(1.125rem, 1.5vw, 1.25rem);
+  --text-lead-lh: 1.6;
+
+  /* Body: 16-17px / 1.65 */
+  --text-body: 1.03125rem;
+  --text-body-lh: 1.65;
+
+  /* Small: 14-15px / 1.5 (never below 14px) */
+  --text-small: 0.90625rem;
+  --text-small-lh: 1.5;
+
+  /* Labels: 12-13px with 0.06em tracking */
+  --text-label: 0.78125rem;
+  --text-label-tracking: 0.06em;
+}
+
+/* Base Body Application */
+body {
+  background-color: var(--color-page);
+  color: var(--color-graphite);
+  font-family: var(--font-body);
+}
+
+/* Headings Default */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-ink);
+  text-wrap: balance;
+  font-optical-sizing: auto;
+  font-feature-settings: 'kern' 1;
+}
+
+/* Typography Utility Classes */
+.font-numbers {
+  font-family: var(--font-body) !important;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.01em;
+}
+
+.text-ink {
+  color: var(--color-ink) !important;
+}
+
+.text-graphite {
+  color: var(--color-graphite) !important;
+}
+
+.text-orange-primary {
+  color: var(--color-orange-text) !important;
+}
+
+.text-cobalt-primary {
+  color: var(--color-cobalt-text) !important;
+}
+
+.bg-page {
+  background-color: var(--color-page) !important;
+}
+
+.bg-paper {
+  background-color: var(--color-paper) !important;
+}
+
+.bg-hairline {
+  background-color: var(--color-hairline) !important;
+}
+
+.border-hairline {
+  border-color: var(--color-hairline) !important;
+}
+
+.bg-sky-tint {
+  background-color: var(--color-sky) !important;
+}
+
+.bg-butter-tint {
+  background-color: var(--color-butter) !important;
+}
+
+.bg-mint-tint {
+  background-color: var(--color-mint) !important;
+}
+
+.bg-blush-tint {
+  background-color: var(--color-blush) !important;
+}
+
+.bg-lavender-tint {
+  background-color: var(--color-lavender) !important;
+}
+
+.bg-cream-tint {
+  background-color: var(--color-cream) !important;
+}
+
+/* Primary Button Styling with 5.2:1 verified contrast (#FFFFFF on #C2410C) */
+.btn-primary-orange {
+  background-color: var(--color-orange-btn) !important;
+  color: #FFFFFF !important;
+  font-weight: 600;
+  border-radius: 0.875rem;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 4px 14px rgba(194, 65, 12, 0.25);
+}
+
+.btn-primary-orange:hover {
+  background-color: var(--color-orange-btn-hover) !important;
+  box-shadow: 0 6px 20px rgba(194, 65, 12, 0.35);
+}

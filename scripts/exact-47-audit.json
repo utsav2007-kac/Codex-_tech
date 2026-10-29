@@ -1,0 +1,288 @@
+{
+  "totalRoutes": 47,
+  "totalGroups": 53,
+  "routes": [
+    {
+      "path": "/",
+      "name": "Home",
+      "cardGroups": 8,
+      "status": "✅ 8 groups passed"
+    },
+    {
+      "path": "/about",
+      "name": "About",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/services",
+      "name": "Services",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/technologies",
+      "name": "Technologies",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/plans",
+      "name": "Plans",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/success-stories",
+      "name": "SuccessStories",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/live-placements",
+      "name": "LivePlacements",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/careers",
+      "name": "Careers",
+      "cardGroups": 3,
+      "status": "✅ 3 groups passed"
+    },
+    {
+      "path": "/services/job-placement",
+      "name": "Service: Job Placement",
+      "cardGroups": 4,
+      "status": "✅ 4 groups passed"
+    },
+    {
+      "path": "/services/recruitment-staffing",
+      "name": "Service: Recruitment & Staffing",
+      "cardGroups": 4,
+      "status": "✅ 4 groups passed"
+    },
+    {
+      "path": "/services/talent-acquisition",
+      "name": "Service: Talent Acquisition",
+      "cardGroups": 5,
+      "status": "✅ 5 groups passed"
+    },
+    {
+      "path": "/services/it-training",
+      "name": "Service: Industry IT Training",
+      "cardGroups": 4,
+      "status": "✅ 4 groups passed"
+    },
+    {
+      "path": "/services/background-verification",
+      "name": "Service: Background Verification",
+      "cardGroups": 4,
+      "status": "✅ 4 groups passed"
+    },
+    {
+      "path": "/services/payroll-taxes",
+      "name": "Service: Payroll & Taxes",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/services/resume-linkedin-rebranding",
+      "name": "Service: Resume & LinkedIn",
+      "cardGroups": 4,
+      "status": "✅ 4 groups passed"
+    },
+    {
+      "path": "/services/interview-preparation",
+      "name": "Service: Interview Preparation",
+      "cardGroups": 4,
+      "status": "✅ 4 groups passed"
+    },
+    {
+      "path": "/services/custom-job-campaigns",
+      "name": "Service: Custom Job Campaigns",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/services/it-training/full-stack-java",
+      "name": "Course: Full Stack Java",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/careers/lead-cloud-solutions-architect",
+      "name": "Career Detail",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/success-stories/senior-cloud-architect-fintech",
+      "name": "Story Detail",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/insights/ats-resume-secrets-2026",
+      "name": "Insight Detail",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/refer-earn",
+      "name": "Refer & Earn",
+      "cardGroups": 2,
+      "status": "✅ 2 groups passed"
+    },
+    {
+      "path": "/resources",
+      "name": "Resources Hub",
+      "cardGroups": 2,
+      "status": "✅ 2 groups passed"
+    },
+    {
+      "path": "/resources/salary-guide",
+      "name": "Salary Guide",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/resources/resume-templates",
+      "name": "Resume Templates",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/resources/interview-question-bank",
+      "name": "Interview Question Bank",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/resources/webinars",
+      "name": "Webinars",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/insights",
+      "name": "Insights Hub",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/faq",
+      "name": "FAQ",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/contact",
+      "name": "Contact",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/privacy-policy",
+      "name": "Privacy Policy",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/terms-and-conditions",
+      "name": "Terms & Conditions",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/cookie-policy",
+      "name": "Cookie Policy",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/refund-policy",
+      "name": "Refund Policy",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/accessibility-statement",
+      "name": "Accessibility Statement",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/thank-you",
+      "name": "Thank You",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/dev/components",
+      "name": "Dev Components",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/dev/motion",
+      "name": "Dev Motion",
+      "cardGroups": 1,
+      "status": "✅ 1 groups passed"
+    },
+    {
+      "path": "/admin/login",
+      "name": "Admin Login",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin",
+      "name": "Admin Dashboard",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/submissions",
+      "name": "Admin Submissions",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/leads",
+      "name": "Admin Leads",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/contacts",
+      "name": "Admin Contacts",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/employer-requests",
+      "name": "Admin Employer Requests",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/applications",
+      "name": "Admin Applications",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/content",
+      "name": "Admin Content",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    },
+    {
+      "path": "/admin/settings",
+      "name": "Admin Settings",
+      "cardGroups": 0,
+      "status": "0 (No card groups)"
+    }
+  ]
+}

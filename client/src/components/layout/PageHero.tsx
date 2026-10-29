@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, ShieldCheck, Zap, Star } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ShieldCheck, Zap, Star, Check } from 'lucide-react';
 import { Breadcrumbs } from '../ui/Breadcrumbs';
 import { Button } from '../ui/Button';
 import { getHeroVisual } from '../hero-visuals/VisualRegistry';
@@ -209,7 +209,12 @@ export const PageHero: React.FC<PageHeroProps> = ({
                     href={primaryCta.href}
                     className="shadow-lg shadow-orange-500/20"
                   >
-                    {primaryCta.label} <ArrowRight className="w-4 h-4 ml-1.5" />
+                    {primaryCta.label}{' '}
+                    {primaryCta.label.toLowerCase().includes('copied') ? (
+                      <Check className="w-4 h-4 ml-1.5 text-emerald-300" />
+                    ) : (
+                      <ArrowRight className="w-4 h-4 ml-1.5" />
+                    )}
                   </Button>
                 )}
                 {secondaryCta && (

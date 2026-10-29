@@ -190,7 +190,7 @@ export const ResumeAnalyzer: React.FC = () => {
                     <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
                     <input
                       type="file"
-                      accept=".pdf,.doc,.docx,.txt"
+                      accept=".pdf,.docx,.txt,application/pdf"
                       onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
                       className="text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 cursor-pointer"
                     />

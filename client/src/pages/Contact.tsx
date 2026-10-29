@@ -67,27 +67,100 @@ export const Contact: React.FC = () => {
         canonical="/contact"
       />
 
-      <PageHero
-        breadcrumbs={[{ label: 'Contact' }]}
-        badge="Get in Touch"
-        title="Let's Discuss Your Hiring or Career Goals."
-        titleGradientWords={['Hiring or Career Goals.']}
-        subtitle="Whether you need to scale an engineering pod under aggressive delivery deadlines or accelerate your personal job search, our technical recruiters are ready to assist."
-        primaryCta={{
-          label: 'Send Direct Message',
-          href: '#contact-form-section',
-        }}
-        secondaryCta={{
-          label: 'Book Consultation',
-          onClick: onOpenConsultation,
-        }}
-        facts={[
-          { label: 'Advisory Reply', value: '< 15 Mins' },
-          { label: 'Headquarters', value: 'Dallas & Hyd' },
-          { label: 'Support SLA', value: '24/7 Global' },
-        ]}
-        visual="contact-card"
-      />
+      {/* ── 1. SHORT HERO WITH TWO OFFICES SIDE BY SIDE ── */}
+      <section className="relative bg-gradient-to-br from-navy-950 via-[#0A173D] to-navy-900 text-white pt-24 sm:pt-32 pb-14 sm:pb-20 border-b border-white/10 overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="container-custom relative z-10">
+          {/* Breadcrumbs and Coloured Page Label Chip */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <Breadcrumbs items={[{ label: 'Contact' }]} className="text-blue-200/80" />
+            <span className="hidden sm:inline text-white/30">•</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold backdrop-blur-md">
+              <Mail className="w-3.5 h-3.5 text-orange-400" />
+              <span>Contact & Advisory</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Headline */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-wider text-orange-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                GLOBAL REACH · 24/7 SUPPORT
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-white leading-[1.15]">
+                Let's Discuss Your{' '}
+                <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
+                  Goals.
+                </span>
+              </h1>
+
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+                Whether you need to scale an engineering pod under aggressive delivery deadlines or accelerate your personal job search, our technical recruiters in Dallas and Hyderabad are ready to assist.
+              </p>
+
+              <div className="pt-2">
+                <Button variant="primary" size="md" onClick={onOpenConsultation} className="shadow-lg shadow-orange-500/25">
+                  Book 1-on-1 Consultation
+                </Button>
+              </div>
+            </div>
+
+            {/* Right: The Two Offices Highlight Cards Side by Side */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* US Office Card */}
+              <div className="p-6 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xl">🇺🇸</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30">
+                    US Headquarters
+                  </span>
+                </div>
+                <h2 className="text-lg font-heading font-bold text-white">Plano, Texas (USA)</h2>
+                <div className="space-y-1.5 text-xs text-slate-300">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0 mt-0.5" />
+                    <span>{siteConfig.offices[0].address}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                    <a href={`tel:${siteConfig.contact.phoneUSA}`} className="hover:text-white transition-colors">
+                      {siteConfig.contact.phoneUSA}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* India Office Card */}
+              <div className="p-6 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xl">🇮🇳</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                    Global Delivery Hub
+                  </span>
+                </div>
+                <h2 className="text-lg font-heading font-bold text-white">Hyderabad (India)</h2>
+                <div className="space-y-1.5 text-xs text-slate-300">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
+                    <span>{siteConfig.offices[1].address}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <a href={`tel:${siteConfig.contact.phoneIndia}`} className="hover:text-white transition-colors">
+                      {siteConfig.contact.phoneIndia}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Scroll3DSection id="contact-form-section" preset="lift" className="py-16 sm:py-20 lg:py-24 bg-white">
         <div className="container-custom">

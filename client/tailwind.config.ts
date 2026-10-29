@@ -30,6 +30,21 @@ export default {
         gray: {
           50: '#F5F7FA',
         },
+        brand: {
+          orange: '#F25C2A',
+          navy: '#0F172A',
+          blue: '#2563EB',
+          sky: '#38BDF8',
+        },
+        pastel: {
+          lavender: '#EEF0FF',
+          cream: '#FFF3E8',
+          butter: '#FFEFB8',
+          mint: '#E3F6EC',
+          sky: '#E4F1FF',
+          blush: '#FFE6E6',
+          indigo: '#1B1FB8',
+        },
       },
       fontFamily: {
         heading: ['Sora', 'sans-serif'],

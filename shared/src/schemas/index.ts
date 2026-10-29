@@ -167,3 +167,50 @@ export const interviewReadinessSchema = z.object({
   mock_interviews_done: z.number().min(0),
 });
 export type InterviewReadinessInput = z.infer<typeof interviewReadinessSchema>;
+
+// 13. Blog Schemas
+export const blogPostInputSchema = z.object({
+  title: z.string().min(3, 'Title must be at least 3 characters'),
+  slug: z.string().min(2, 'Slug is required'),
+  excerpt: z.string().min(10, 'Excerpt must be at least 10 characters'),
+  content_markdown: z.string().optional(),
+  content_html: z.string().min(20, 'Content HTML must be at least 20 characters'),
+  category_id: z.number().int().positive().optional().nullable(),
+  category: z.string().optional(),
+  author_id: z.number().int().positive().optional().nullable(),
+  cover_image: z.string().min(1, 'Cover image URL is required'),
+  cover_alt: z.string().optional().default(''),
+  canonical_url: z.string().url().optional().or(z.literal('')).nullable(),
+  meta_title: z.string().optional().nullable(),
+  meta_description: z.string().optional().nullable(),
+  reading_time_min: z.number().int().min(1).default(5),
+  status: z.enum(['draft', 'published', 'scheduled', 'archived', 'DRAFT', 'PUBLISHED', 'SCHEDULED', 'ARCHIVED']).default('draft'),
+  published_at: z.string().or(z.date()).optional().nullable(),
+  scheduled_for: z.string().or(z.date()).optional().nullable(),
+  featured: z.boolean().or(z.number()).optional().default(false),
+  seo_title: z.string().optional().nullable(),
+  seo_description: z.string().optional().nullable(),
+  og_image: z.string().optional().nullable(),
+  tag_ids: z.array(z.number().int()).optional().default([]),
+  tags: z.array(z.any()).optional().default([]),
+  faqs: z.array(z.object({
+    question: z.string().min(3),
+    answer: z.string().min(5),
+    sort_order: z.number().optional()
+  })).optional().default([]),
+});
+export type BlogPostInput = z.infer<typeof blogPostInputSchema>;
+
+export const blogQuerySchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(9),
+  category: z.string().optional(),
+  tag: z.string().optional(),
+  q: z.string().optional(),
+  sort: z.string().optional(),
+  status: z.enum(['draft', 'published', 'scheduled', 'archived', 'all', 'DRAFT', 'PUBLISHED', 'SCHEDULED', 'ARCHIVED', 'ALL']).optional(),
+  sortBy: z.enum(['published_at', 'views_count', 'title']).default('published_at'),
+  order: z.enum(['asc', 'desc']).default('desc'),
+});
+export type BlogQueryInput = z.infer<typeof blogQuerySchema>;
+

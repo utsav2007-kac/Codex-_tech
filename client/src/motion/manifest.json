@@ -1,0 +1,67 @@
+{
+  "system": "Codex Motion & Smoothness Architecture",
+  "version": "2.0.0",
+  "philosophy": {
+    "reverseRule": "Every scrubbed scroll animation moves backwards naturally when scrolling up. Entrance animations use 'play none none reverse'. All elements release to transform: none at rest for subpixel text sharpness.",
+    "smoothScroll": "Lenis smooth scroll with lerp 0.09 driven by GSAP ticker with lagSmoothing(0). Touch devices use native momentum scrolling.",
+    "canvasBudget": "Strict maximum of 1 WebGL canvas active across any viewport."
+  },
+  "qualityGovernor": {
+    "modes": {
+      "full": {
+        "fpsTarget": 60,
+        "features": ["3D transforms", "Lenis smooth scroll", "GSAP ScrollTrigger scrub", "Cursor tilt with specular glare", "WebGL monogram stage"]
+      },
+      "lite": {
+        "fpsTarget": 60,
+        "features": ["2D transforms", "Reduced tilt amplitude", "Native momentum scroll", "Static hero monogram fallback", "Throttled tickers"]
+      },
+      "off": {
+        "fpsTarget": 60,
+        "features": ["Instant reveal without transitions", "prefers-reduced-motion compliance", "Zero transforms at rest"]
+      }
+    },
+    "hardwareThresholds": {
+      "memoryMinGb": 4,
+      "coresMin": 4,
+      "maxAverageFrameTimeMs": 20
+    }
+  },
+  "directives": [
+    {
+      "name": "tilt-in",
+      "target": "Section containers",
+      "behavior": "Perspective 1200px tilt-in from rotateX(10deg) scrubbed from top 95% to top 40%, releases to transform: none on leave."
+    },
+    {
+      "name": "stage-recede",
+      "target": "Hero monogram stage",
+      "behavior": "Smoothly scales down to 0.94 and recedes in 3D perspective as user scrolls down."
+    },
+    {
+      "name": "rise-stagger",
+      "target": "Card grids & list groups",
+      "behavior": "Children stagger rise 20px with power2.out ease, triggered at top 92% with fastScrollEnd and clearProps onComplete."
+    },
+    {
+      "name": "split-lines",
+      "target": "Display headings",
+      "behavior": "Lines reveal from horizon mask with rotateX(-15deg) to 0, descender safe padding 0.15em."
+    },
+    {
+      "name": "flip-rows",
+      "target": "Outcome rows & metrics",
+      "behavior": "Staggered 3D flip from rotateX(-18deg) to 0, clearing props at rest."
+    },
+    {
+      "name": "depth-in",
+      "target": "Cards & feature blocks",
+      "behavior": "Subtle scale and z-depth entrance with toggleActions: 'play none none reverse'."
+    },
+    {
+      "name": "magnetic",
+      "target": "Primary CTA buttons",
+      "behavior": "Spring-damped button pull with mouse-following trajectory."
+    }
+  ]
+}

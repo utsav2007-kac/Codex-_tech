@@ -275,7 +275,7 @@ export const CareerDetail: React.FC = () => {
                         </span>
                         <input
                           type="file"
-                          accept=".pdf,.doc,.docx"
+                          accept=".pdf,.docx,application/pdf"
                           onChange={onFileChange}
                           className="hidden"
                         />

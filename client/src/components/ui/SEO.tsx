@@ -1,5 +1,5 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import * as pkg from 'react-helmet-async';
+const Helmet: any = (pkg as any).Helmet || (pkg as any).default?.Helmet || (pkg as any).default || pkg;
 import { siteConfig } from '../../config/site';
 
 interface SEOProps {
