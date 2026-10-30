@@ -10,6 +10,16 @@ import './styles/index.css';
 import { App } from './App';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
+// Enforce browser manual scroll restoration on reload across all devices
+if (typeof window !== 'undefined') {
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+}
+
 const rootElement = document.getElementById('root')!;
 
 const appNode = (

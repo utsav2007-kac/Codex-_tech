@@ -45,7 +45,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
   const onSubmit = async (values: ConsultationInput) => {
     setErrorMessage('');
     try {
-      await api.post('/leads', values);
+      let refCode = '';
+      try {
+        refCode = sessionStorage.getItem('cx_referral_code') || '';
+      } catch {}
+      await api.post('/leads', { ...values, referral_code: refCode });
       setIsSuccess(true);
       reset();
     } catch (err: any) {

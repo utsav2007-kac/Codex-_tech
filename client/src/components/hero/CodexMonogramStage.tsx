@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Smartphone, Code2, Sparkles, Terminal } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { FileCheck, Linkedin, Target, Award, ArrowUpRight } from 'lucide-react';
 
 // Lazy load the heavy Three.js / R3F Canvas off the critical path
 const CodexMonogramCanvas = React.lazy(() => import('./CodexMonogramCanvas'));
@@ -25,15 +26,16 @@ export function StaticFallback() {
   );
 }
 
-// ── FOUR BALANCED JOB CARDS DATA (4 QUADRANTS) ─────────────────────────────────
+// ── FOUR BALANCED INTERACTIVE TOOLS (MATCHING IMAGE 4 RED CIRCLES) ──────────────
 const jobCardsData = [
   {
-    id: 'mobile-lead',
-    role: 'Mobile iOS & Android Lead',
-    stack: 'React Native · Swift · Kotlin',
-    badge: '98% Match',
-    salary: '$155,000 / yr',
-    icon: Smartphone,
+    id: 'resume-analyzer',
+    role: 'Resume Analyzer',
+    stack: 'ATS Optimization · Scoring',
+    badge: '98% ATS Match',
+    salary: 'Instant Audit',
+    icon: FileCheck,
+    link: '/tools/resume-analyzer',
     accentBorder: 'border-orange-200/80',
     iconBg: 'bg-orange-50 border border-orange-200/80 text-[#F15A34]',
     badgeBg: 'bg-orange-50 text-orange-700 border border-orange-200/80',
@@ -41,12 +43,13 @@ const jobCardsData = [
     activeGlow: 'ring-2 ring-[#F15A34]/50 shadow-[0_18px_45px_rgba(241,90,52,0.22)]',
   },
   {
-    id: 'fullstack-dev',
-    role: 'Full Stack Engineer',
-    stack: 'React · TypeScript · Node.js',
-    badge: 'Urgent Hire',
-    salary: '$156,000 / yr',
-    icon: Code2,
+    id: 'linkedin-analyzer',
+    role: 'LinkedIn Profile Analyzer',
+    stack: 'Executive Presence · Inbound',
+    badge: 'Top 2% Brand',
+    salary: '+340% Reach',
+    icon: Linkedin,
+    link: '/tools/linkedin-analyzer',
     accentBorder: 'border-blue-200/90',
     iconBg: 'bg-blue-50 border border-blue-200/80 text-[#1F6AA5]',
     badgeBg: 'bg-blue-50 text-[#1F6AA5] border border-blue-200/80',
@@ -54,12 +57,13 @@ const jobCardsData = [
     activeGlow: 'ring-2 ring-[#1F6AA5]/50 shadow-[0_18px_45px_rgba(31,106,165,0.24)]',
   },
   {
-    id: 'python-dev',
-    role: 'Python Developer',
-    stack: 'FastAPI · Django · PostgreSQL',
-    badge: 'Top Offer',
-    salary: '$148,000 / yr',
-    icon: Terminal,
+    id: 'job-match-score',
+    role: 'Job Match Score',
+    stack: 'Requisition Compatibility',
+    badge: '98% Match',
+    salary: 'Direct Fit',
+    icon: Target,
+    link: '/tools/job-match-score',
     accentBorder: 'border-indigo-200/80',
     iconBg: 'bg-indigo-50 border border-indigo-200/80 text-indigo-600',
     badgeBg: 'bg-indigo-50 text-indigo-700 border border-indigo-200/80',
@@ -67,12 +71,13 @@ const jobCardsData = [
     activeGlow: 'ring-2 ring-indigo-500/50 shadow-[0_18px_45px_rgba(99,102,241,0.22)]',
   },
   {
-    id: 'ai-ml-engineer',
-    role: 'AI / ML Engineer',
-    stack: 'PyTorch · GenAI · LLMs',
-    badge: '99% Match',
-    salary: '$178,000 / yr',
-    icon: Sparkles,
+    id: 'interview-readiness',
+    role: 'Interview Readiness',
+    stack: 'System Design · STAR Defense',
+    badge: '94% Ready',
+    salary: 'Offer Calibrated',
+    icon: Award,
+    link: '/tools/interview-readiness',
     accentBorder: 'border-emerald-200/80',
     iconBg: 'bg-emerald-50 border border-emerald-200/80 text-emerald-600',
     badgeBg: 'bg-emerald-50 text-emerald-700 border border-emerald-200/80',
@@ -410,23 +415,24 @@ export const CodexMonogramStage: React.FC = () => {
           <circle cx="382" cy="388" r="3" fill="#10B981" opacity={activeCardIdx === 3 ? 1 : 0.45} />
         </svg>
 
-        {/* ── 1. JOB CARD 1: MOBILE IOS & ANDROID (Upper-Left Area) ── */}
-        <div
+        {/* ── 1. TOOL CARD 1: RESUME ANALYZER (Upper-Left Area) ── */}
+        <Link
+          to={card1.link}
           onPointerDown={(e) => e.stopPropagation()}
-          className="hero-anim-card-1 absolute top-3 sm:top-5 left-1 sm:left-2 lg:-left-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex"
-          aria-label={`${card1.role} job opportunity`}
+          className="hero-anim-card-1 absolute top-3 sm:top-5 left-1 sm:left-2 lg:-left-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex group/tool"
+          aria-label={`${card1.role} tool`}
         >
           <div
-            className={`hero-card-inner-1 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(31,106,165,0.08)] transition-all duration-300 ${
+            className={`hero-card-inner-1 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(31,106,165,0.08)] transition-all duration-300 group-hover/tool:scale-105 group-hover/tool:border-[#F15A34]/50 ${
               activeCardIdx === 0 ? card1.activeGlow : 'hover:shadow-[0_18px_40px_rgba(31,106,165,0.15)]'
             }`}
           >
             <div className={`w-9 h-9 rounded-xl ${card1.iconBg} flex items-center justify-center shrink-0`}>
-              <Smartphone className="w-4 h-4" />
+              <FileCheck className="w-4 h-4" />
             </div>
             <div className="leading-tight flex-1 min-w-0">
               <div className="flex items-center justify-between gap-1.5 mb-1">
-                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate">
+                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate group-hover/tool:text-[#C2410C] transition-colors">
                   {card1.role}
                 </span>
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${card1.badgeBg} shrink-0`}>
@@ -441,25 +447,26 @@ export const CodexMonogramStage: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
 
-        {/* ── 2. JOB CARD 2: FULL STACK ENGINEER (Upper-Right Area) ── */}
-        <div
+        {/* ── 2. TOOL CARD 2: LINKEDIN PROFILE ANALYZER (Upper-Right Area) ── */}
+        <Link
+          to={card2.link}
           onPointerDown={(e) => e.stopPropagation()}
-          className="hero-anim-card-2 absolute top-5 sm:top-7 right-1 sm:right-2 lg:-right-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex"
-          aria-label={`${card2.role} job opportunity`}
+          className="hero-anim-card-2 absolute top-5 sm:top-7 right-1 sm:right-2 lg:-right-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex group/tool"
+          aria-label={`${card2.role} tool`}
         >
           <div
-            className={`hero-card-inner-2 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border ${card2.accentBorder} shadow-[0_16px_40px_rgba(31,106,165,0.12)] transition-all duration-300 ${
+            className={`hero-card-inner-2 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border ${card2.accentBorder} shadow-[0_16px_40px_rgba(31,106,165,0.12)] transition-all duration-300 group-hover/tool:scale-105 group-hover/tool:border-[#1F6AA5]/60 ${
               activeCardIdx === 1 ? card2.activeGlow : 'hover:shadow-[0_20px_45px_rgba(31,106,165,0.20)]'
             }`}
           >
             <div className={`w-9 h-9 rounded-xl ${card2.iconBg} flex items-center justify-center shrink-0`}>
-              <Code2 className="w-4 h-4" />
+              <Linkedin className="w-4 h-4" />
             </div>
             <div className="leading-tight flex-1 min-w-0">
               <div className="flex items-center justify-between gap-1.5 mb-1">
-                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate">
+                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate group-hover/tool:text-[#1F6AA5] transition-colors">
                   {card2.role}
                 </span>
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${card2.badgeBg} shrink-0`}>
@@ -474,25 +481,26 @@ export const CodexMonogramStage: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
 
-        {/* ── 3. JOB CARD 3: PYTHON DEVELOPER (Lower-Left Area) ── */}
-        <div
+        {/* ── 3. TOOL CARD 3: JOB MATCH SCORE (Lower-Left Area) ── */}
+        <Link
+          to={card3.link}
           onPointerDown={(e) => e.stopPropagation()}
-          className="hero-anim-card-3 absolute bottom-4 sm:bottom-6 left-1 sm:left-2 lg:-left-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex"
-          aria-label={`${card3.role} job opportunity`}
+          className="hero-anim-card-3 absolute bottom-4 sm:bottom-6 left-1 sm:left-2 lg:-left-2 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex group/tool"
+          aria-label={`${card3.role} tool`}
         >
           <div
-            className={`hero-card-inner-3 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(99,102,241,0.08)] transition-all duration-300 ${
+            className={`hero-card-inner-3 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(99,102,241,0.08)] transition-all duration-300 group-hover/tool:scale-105 group-hover/tool:border-indigo-400 ${
               activeCardIdx === 2 ? card3.activeGlow : 'hover:shadow-[0_18px_40px_rgba(99,102,241,0.18)]'
             }`}
           >
             <div className={`w-9 h-9 rounded-xl ${card3.iconBg} flex items-center justify-center shrink-0`}>
-              <Terminal className="w-4 h-4" />
+              <Target className="w-4 h-4" />
             </div>
             <div className="leading-tight flex-1 min-w-0">
               <div className="flex items-center justify-between gap-1.5 mb-1">
-                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate">
+                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate group-hover/tool:text-indigo-600 transition-colors">
                   {card3.role}
                 </span>
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${card3.badgeBg} shrink-0`}>
@@ -507,25 +515,26 @@ export const CodexMonogramStage: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
 
-        {/* ── 4. JOB CARD 4: AI / ML ENGINEER (Lower-Right Area) ── */}
-        <div
+        {/* ── 4. TOOL CARD 4: INTERVIEW READINESS (Lower-Right Area) ── */}
+        <Link
+          to={card4.link}
           onPointerDown={(e) => e.stopPropagation()}
-          className="hero-anim-card-4 absolute bottom-4 sm:bottom-6 right-2 sm:right-4 lg:right-3 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex"
-          aria-label={`${card4.role} job opportunity`}
+          className="hero-anim-card-4 absolute bottom-4 sm:bottom-6 right-2 sm:right-4 lg:right-3 z-20 w-[252px] sm:w-[266px] lg:w-[276px] hidden sm:flex group/tool"
+          aria-label={`${card4.role} tool`}
         >
           <div
-            className={`hero-card-inner-4 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(16,185,129,0.08)] transition-all duration-300 ${
+            className={`hero-card-inner-4 w-full p-3 flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_14px_35px_rgba(16,185,129,0.08)] transition-all duration-300 group-hover/tool:scale-105 group-hover/tool:border-emerald-400 ${
               activeCardIdx === 3 ? card4.activeGlow : 'hover:shadow-[0_18px_40px_rgba(16,185,129,0.18)]'
             }`}
           >
             <div className={`w-9 h-9 rounded-xl ${card4.iconBg} flex items-center justify-center shrink-0`}>
-              <Sparkles className="w-4 h-4" />
+              <Award className="w-4 h-4" />
             </div>
             <div className="leading-tight flex-1 min-w-0">
               <div className="flex items-center justify-between gap-1.5 mb-1">
-                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate">
+                <span className="font-heading font-bold text-[12.5px] text-[#0B1B2E] truncate group-hover/tool:text-emerald-600 transition-colors">
                   {card4.role}
                 </span>
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${card4.badgeBg} shrink-0`}>
@@ -540,7 +549,7 @@ export const CodexMonogramStage: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* ── MOBILE RESPONSIVE STACK (< 640px) ── */}
@@ -549,8 +558,9 @@ export const CodexMonogramStage: React.FC = () => {
           const Icon = job.icon;
           const isActive = activeCardIdx === idx;
           return (
-            <div
+            <Link
               key={job.id}
+              to={job.link}
               className={`p-3 flex items-center gap-3 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_10px_25px_rgba(31,106,165,0.06)] transition-all ${
                 isActive ? job.activeGlow : ''
               }`}
@@ -574,7 +584,7 @@ export const CodexMonogramStage: React.FC = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

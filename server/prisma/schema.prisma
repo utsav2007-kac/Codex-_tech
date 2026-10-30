@@ -55,6 +55,7 @@ model Lead {
   source             String?    @default("website") @db.VarChar(100)
   plan               String?    @db.VarChar(100)
   message            String?    @db.Text
+  referral_code      String?    @db.VarChar(50)
   consent            Boolean    @default(true)
   status             LeadStatus @default(NEW)
   created_at         DateTime   @default(now())
@@ -130,6 +131,7 @@ model Application {
   linkedin_url         String?    @db.VarChar(255)
   resume_path          String     @db.VarChar(255)
   resume_original_name String     @db.VarChar(255)
+  referral_code        String?    @db.VarChar(50)
   cover_note           String?    @db.Text
   status               String     @default("NEW") @db.VarChar(50)
   created_at           DateTime   @default(now())
@@ -151,11 +153,14 @@ model Referral {
   referee_email  String   @db.VarChar(191)
   referee_phone  String   @db.VarChar(50)
   role_skill     String   @db.VarChar(200)
+  referral_code  String?  @unique @db.VarChar(50)
+  used_count     Int      @default(0)
   status         String   @default("NEW") @db.VarChar(50)
   created_at     DateTime @default(now())
 
   @@index([referrer_email])
   @@index([referee_email])
+  @@index([referral_code])
   @@index([status])
   @@index([created_at])
   @@map("referrals")
@@ -279,9 +284,10 @@ model SuccessStory {
   situation    String   @db.LongText
   approach     String   @db.LongText
   results      String   @db.LongText
-  is_sample    Boolean  @default(true)
-  is_published Boolean  @default(true)
-  created_at   DateTime @default(now())
+  is_sample         Boolean  @default(true)
+  is_published      Boolean  @default(true)
+  consent_confirmed Boolean  @default(false)
+  created_at        DateTime @default(now())
 
   @@index([slug])
   @@index([is_published])
@@ -328,9 +334,10 @@ model Testimonial {
   source       String   @default("LinkedIn") @db.VarChar(50)
   avatar       String?  @db.VarChar(255)
   date         String?  @db.VarChar(50)
-  is_sample    Boolean  @default(true)
-  is_published Boolean  @default(true)
-  created_at   DateTime @default(now())
+  is_sample         Boolean  @default(true)
+  is_published      Boolean  @default(true)
+  consent_confirmed Boolean  @default(false)
+  created_at        DateTime @default(now())
 
   @@index([is_published])
   @@map("testimonials")

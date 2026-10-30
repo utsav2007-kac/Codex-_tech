@@ -92,6 +92,10 @@ export const CareerDetail: React.FC = () => {
     formData.append('phone', data.phone);
     if (data.linkedin_url) formData.append('linkedin_url', data.linkedin_url);
     if (data.cover_note) formData.append('cover_note', data.cover_note);
+    try {
+      const refCode = sessionStorage.getItem('cx_referral_code');
+      if (refCode) formData.append('referral_code', refCode);
+    } catch {}
     if (data.honeypot) formData.append('honeypot', data.honeypot);
     formData.append('resume', resumeFile);
 

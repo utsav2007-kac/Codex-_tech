@@ -23,6 +23,7 @@ export const consultationSchema = z.object({
   source: z.string().optional().default('website'),
   plan: z.string().optional().default(''),
   message: z.string().optional().default(''),
+  referral_code: z.string().optional().default(''),
   consent: z.boolean().refine((val) => val === true, 'You must agree to the privacy policy and consent to be contacted'),
   honeypot: z.string().max(0, 'Spam detected').optional().default(''),
 });
@@ -63,6 +64,7 @@ export const applicationSchema = z.object({
   phone: z.string().min(7, 'Valid phone number is required'),
   linkedin_url: z.string().url('Valid LinkedIn URL is required').optional().or(z.literal('')),
   cover_note: z.string().optional().default(''),
+  referral_code: z.string().optional().default(''),
   honeypot: z.string().max(0, 'Spam detected').optional().default(''),
 });
 export type ApplicationInput = z.infer<typeof applicationSchema>;
@@ -76,6 +78,7 @@ export const referralSchema = z.object({
   referee_email: z.string().email("Candidate's valid email is required"),
   referee_phone: z.string().min(7, "Candidate's phone number is required"),
   role_skill: z.string().min(2, 'Target role or skills are required'),
+  consent: z.boolean().default(true),
   honeypot: z.string().max(0, 'Spam detected').optional().default(''),
 });
 export type ReferralInput = z.infer<typeof referralSchema>;

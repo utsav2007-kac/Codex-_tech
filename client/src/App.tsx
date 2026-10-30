@@ -33,8 +33,6 @@ const SalaryGuide = lazy(() => import('./pages/resources/SalaryGuide').then((m) 
 const ResumeTemplates = lazy(() => import('./pages/resources/ResumeTemplates').then((m) => ({ default: m.ResumeTemplates })));
 const InterviewQuestionBank = lazy(() => import('./pages/resources/InterviewQuestionBank').then((m) => ({ default: m.InterviewQuestionBank })));
 const Webinars = lazy(() => import('./pages/resources/Webinars').then((m) => ({ default: m.Webinars })));
-const Insights = lazy(() => import('./pages/Insights').then((m) => ({ default: m.Insights })));
-const InsightDetail = lazy(() => import('./pages/InsightDetail').then((m) => ({ default: m.InsightDetail })));
 const BlogList = lazy(() => import('./pages/blog/BlogList').then((m) => ({ default: m.BlogList })));
 const BlogDetail = lazy(() => import('./pages/blog/BlogDetail').then((m) => ({ default: m.BlogDetail })));
 const Faq = lazy(() => import('./pages/Faq').then((m) => ({ default: m.Faq })));
@@ -99,8 +97,8 @@ export const App: React.FC = () => {
             <Route path="/resources/resume-templates" element={<ResumeTemplates />} />
             <Route path="/resources/interview-question-bank" element={<InterviewQuestionBank />} />
             <Route path="/resources/webinars" element={<Webinars />} />
-            <Route path="/insights" element={<Insights />} />
-            <Route path="/insights/:slug" element={<InsightDetail />} />
+            <Route path="/insights" element={<Navigate to="/blog" replace />} />
+            <Route path="/insights/:slug" element={<Navigate to="/blog" replace />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/faq" element={<Faq />} />

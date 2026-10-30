@@ -8,7 +8,8 @@
       name="description"
       content="Codex Tech-IT connects skilled IT professionals with companies ready to hire through sharp profile positioning, interview coaching, and direct employer access."
     />
-    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
     <meta property="og:title" content="Codex Tech-IT | We Deliver Jobs Faster" />
     <meta
       property="og:description"
@@ -339,6 +340,14 @@
             doc.setAttribute('data-motion', 'lite');
           } else {
             doc.setAttribute('data-motion', 'full');
+          }
+
+          // Ensure page always reloads from the top without jumping
+          if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+          }
+          if (!location.hash) {
+            window.scrollTo(0, 0);
           }
 
           // 1.5s failsafe reveals all content if motion scripts are blocked

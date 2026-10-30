@@ -263,19 +263,24 @@ export const AdminSubmissions: React.FC = () => {
                     <td className="py-3 px-4 font-mono text-[11px] text-slate-400">#{item.id}</td>
                     <td className="py-3 px-4">
                       <div className="font-bold text-navy-900 flex items-center gap-1.5">
-                        <span>{item.name || item.contact_person || item.company || 'Subscriber'}</span>
+                        <span>{item.name || item.contact_person || item.company || (item.referrer_name ? `${item.referrer_name} (Referrer)` : 'Subscriber')}</span>
                         {item.visa_status && item.visa_status !== 'NA' && (
                           <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-100 text-blue-800">
                             {item.visa_status}
                           </span>
                         )}
+                        {item.referral_code && (
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                            {item.referral_code} ({item.used_count || 0} used)
+                          </span>
+                        )}
                       </div>
-                      <div className="text-[11px] text-slate-500">{item.email}</div>
-                      {item.phone && <div className="text-[10px] text-slate-400">{item.phone}</div>}
+                      <div className="text-[11px] text-slate-500">{item.email || item.referrer_email}</div>
+                      {(item.phone || item.referrer_phone) && <div className="text-[10px] text-slate-400">{item.phone || item.referrer_phone}</div>}
                     </td>
                     <td className="py-3 px-4 max-w-xs truncate">
                       <div className="font-semibold text-navy-800 truncate">
-                        {item.service_interest || item.job?.title || item.subject || item.roles_needed || item.role_skill || item.course?.title || item.plan || 'General Request'}
+                        {item.referee_name ? `Referred: ${item.referee_name} (${item.role_skill})` : (item.service_interest || item.job?.title || item.subject || item.roles_needed || item.role_skill || item.course?.title || item.plan || 'General Request')}
                       </div>
                       {(item.message || item.cover_note || item.notes) && (
                         <div className="text-[10px] text-slate-400 truncate">
@@ -422,6 +427,30 @@ export const AdminSubmissions: React.FC = () => {
 
               {/* Dynamic Context Fields */}
               <div className="space-y-3">
+                {selectedItem.referral_code && (
+                  <div className="flex justify-between py-2 border-b border-gray-100 bg-amber-50/60 px-3 rounded-lg">
+                    <span className="text-slate-600 font-medium">Referral Code & Usages:</span>
+                    <span className="font-mono font-bold text-amber-900">{selectedItem.referral_code} ({selectedItem.used_count || 0} used)</span>
+                  </div>
+                )}
+                {selectedItem.referrer_name && (
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-slate-500">Referrer:</span>
+                    <span className="font-bold text-navy-900">{selectedItem.referrer_name} ({selectedItem.referrer_email})</span>
+                  </div>
+                )}
+                {selectedItem.referee_name && (
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-slate-500">Referred Candidate:</span>
+                    <span className="font-bold text-navy-900">{selectedItem.referee_name} ({selectedItem.referee_email} | {selectedItem.referee_phone})</span>
+                  </div>
+                )}
+                {selectedItem.role_skill && (
+                  <div className="flex justify-between py-2 border-b border-gray-100">
+                    <span className="text-slate-500">Referred Role / Skill:</span>
+                    <span className="font-bold text-navy-900">{selectedItem.role_skill}</span>
+                  </div>
+                )}
                 {selectedItem.current_role && (
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-slate-500">Current Role:</span>

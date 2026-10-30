@@ -80,6 +80,22 @@ async function main() {
       },
     },
     {
+      key: 'referral_reward_total',
+      value: '$1,500',
+    },
+    {
+      key: 'referral_reward_on_enrolment',
+      value: '$500',
+    },
+    {
+      key: 'referral_reward_on_placement',
+      value: '$1,000',
+    },
+    {
+      key: 'referral_terms',
+      value: 'Terms & Eligibility: Referrals must complete registration and meet program milestones. Rewards are disbursed after successful corporate placement and verification of a minimum 60-day active tenure. Self-referrals are prohibited. T&C apply.',
+    },
+    {
       key: 'referral_tiers',
       value: [
         {
@@ -741,12 +757,34 @@ Financial institutions, healthcare providers, and defense contractors require ex
     });
     if (!existing) {
       await prisma.testimonial.create({
-        data: { ...t, is_published: true },
+        data: { ...t, is_published: true, consent_confirmed: true },
       });
     } else {
       await prisma.testimonial.update({
         where: { id: existing.id },
-        data: { rating: t.rating, source: t.source, date: t.date, is_sample: t.is_sample },
+        data: { rating: t.rating, source: t.source, date: t.date, is_sample: t.is_sample, consent_confirmed: true },
+      });
+    }
+  }
+
+  // Legacy Draft Testimonials (Unpublished pending consent)
+  const legacyDraftTestimonials = [
+    { name: 'Raj Chauhan', role: 'Software Engineer', quote: 'Codex Tech-IT has been instrumental in shaping my career. Their dedicated team went above and beyond to match my skills with the perfect job opportunity. Their professionalism and commitment to both candidates and clients truly set them apart.', rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+    { name: 'Anjana Thomas', role: 'Software Engineer', quote: "Codex Tech-IT is not just a staffing agency; they are a true partner in your career journey. The team is responsive, proactive, and genuinely invested in your success. Thanks to them, I found a job that I'm not only qualified for but also passionate about.", rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+    { name: 'Ramandeep Kaur', role: 'Software Developer', quote: 'Working with Codex Tech-IT was a seamless experience. They understood my career goals and connected me with a company that perfectly aligned with my skills. The entire process was efficient, and their team was always available to address any concerns. Highly recommend!', rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+    { name: 'Smit Patel', role: 'IT Professional', quote: 'Codex Tech-IT is the go-to IT placement company! Their expertise in matching candidates with the right opportunities is unparalleled. I landed my dream job through their services, and the entire process was seamless. Highly recommend Codex Tech-IT for anyone looking for top-notch IT placement services.', rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+    { name: 'Shweta Singh', role: 'IT Specialist', quote: 'Thanks to Codex Tech-IT, I am now in a position that perfectly aligns with my career goals. Their professionalism, attention to detail, and commitment to candidate success are truly commendable. I am grateful for the personalized service they provided, guiding me through the job search process and helping me secure an incredible opportunity. Codex Tech-IT is the go-to for anyone serious about advancing their career in IT.', rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+    { name: 'Sonia Rajput', role: 'IT Professional', quote: "Codex Tech-IT truly understands the needs of IT professionals. Their commitment to excellence and personalized service made my job search a breeze. With their guidance, I not only found a job that matches my skill set but also one that I'm genuinely excited about. Kudos to Codex Tech-IT for being a reliable partner in my career journey!", rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+    { name: 'Maharshi Bhardwaj', role: 'Software Developer', quote: 'Codex Tech-IT has been a game-changer in my job search! Their personalized approach and dedication to finding the right fit for candidates are unmatched. Thanks to their exceptional service, I landed the best job that perfectly aligns with my skills and career aspirations. Grateful to the Codex Tech-IT team for making this career milestone possible!', rating: 5, source: 'Legacy Site', date: 'Archive', is_sample: false, is_published: false, consent_confirmed: false },
+  ];
+
+  for (const t of legacyDraftTestimonials) {
+    const existing = await prisma.testimonial.findFirst({
+      where: { name: t.name },
+    });
+    if (!existing) {
+      await prisma.testimonial.create({
+        data: t,
       });
     }
   }

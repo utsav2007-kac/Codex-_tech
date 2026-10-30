@@ -21,6 +21,15 @@ import { siteConfig } from '../config/site';
 import { Scroll3DSection } from '../components/motion/Scroll3DSection';
 import { Scroll3DCard } from '../components/motion/Scroll3DCard';
 import { SectionReveal } from '../components/motion/SectionReveal';
+import { JobPlacementPage } from '../components/services/pages/JobPlacementPage';
+import { RecruitmentStaffingPage } from '../components/services/pages/RecruitmentStaffingPage';
+import { TalentAcquisitionPage } from '../components/services/pages/TalentAcquisitionPage';
+import { ItTrainingPage } from '../components/services/pages/ItTrainingPage';
+import { BackgroundVerificationPage } from '../components/services/pages/BackgroundVerificationPage';
+import { PayrollTaxesPage } from '../components/services/pages/PayrollTaxesPage';
+import { ResumeRebrandingPage } from '../components/services/pages/ResumeRebrandingPage';
+import { InterviewPreparationPage } from '../components/services/pages/InterviewPreparationPage';
+import { CustomJobCampaignsPage } from '../components/services/pages/CustomJobCampaignsPage';
 
 interface ServiceContent {
   slug: string;
@@ -547,280 +556,40 @@ export const ServiceDetail: React.FC = () => {
     areaServed: ['US', 'IN'],
   };
 
-  const currentFacts = SERVICE_FACTS[service.slug] || [
-    { icon: Zap, label: 'Average Timeline', value: '18 Days' },
-    { icon: ShieldCheck, label: 'Verified Partners', value: '180+' },
-    { icon: Star, label: 'Placement Rate', value: '94%' },
-  ];
+  const renderBespokeServicePage = () => {
+    switch (service.slug) {
+      case 'job-placement':
+        return <JobPlacementPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'recruitment-staffing':
+        return <RecruitmentStaffingPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'talent-acquisition':
+        return <TalentAcquisitionPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'it-training':
+        return <ItTrainingPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'background-verification':
+        return <BackgroundVerificationPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'payroll-taxes':
+        return <PayrollTaxesPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'resume-linkedin-rebranding':
+        return <ResumeRebrandingPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'interview-preparation':
+        return <InterviewPreparationPage service={service} onOpenConsultation={onOpenConsultation} />;
+      case 'custom-job-campaigns':
+        return <CustomJobCampaignsPage service={service} onOpenConsultation={onOpenConsultation} />;
+      default:
+        return <JobPlacementPage service={service} onOpenConsultation={onOpenConsultation} />;
+    }
+  };
 
   return (
-    <div className="bg-white">
+    <div className="w-full">
       <SEO
         title={`${service.title} | ${service.tagline}`}
         description={service.overview.slice(0, 160)}
         canonical={`/services/${service.slug}`}
         jsonLd={jsonLd}
       />
-
-      {/* ── 1. UNIVERSAL PAGE HERO (Two-Column Balanced Layout with Visual Companion) ── */}
-      <PageHero
-        eyebrow="Codex Specialized IT Service"
-        title={service.title}
-        tagline={service.tagline}
-        summary={service.overview.split('. ')[0] + '.'}
-        primaryCta={{
-          label: 'Book Free Consultation',
-          onClick: onOpenConsultation,
-        }}
-        secondaryCta={{
-          label: 'Contact Advisory Team',
-          href: '/contact',
-        }}
-        breadcrumbs={[
-          { label: 'Services', path: '/services' },
-          { label: service.title },
-        ]}
-        facts={currentFacts}
-        visual={`service-${service.slug}`}
-      />
-
-      {/* ── 2. STRATEGIC OVERVIEW (Full Narrative Preserved + C1 Sticky Companion Card) ── */}
-      <Scroll3DSection preset="lift" className="py-12 bg-white border-b border-slate-100">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8">
-              <div className="eyebrow">Strategic Overview</div>
-              <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-navy-900 mb-4">
-                Engineering-First Career Advocacy & Placement
-              </h2>
-              <p className="text-body-lg text-slate-600 leading-relaxed">
-                {service.overview}
-              </p>
-            </div>
-            <div className="lg:col-span-4">
-              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-sm">
-                <div className="flex items-center gap-2 text-orange-600 font-heading font-bold text-sm mb-2">
-                  <Zap className="w-4 h-4" /> 18-Day Advantage
-                </div>
-                <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-                  Direct introductions to engineering directors with open requisitions, bypassing standard applicant queues.
-                </p>
-                <Button variant="primary" size="sm" onClick={onOpenConsultation} className="w-full text-xs">
-                  Request Free Consultation
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Who It's For & What's Included */}
-      <Scroll3DSection preset="lift" className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Who It's For */}
-            <div className="lg:col-span-5 flex flex-col gap-5">
-              <SectionReveal variant="tiltLeft">
-                <div className="eyebrow">Target Audience</div>
-                <h2 className="text-h2 text-navy-900">
-                  Who This Service <span className="text-brand-gradient">Is For.</span>
-                </h2>
-              </SectionReveal>
-              <ul className="flex flex-col gap-4 mt-2">
-                {service.whoItsFor.map((item, i) => (
-                  <li key={i} className="list-none">
-                    <Scroll3DCard index={i} maxTilt={4} className="p-4 rounded-2xl bg-gray-50 border border-gray-100 text-sm text-slate-700 flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
-                      <span className="leading-relaxed">{item}</span>
-                    </Scroll3DCard>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* What's Included */}
-            <div className="lg:col-span-7 h-full">
-              <Scroll3DCard index={1} maxTilt={3} className="bg-navy-900 text-white p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-between h-full">
-                <div>
-                  <div className="eyebrow text-orange-400">Deliverables</div>
-                  <h3 className="text-h2 text-white mb-6">What's Included in the Service.</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
-                    {service.whatsIncluded.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-navy-800/80 border border-navy-700/60">
-                        <Sparkles className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
-                        <span className="leading-relaxed">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Scroll3DCard>
-            </div>
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Process Steps */}
-      <Scroll3DSection preset="cinematic" className="section-padding bg-gray-50 border-t border-gray-200/60">
-        <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-16">
-            <div className="eyebrow justify-center">Execution Methodology</div>
-            <h2 className="text-h2 text-navy-900 mb-3">
-              How the Process <span className="text-brand-gradient">Works.</span>
-            </h2>
-            <p className="text-slate-600 text-sm">
-              A structured, step-by-step roadmap delivering transparent milestones from intake to placement.
-            </p>
-          </SectionReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
-            {service.process.map((step, idx) => (
-              <Scroll3DCard key={idx} index={idx} className="p-6 rounded-2xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between">
-                <div>
-                  <span className="text-3xl font-numbers font-black text-orange-500 mb-3 block">{step.step}</span>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{step.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
-                </div>
-              </Scroll3DCard>
-            ))}
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Key Benefits */}
-      <Scroll3DSection preset="tilt" className="section-padding bg-white">
-        <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-14">
-            <div className="eyebrow justify-center">Measurable Value</div>
-            <h2 className="text-h2 text-navy-900 mb-3">
-              Core Benefits & <span className="text-brand-gradient">Advantages.</span>
-            </h2>
-          </SectionReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {service.benefits.map((b, idx) => (
-              <Scroll3DCard key={idx} index={idx} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col justify-between">
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
-                    <Zap className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-2">{b.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">{b.desc}</p>
-                </div>
-              </Scroll3DCard>
-            ))}
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Mini Case Study (SAMPLE) */}
-      <Scroll3DSection preset="lift" className="section-padding bg-navy-900 text-white relative overflow-hidden">
-        <div className="container-custom max-w-4xl relative z-10">
-          <SectionReveal variant="tiltUp">
-            <div className="eyebrow text-orange-400">Verified Outcome (SAMPLE)</div>
-            <h2 className="text-h2 text-white mb-2">{service.miniCaseStudy.title}</h2>
-            <span className="text-xs uppercase tracking-wider text-slate-400 font-bold block mb-8">
-              Target Role: {service.miniCaseStudy.role}
-            </span>
-          </SectionReveal>
-
-          <Scroll3DCard maxTilt={4} className="bg-navy-800/80 p-8 rounded-3xl border border-navy-700/80">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400 mb-2">The Challenge</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">{service.miniCaseStudy.challenge}</p>
-              </div>
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">The Codex Solution</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">{service.miniCaseStudy.solution}</p>
-              </div>
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-2">The Result</h4>
-                <p className="text-xs text-slate-300 leading-relaxed font-semibold">{service.miniCaseStudy.result}</p>
-              </div>
-            </div>
-          </Scroll3DCard>
-        </div>
-      </Scroll3DSection>
-
-      {/* Service FAQs */}
-      <Scroll3DSection preset="fade3d" className="section-padding bg-gray-50 border-t border-gray-200/60">
-        <div className="container-custom max-w-3xl">
-          <SectionReveal variant="tiltUp" className="text-center mb-12">
-            <div className="eyebrow justify-center">FAQ</div>
-            <h2 className="text-h2 text-navy-900 mb-2">Service FAQs.</h2>
-            <p className="text-xs text-slate-500">Common questions regarding {service.title}.</p>
-          </SectionReveal>
-
-          <div className="flex flex-col gap-4">
-            {service.faqs.map((faq, i) => (
-              <Scroll3DCard key={i} index={i} maxTilt={2} className="bg-white rounded-2xl border border-gray-200/80 shadow-sm overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full p-5 text-left font-heading font-bold text-sm text-navy-900 flex items-center justify-between gap-4 cursor-pointer"
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${openFaq === i ? 'rotate-180 text-orange-500' : ''}`} />
-                </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-gray-100 pt-3">
-                    {faq.a}
-                  </div>
-                )}
-              </Scroll3DCard>
-            ))}
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Related Services Navigation */}
-      <Scroll3DSection preset="lift" className="py-12 bg-white border-t border-gray-100">
-        <div className="container-custom">
-          <div className="flex items-center justify-between mb-6">
-            <h4 className="font-heading font-bold text-base text-navy-900">Explore Other Services</h4>
-            <Link to="/services" className="text-xs font-bold text-orange-500 hover:underline">
-              View all services →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {otherServices.map((s, idx) => (
-              <Scroll3DCard key={s.slug} index={idx} maxTilt={5}>
-                <Link
-                  to={`/services/${s.slug}`}
-                  className="p-5 rounded-2xl bg-gray-50 border border-gray-200/80 hover:border-orange-500/40 transition-colors group flex flex-col justify-between h-full"
-                >
-                  <div>
-                    <h5 className="font-heading font-bold text-sm text-navy-900 group-hover:text-orange-500 transition-colors mb-1">
-                      {s.title}
-                    </h5>
-                    <p className="text-xs text-slate-500 line-clamp-2">{s.desc}</p>
-                  </div>
-                  <div className="mt-4 text-xs font-bold text-orange-600 flex items-center gap-1">
-                    <span>Learn more</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </Link>
-              </Scroll3DCard>
-            ))}
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Bottom Consultation CTA */}
-      <Scroll3DSection preset="scaleIn" className="section-padding bg-navy-900 text-white text-center">
-        <div className="container-custom max-w-2xl mx-auto">
-          <SectionReveal variant="tiltUp">
-            <h2 className="text-h2 text-white mb-4">
-              Ready to Get Started with <span className="text-brand-gradient">{service.title}?</span>
-            </h2>
-            <p className="text-slate-300 text-sm mb-8">
-              Speak directly with a senior talent advisor to discuss your timeline, requirements, and next steps.
-            </p>
-            <Button variant="primary" size="lg" onClick={onOpenConsultation}>
-              Book Free Consultation <ArrowRight className="w-5 h-5 ml-1" />
-            </Button>
-          </SectionReveal>
-        </div>
-      </Scroll3DSection>
+      {renderBespokeServicePage()}
     </div>
   );
 };

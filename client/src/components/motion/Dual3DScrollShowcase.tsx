@@ -1,510 +1,453 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  motion,
-  useScroll,
-  useVelocity,
-  useSpring,
-  useTransform,
-  useAnimationFrame,
-  useMotionValue,
-  useInView,
-  useReducedMotion,
-  wrap,
-} from 'framer-motion';
-import {
-  Cloud,
-  Database,
-  ShieldCheck,
-  Zap,
-  Sparkles,
-  Cpu,
-  Layers,
-  Server,
-  TrendingUp,
   Building2,
-  CheckCircle2,
   ArrowUpRight,
-  Compass,
+  DollarSign,
+  Briefcase,
+  Clock,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface PartnerItem {
+export interface ShowcasePlacementCard {
   id: string;
-  name: string;
-  category: string;
-  openings: string;
+  personName: string;
+  companyName: string;
+  position: string;
+  packageAmount: string;
+  daysToPlacement: string;
   badge: string;
-  icon: React.ElementType;
+  badgeColor: string;
+  link: string;
 }
 
-interface RoleItem {
-  id: string;
-  role: string;
-  track: string;
-  compensation: string;
-  timeline: string;
-  tag: string;
-  accent: string;
-  icon: React.ElementType;
-}
-
-const enterprisePartners: PartnerItem[] = [
+// Row 1: Active Bench Candidate Placements (Stream 01 - Flowing Left)
+const row1Cards: ShowcasePlacementCard[] = [
   {
-    id: 'p1',
-    name: 'CloudScale Systems',
-    category: 'Enterprise Cloud & DevOps',
-    openings: '14 Active Roles',
-    badge: 'Tier-1 Partner',
-    icon: Cloud,
-  },
-  {
-    id: 'p2',
-    name: 'FinTech Global',
-    category: 'Algorithmic Banking',
-    openings: '9 Active Roles',
+    id: 'plc-1',
+    personName: 'Rohit Sharma',
+    companyName: 'Capital One',
+    position: 'Senior Cloud Solutions Architect',
+    packageAmount: '$165,000 / yr',
+    daysToPlacement: '8 Days to Offer',
     badge: 'Direct Client',
-    icon: TrendingUp,
+    badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'p3',
-    name: 'Apex Healthcare IT',
-    category: 'HIPAA Cloud Infrastructure',
-    openings: '11 Active Roles',
-    badge: 'Vetted Sponsor',
-    icon: ShieldCheck,
+    id: 'plc-2',
+    personName: 'Ananya Mishra',
+    companyName: 'JPMorgan Chase',
+    position: 'Staff Data Platform Engineer',
+    packageAmount: '$178,000 / yr',
+    daysToPlacement: '12 Days to Offer',
+    badge: 'Tier-1 Enterprise',
+    badgeColor: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'p4',
-    name: 'Synapse Distributed AI',
-    category: 'LLM & ML Inference Ops',
-    openings: '8 Active Roles',
-    badge: 'High Growth',
-    icon: Cpu,
+    id: 'plc-3',
+    personName: 'Marcus Chen',
+    companyName: 'Amazon AWS',
+    position: 'DevSecOps & Kubernetes SRE',
+    packageAmount: '$185,000 / yr',
+    daysToPlacement: '9 Days to Offer',
+    badge: 'Fast-Track Fill',
+    badgeColor: 'bg-orange-500/15 text-[#F15A24] border-orange-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'p5',
-    name: 'OmniLogistics Core',
-    category: 'Real-time Supply Chain',
-    openings: '16 Active Roles',
-    badge: 'Enterprise',
-    icon: Server,
+    id: 'plc-4',
+    personName: 'Priya Patel',
+    companyName: 'Salesforce',
+    position: 'Lead Full-Stack React / Node',
+    packageAmount: '$152,000 / yr',
+    daysToPlacement: '15 Days to Offer',
+    badge: 'H1B Sponsored',
+    badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'p6',
-    name: 'SecureCore CyberTech',
-    category: 'Zero-Trust Defense',
-    openings: '7 Active Roles',
-    badge: 'Priority Requisition',
-    icon: ShieldCheck,
+    id: 'plc-5',
+    personName: 'Kevin Taylor',
+    companyName: 'Cisco Systems',
+    position: 'Principal Machine Learning Engineer',
+    packageAmount: '$192,000 / yr',
+    daysToPlacement: '7 Days to Offer',
+    badge: 'Exclusive Desk',
+    badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'p7',
-    name: 'Starlight Data Labs',
-    category: 'Distributed Analytics',
-    openings: '12 Active Roles',
-    badge: 'Top Tier',
-    icon: Database,
+    id: 'plc-6',
+    personName: 'Elena Vasquez',
+    companyName: 'Deloitte US',
+    position: 'Enterprise Java Microservices Lead',
+    packageAmount: '$158,000 / yr',
+    daysToPlacement: '11 Days to Offer',
+    badge: 'E-Verified',
+    badgeColor: 'bg-teal-500/15 text-teal-300 border-teal-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'p8',
-    name: 'Nexus Capital Tech',
-    category: 'High-Frequency Systems',
-    openings: '10 Active Roles',
-    badge: 'Exclusive',
-    icon: Building2,
+    id: 'plc-7',
+    personName: 'Vikram Malhotra',
+    companyName: 'Morgan Stanley',
+    position: 'Distributed Data Pipeline Lead',
+    packageAmount: '$172,000 / yr',
+    daysToPlacement: '14 Days to Offer',
+    badge: 'Tier-1 Banking',
+    badgeColor: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
+    link: '/services/job-placement',
+  },
+  {
+    id: 'plc-8',
+    personName: 'Sarah Jenkins',
+    companyName: 'Humana Healthcare',
+    position: 'Cybersecurity & Zero-Trust Architect',
+    packageAmount: '$168,000 / yr',
+    daysToPlacement: '10 Days to Offer',
+    badge: 'Direct Hire',
+    badgeColor: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+    link: '/services/job-placement',
   },
 ];
 
-const featuredRoles: RoleItem[] = [
+// Row 2: Active Bench Candidate Placements (Stream 02 - Flowing Right)
+const row2Cards: ShowcasePlacementCard[] = [
   {
-    id: 'r1',
-    role: 'Principal Cloud Architect',
-    track: 'AWS / Multi-Cloud Terraform',
-    compensation: '$150k - $185k',
-    timeline: '10-18 Days to Offer',
-    tag: 'Direct Placement',
-    accent: 'border-orange-200 bg-orange-50/50 text-orange-700',
-    icon: Cloud,
+    id: 'plc-9',
+    personName: 'David Lin',
+    companyName: 'Microsoft Azure',
+    position: 'Cloud Infrastructure Architect',
+    packageAmount: '$180,000 / yr',
+    daysToPlacement: '6 Days to Offer',
+    badge: 'Bench Priority',
+    badgeColor: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r2',
-    role: 'Staff Full-Stack Engineer',
-    track: 'React 19, TypeScript, Node',
-    compensation: '$135k - $165k',
-    timeline: '12-21 Days to Offer',
-    tag: 'Fast-Track',
-    accent: 'border-sky-200 bg-sky-50/50 text-sky-700',
-    icon: Layers,
+    id: 'plc-10',
+    personName: 'Sneha Reddy',
+    companyName: 'Oracle Cloud',
+    position: 'Snowflake & PySpark Platform Lead',
+    packageAmount: '$162,000 / yr',
+    daysToPlacement: '13 Days to Offer',
+    badge: 'STEM-OPT Verified',
+    badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r3',
-    role: 'Lead Data Engineer',
-    track: 'Snowflake, PySpark & dbt',
-    compensation: '$140k - $175k',
-    timeline: '14-20 Days to Offer',
-    tag: 'Bench Priority',
-    accent: 'border-emerald-200 bg-emerald-50/50 text-emerald-700',
-    icon: Database,
+    id: 'plc-11',
+    personName: 'Arjun Nair',
+    companyName: 'Stripe',
+    position: 'High-Throughput Payment SRE',
+    packageAmount: '$188,000 / yr',
+    daysToPlacement: '9 Days to Offer',
+    badge: 'Direct Client',
+    badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r4',
-    role: 'Kubernetes Platform SRE',
-    track: 'CI/CD, ArgoCD, Observability',
-    compensation: '$145k - $170k',
-    timeline: '11-16 Days to Offer',
-    tag: 'Visa Friendly',
-    accent: 'border-purple-200 bg-purple-50/50 text-purple-700',
-    icon: Server,
+    id: 'plc-12',
+    personName: 'Rachel Adams',
+    companyName: 'Netflix',
+    position: 'Lead Streaming Platform Engineer',
+    packageAmount: '$195,000 / yr',
+    daysToPlacement: '8 Days to Offer',
+    badge: 'Exclusive Desk',
+    badgeColor: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r5',
-    role: 'AI / Machine Learning Engineer',
-    track: 'Vector Embeddings, RAG, PyTorch',
-    compensation: '$160k - $195k',
-    timeline: '15-24 Days to Offer',
-    tag: 'High Demand',
-    accent: 'border-rose-200 bg-rose-50/50 text-rose-700',
-    icon: Cpu,
+    id: 'plc-13',
+    personName: 'Karthik Raman',
+    companyName: 'Barclays US',
+    position: 'Kafka & Event-Driven Architect',
+    packageAmount: '$160,000 / yr',
+    daysToPlacement: '15 Days to Offer',
+    badge: 'Tier-1 Banking',
+    badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r6',
-    role: 'DevSecOps Security Engineer',
-    track: 'Cloud Security & Compliance',
-    compensation: '$135k - $160k',
-    timeline: '12-19 Days to Offer',
-    tag: 'Enterprise',
-    accent: 'border-amber-200 bg-amber-50/50 text-amber-700',
-    icon: ShieldCheck,
+    id: 'plc-14',
+    personName: 'Jessica Martinez',
+    companyName: 'Uber Freight',
+    position: 'Mobile Lead (React Native / iOS)',
+    packageAmount: '$155,000 / yr',
+    daysToPlacement: '11 Days to Offer',
+    badge: 'Direct Pitch',
+    badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r7',
-    role: 'Distributed Backend Developer',
-    track: 'Golang, gRPC & Kafka',
-    compensation: '$140k - $170k',
-    timeline: '10-15 Days to Offer',
-    tag: 'Immediate Fill',
-    accent: 'border-teal-200 bg-teal-50/50 text-teal-700',
-    icon: Zap,
+    id: 'plc-15',
+    personName: 'Deepak Varma',
+    companyName: 'Walmart Global Tech',
+    position: 'Supply Chain Cloud Data Architect',
+    packageAmount: '$174,000 / yr',
+    daysToPlacement: '10 Days to Offer',
+    badge: 'Enterprise Hire',
+    badgeColor: 'bg-orange-500/15 text-[#F15A24] border-orange-500/30',
+    link: '/services/job-placement',
   },
   {
-    id: 'r8',
-    role: 'Engineering Manager',
-    track: 'Cross-functional Agile Squads',
-    compensation: '$170k - $210k',
-    timeline: '18-28 Days to Offer',
-    tag: 'Executive Search',
-    accent: 'border-blue-200 bg-blue-50/50 text-blue-700',
-    icon: Compass,
+    id: 'plc-16',
+    personName: 'Hannah Mueller',
+    companyName: 'Cigna Healthcare',
+    position: 'HealthTech Observability & SRE Lead',
+    packageAmount: '$164,000 / yr',
+    daysToPlacement: '12 Days to Offer',
+    badge: 'E-Verified',
+    badgeColor: 'bg-teal-500/15 text-teal-300 border-teal-500/30',
+    link: '/services/job-placement',
   },
 ];
 
-// Single 3D Tilt Card Component with interactive cursor glare
-const TiltCard3D: React.FC<{
-  children: React.ReactNode;
-  className?: string;
-  borderColor?: string;
-}> = ({ children, className = '', borderColor = 'hover:border-orange-400' }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ rotX: 0, rotY: 0, scale: 1 });
-  const [glare, setGlare] = useState({ opacity: 0, x: 50, y: 50 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotX = ((y - centerY) / centerY) * -8;
-    const rotY = ((x - centerX) / centerX) * 8;
-
-    setTilt({
-      rotX: Number(rotX.toFixed(2)),
-      rotY: Number(rotY.toFixed(2)),
-      scale: 1.04,
-    });
-    setGlare({
-      opacity: 0.22,
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ rotX: 0, rotY: 0, scale: 1 });
-    setGlare({ opacity: 0, x: 50, y: 50 });
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden cursor-pointer transition-all duration-200 select-none ${borderColor} ${className}`}
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.rotX}deg) rotateY(${tilt.rotY}deg) scale3d(${tilt.scale}, ${tilt.scale}, 1) translateZ(16px)`,
-        transformStyle: 'preserve-3d',
-        willChange: 'transform',
-      }}
-    >
-      {/* Specular glare following mouse */}
-      <div
-        className="pointer-events-none absolute -inset-full transition-opacity duration-300"
-        style={{
-          opacity: glare.opacity,
-          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 60%)`,
-        }}
-      />
-      {children}
-    </div>
-  );
-};
-
-// Reversible, Velocity-driven 3D Scrolling Track
-interface StreamRowProps {
-  baseVelocity: number; // Negative for left, positive for right
-  isPaused: boolean;
-  onHoverStateChange?: (hovered: boolean) => void;
-  children: React.ReactNode;
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
 }
 
-const StreamRow: React.FC<StreamRowProps> = ({
-  baseVelocity = -1,
-  isPaused,
-  onHoverStateChange,
-  children,
+interface UniformPlacementCardProps {
+  item: ShowcasePlacementCard;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+}
+
+const UniformPlacementCard: React.FC<UniformPlacementCardProps> = ({
+  item,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
-  const baseX = useMotionValue(0);
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  // Low mass (0.1) and responsive damping for instant start & crisp stop
-  const smoothVelocity = useSpring(scrollVelocity, { damping: 24, stiffness: 480, mass: 0.1 });
-  const velocityFactor = useTransform(smoothVelocity, [-1200, 0, 1200], [-3.5, 0, 3.5], {
-    clamp: false,
-  });
-
-  // Track wrapped percentage between -33.333% and 0%
-  const x = useTransform(baseX, (v) => `${wrap(-33.333333, 0, v)}%`);
-
-  useAnimationFrame((_, delta) => {
-    if (isPaused) return;
-
-    // Normal scrolling velocity response:
-    // Scrolling down produces positive velocity, scrolling up produces negative velocity
-    // Reacts immediately with zero lag or lingering delay
-    const vFactor = velocityFactor.get();
-    let moveBy = baseVelocity;
-
-    if (Math.abs(vFactor) > 0.01) {
-      moveBy += (vFactor * 0.45) * (baseVelocity > 0 ? 1 : -1);
-    }
-
-    // Clamp delta to prevent frame spikes on tab resume/scroll start
-    const safeDelta = Math.min(delta, 32);
-    baseX.set(baseX.get() + moveBy * (safeDelta / 1000) * 1.8);
-  });
-
   return (
-    <div
-      className="overflow-hidden flex flex-nowrap"
-      onMouseEnter={() => onHoverStateChange?.(true)}
-      onMouseLeave={() => onHoverStateChange?.(false)}
+    <Link
+      to={item.link}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="showcase-card shrink-0 w-[310px] sm:w-[345px] p-4 sm:p-5 rounded-2xl bg-[#243550]/95 hover:bg-[#2C3F60] border border-slate-600/70 hover:border-[#F15A24]/70 shadow-lg hover:shadow-[0_12px_36px_rgba(241,90,36,0.25)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group/card select-none cursor-pointer"
     >
-      <motion.div
-        className="flex shrink-0 items-center gap-6"
-        style={{ x, willChange: 'transform' }}
-      >
-        {children}
-      </motion.div>
-    </div>
+      <div>
+        {/* Top Header: Person Avatar + Name + Company & Badge */}
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex items-center gap-3 min-w-0">
+            {/* Person Initials Avatar */}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1A263B] to-[#121B2A] border border-slate-500/70 flex items-center justify-center font-heading font-black text-sm text-[#F15A24] shrink-0 group-hover/card:scale-105 group-hover/card:border-[#F15A24]/60 transition-all shadow-inner">
+              {getInitials(item.personName)}
+            </div>
+
+            {/* 1. Person Name & 2. Company Name */}
+            <div className="min-w-0">
+              <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover/card:text-[#F15A24] transition-colors truncate">
+                {item.personName}
+              </h4>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#93C5FD] truncate">
+                <Building2 className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">{item.companyName}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Badge */}
+          <span
+            className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shrink-0 ${item.badgeColor}`}
+          >
+            {item.badge}
+          </span>
+        </div>
+
+        {/* 3. Position Box */}
+        <div className="mt-2.5 mb-3 p-3 rounded-xl bg-[#131C2E]/80 border border-slate-700/80 flex flex-col gap-1">
+          <span className="text-[10px] font-mono font-medium text-slate-400 uppercase tracking-wider flex items-center gap-1">
+            <Briefcase className="w-3 h-3 text-slate-400" />
+            <span>Position</span>
+          </span>
+          <p className="text-xs sm:text-[13px] font-bold text-slate-100 truncate group-hover/card:text-white">
+            {item.position}
+          </p>
+        </div>
+
+        {/* 4. Package Row */}
+        <div className="flex items-center justify-between px-3 py-2 rounded-xl mb-3 bg-emerald-500/15 border border-emerald-500/30">
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1">
+            <DollarSign className="w-3 h-3" />
+            <span>Package</span>
+          </span>
+          <span className="text-sm font-heading font-black text-emerald-300 tabular-nums">
+            {item.packageAmount}
+          </span>
+        </div>
+      </div>
+
+      {/* 5. The Day in Placement Bottom Bar */}
+      <div className="pt-2.5 border-t border-slate-700/80 flex items-center justify-between text-xs">
+        <span className="flex items-center gap-1.5 text-[11px] font-bold text-amber-300 bg-amber-400/15 px-2.5 py-1 rounded-lg border border-amber-400/30 shadow-2xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <Clock className="w-3 h-3" />
+          {item.daysToPlacement}
+        </span>
+
+        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-400 group-hover/card:text-[#F15A24] transition-colors">
+          <span>Offer Vetted</span>
+          <ArrowUpRight className="w-3.5 h-3.5 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 transition-transform" />
+        </span>
+      </div>
+    </Link>
   );
 };
 
 export const Dual3DScrollShowcase: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  // Expand margin to 350px so streams are already moving smoothly when entering viewport (zero start delay)
-  const isInView = useInView(containerRef, { margin: '350px 0px 350px 0px' });
-  const shouldReduceMotion = useReducedMotion();
-  const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  // Card-level hover pause state: true when cursor is hovering over any box/card
+  const [isCardHovered, setIsCardHovered] = useState(false);
 
-  const isPaused = !isInView || !!shouldReduceMotion || isHovered || isFocused;
-
-  // Real-time scroll velocity for 3D stage tilt response with instant reaction
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, { damping: 22, stiffness: 450, mass: 0.1 });
-
-  // Dynamically tilt the 3D stage based on scroll direction:
-  const dynamicTiltX = useTransform(smoothVelocity, [-1000, 0, 1000], [5, 12, 17]);
-  const dynamicZ = useTransform(smoothVelocity, [-1000, 0, 1000], [-30, 0, 40]);
+  const handleCardEnter = () => setIsCardHovered(true);
+  const handleCardLeave = () => setIsCardHovered(false);
 
   return (
-    <div
-      ref={containerRef}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
-      tabIndex={0}
-      aria-label="Interactive 3D Ecosystem Showcase (pauses on hover and focus)"
-      className="relative w-full py-12 lg:py-18 overflow-hidden select-none bg-gradient-to-b from-slate-50/90 via-white to-slate-50/90 border-y border-gray-200/80 outline-none"
+    <section
+      id="enterprise-showcase"
+      aria-label="Enterprise Ecosystem & Active Bench Showcase"
+      data-nav-theme="dark"
+      className="showcase-container relative w-full py-16 overflow-hidden bg-gradient-to-b from-[#182338] via-[#21304A] to-[#182338] text-white border-y border-slate-700/80"
     >
-      {/* Background Spatial Glow Accents */}
-      <div
-        aria-hidden="true"
-        className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[650px] h-[340px] bg-orange-500/6 rounded-full filter blur-[100px] pointer-events-none"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[650px] h-[340px] bg-blue-500/6 rounded-full filter blur-[100px] pointer-events-none"
-      />
+      {/* Ambient background glow matching website brand colors */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-gradient-to-r from-[#F15A24]/15 via-[#1F6AA5]/20 to-[#F15A24]/10 blur-[120px] pointer-events-none rounded-full" />
 
-      {/* Header */}
+      {/* ── HEADER ── */}
       <div className="container-custom relative z-10 mb-8 sm:mb-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 border border-orange-200 mb-2.5">
-              <Sparkles className="w-3.5 h-3.5 text-orange-600 animate-spin-slow" />
-              <span>Bidirectional 3D Motion Grid</span>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#F15A24] animate-pulse" />
+              <span className="text-[11px] font-mono uppercase font-bold tracking-wider text-[#F15A24]">
+                Enterprise Hiring Cohorts
+              </span>
             </div>
-            <h2 className="text-h2 text-navy-900 leading-tight">
-              Enterprise Ecosystem & <span className="text-brand-gradient">Active Bench Cohorts</span>
+            <h2 className="text-h2 font-heading font-bold text-white leading-tight">
+              Enterprise Ecosystem & <span className="text-[#F15A24]">Active Bench Cohorts</span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1.5 max-w-2xl leading-relaxed">
-              Streams react in real time to your scroll direction—gliding normally on scroll down, and smoothly reversing when you scroll up.
+            <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed font-normal">
+              Direct hiring desks, verified candidate packages, and rapid placement turnarounds across top tech employers.
             </p>
+          </div>
+
+          <Link
+            to="/careers"
+            className="text-xs font-bold text-[#93C5FD] hover:text-white hover:underline flex items-center gap-1 self-start lg:self-auto transition-colors"
+          >
+            <span>Explore all requisitions</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      {/* ── BUTTERY-SMOOTH GPU-ACCELERATED DUAL MARQUEE STREAMS (CONTINUOUS 60FPS) ── */}
+      <div className="w-full relative overflow-hidden space-y-5">
+        {/* Soft edge masking for smooth fade */}
+        <div
+          className="w-full relative overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+          }}
+        >
+          {/* Stream 1: Flows Left gently and smoothly. Pauses when cursor hovers on cards */}
+          <div className="flex overflow-hidden py-1">
+            <div
+              className="marquee-track flex shrink-0 items-center gap-5"
+              style={{
+                animation: 'marquee-left 115s linear infinite',
+                animationPlayState: isCardHovered ? 'paused' : 'running',
+                willChange: 'transform',
+              }}
+            >
+              {[...row1Cards, ...row1Cards].map((item, idx) => (
+                <UniformPlacementCard
+                  key={`r1-${item.id}-${idx}`}
+                  item={item}
+                  onMouseEnter={handleCardEnter}
+                  onMouseLeave={handleCardLeave}
+                />
+              ))}
+            </div>
+            <div
+              aria-hidden="true"
+              className="marquee-track flex shrink-0 items-center gap-5"
+              style={{
+                animation: 'marquee-left 115s linear infinite',
+                animationPlayState: isCardHovered ? 'paused' : 'running',
+                willChange: 'transform',
+              }}
+            >
+              {[...row1Cards, ...row1Cards].map((item, idx) => (
+                <UniformPlacementCard
+                  key={`r1-dup-${item.id}-${idx}`}
+                  item={item}
+                  onMouseEnter={handleCardEnter}
+                  onMouseLeave={handleCardLeave}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Stream 2: Flows Right gently and smoothly. Pauses when cursor hovers on cards */}
+          <div className="flex overflow-hidden py-1">
+            <div
+              className="marquee-track flex shrink-0 items-center gap-5"
+              style={{
+                animation: 'marquee-right 125s linear infinite',
+                animationPlayState: isCardHovered ? 'paused' : 'running',
+                willChange: 'transform',
+              }}
+            >
+              {[...row2Cards, ...row2Cards].map((item, idx) => (
+                <UniformPlacementCard
+                  key={`r2-${item.id}-${idx}`}
+                  item={item}
+                  onMouseEnter={handleCardEnter}
+                  onMouseLeave={handleCardLeave}
+                />
+              ))}
+            </div>
+            <div
+              aria-hidden="true"
+              className="marquee-track flex shrink-0 items-center gap-5"
+              style={{
+                animation: 'marquee-right 125s linear infinite',
+                animationPlayState: isCardHovered ? 'paused' : 'running',
+                willChange: 'transform',
+              }}
+            >
+              {[...row2Cards, ...row2Cards].map((item, idx) => (
+                <UniformPlacementCard
+                  key={`r2-dup-${item.id}-${idx}`}
+                  item={item}
+                  onMouseEnter={handleCardEnter}
+                  onMouseLeave={handleCardLeave}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 3D PERSPECTIVE STAGE CONTAINER */}
-      <div
-        className="w-full relative overflow-visible"
-        style={{
-          perspective: '1400px',
-          perspectiveOrigin: '50% 50%',
-        }}
-      >
-        {/* Soft edge masking for smooth fade into screen boundaries */}
-        <motion.div
-          className="w-full transition-all duration-300 ease-out"
-          style={{
-            transformStyle: 'preserve-3d',
-            rotateX: dynamicTiltX,
-            rotateZ: -1.8,
-            z: dynamicZ,
-            maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
-          }}
-        >
-          {/* ── ROW 1: TOP TRACK (FLOWS NORMALLY LEFT ←, REVERSES RIGHT →) ── */}
-          <div className="relative mb-6">
-            <div className="flex items-center mb-2 px-8">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                Stream 01 · Enterprise Client Network (Flowing Left ←)
-              </span>
-            </div>
-
-            <StreamRow
-              baseVelocity={-1.5}
-              isPaused={isPaused}
-            >
-              {/* Duplicate cards 3x for continuous infinite wrapping */}
-              {[...enterprisePartners, ...enterprisePartners, ...enterprisePartners].map((partner, idx) => {
-                const IconComponent = partner.icon;
-                return (
-                  <TiltCard3D
-                    key={`${partner.id}-${idx}`}
-                    borderColor="hover:border-orange-400"
-                    className="shrink-0 w-[300px] sm:w-[340px] p-4 sm:p-5 rounded-2xl bg-white/95 border border-gray-200/90 shadow-md hover:shadow-xl group/card backdrop-blur-sm"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-slate-50 border border-gray-200 flex items-center justify-center text-navy-900 group-hover/card:bg-orange-50 group-hover/card:text-orange-600 transition-colors">
-                        <IconComponent className="w-5 h-5" />
-                      </div>
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 border border-gray-200">
-                        {partner.badge}
-                      </span>
-                    </div>
-
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-1 group-hover/card:text-orange-600 transition-colors flex items-center justify-between">
-                      <span>{partner.name}</span>
-                      <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover/card:text-orange-500 transition-colors" />
-                    </h3>
-                    <p className="text-xs text-slate-500 mb-3">{partner.category}</p>
-
-                    <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between text-xs">
-                      <span className="font-semibold text-emerald-700 flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                        {partner.openings}
-                      </span>
-                      <span className="text-[10px] font-bold text-orange-600 uppercase tracking-wider">Hiring</span>
-                    </div>
-                  </TiltCard3D>
-                );
-              })}
-            </StreamRow>
-          </div>
-
-          {/* ── ROW 2: BOTTOM TRACK (FLOWS NORMALLY RIGHT →, REVERSES LEFT ←) ── */}
-          <div className="relative">
-            <div className="flex items-center mb-2 px-8">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-                Stream 02 · In-Demand Technical Cohorts (Flowing Right →)
-              </span>
-            </div>
-
-            <StreamRow
-              baseVelocity={1.5}
-              isPaused={isPaused}
-            >
-              {/* Duplicate cards 3x for continuous infinite wrapping */}
-              {[...featuredRoles, ...featuredRoles, ...featuredRoles].map((role, idx) => {
-                const IconComponent = role.icon;
-                return (
-                  <TiltCard3D
-                    key={`${role.id}-${idx}`}
-                    borderColor="hover:border-blue-400"
-                    className="shrink-0 w-[310px] sm:w-[350px] p-4 sm:p-5 rounded-2xl bg-white/95 border border-gray-200/90 shadow-md hover:shadow-xl group/card backdrop-blur-sm"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-numbers font-bold text-navy-900 bg-slate-100/90 px-3 py-1 rounded-lg border border-gray-200">
-                        {role.compensation}
-                      </span>
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${role.accent}`}>
-                        {role.tag}
-                      </span>
-                    </div>
-
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                        <IconComponent className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h3 className="font-heading font-bold text-sm text-navy-900 leading-snug group-hover/card:text-blue-600 transition-colors">
-                          {role.role}
-                        </h3>
-                        <p className="text-xs text-slate-500 font-medium">{role.track}</p>
-                      </div>
-                    </div>
-
-                    <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between text-xs text-slate-600">
-                      <span className="flex items-center gap-1.5 font-medium">
-                        <Zap className="w-3.5 h-3.5 text-amber-500" />
-                        {role.timeline}
-                      </span>
-                      <span className="text-[10px] font-bold text-blue-600 uppercase">Sample Role</span>
-                    </div>
-                  </TiltCard3D>
-                );
-              })}
-            </StreamRow>
-          </div>
-        </motion.div>
-      </div>
-    </div>
+      {/* Embedded High-Performance Keyframes + CSS Hover Pause Fallback */}
+      <style>{`
+        @keyframes marquee-left {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-100%, 0, 0); }
+        }
+        @keyframes marquee-right {
+          0% { transform: translate3d(-100%, 0, 0); }
+        }
+        /* When hovering directly on any card box, stop the marquee tracks */
+        .showcase-container:has(.showcase-card:hover) .marquee-track {
+          animation-play-state: paused !important;
+        }
+      `}</style>
+    </section>
   );
 };

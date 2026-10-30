@@ -12,6 +12,9 @@ import {
   Globe,
   Gift,
   Linkedin,
+  Facebook,
+  Instagram,
+  MessageCircle,
   Twitter,
   Github,
   Youtube,
@@ -23,7 +26,7 @@ import {
 import { siteConfig } from '../../config/site';
 import { api } from '../../services/api';
 import { qualityGovernor, MotionMode } from '../../motion/qualityGovernor';
-import { OfficeClock } from '../footer/OfficeClock';
+import { GlobalHubShowcase } from '../footer/GlobalHubShowcase';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -97,8 +100,8 @@ export const Footer: React.FC = () => {
                 <img
                   src="/assets/logo.svg"
                   alt="Codex Tech-IT"
-                  width="180"
-                  height="48"
+                  width="214"
+                  height="40"
                   className="h-10 w-auto object-contain"
                 />
               </Link>
@@ -107,7 +110,7 @@ export const Footer: React.FC = () => {
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5 mt-6">
+            <div className="flex flex-wrap items-center gap-2.5 mt-6">
               <a
                 href={siteConfig.socials.linkedin}
                 target="_blank"
@@ -118,22 +121,31 @@ export const Footer: React.FC = () => {
                 <Linkedin className="w-4 h-4" />
               </a>
               <a
-                href={siteConfig.socials.twitter}
+                href={siteConfig.socials.facebook}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Codex Twitter"
-                className="w-9 h-9 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#475569] hover:text-[#FFFFFF] hover:bg-[#0284C7] hover:border-[#0284C7] flex items-center justify-center transition-all duration-200 shadow-xs"
+                aria-label="Codex Facebook"
+                className="w-9 h-9 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#475569] hover:text-[#FFFFFF] hover:bg-[#1877F2] hover:border-[#1877F2] flex items-center justify-center transition-all duration-200 shadow-xs"
               >
-                <Twitter className="w-4 h-4" />
+                <Facebook className="w-4 h-4" />
               </a>
               <a
-                href={siteConfig.socials.github}
+                href={siteConfig.socials.instagram}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Codex GitHub"
-                className="w-9 h-9 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#475569] hover:text-[#FFFFFF] hover:bg-[#0F172A] hover:border-[#0F172A] flex items-center justify-center transition-all duration-200 shadow-xs"
+                aria-label="Codex Instagram"
+                className="w-9 h-9 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#475569] hover:text-[#FFFFFF] hover:bg-[#E1306C] hover:border-[#E1306C] flex items-center justify-center transition-all duration-200 shadow-xs"
               >
-                <Github className="w-4 h-4" />
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href={siteConfig.socials.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Codex WhatsApp"
+                className="w-9 h-9 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#475569] hover:text-[#FFFFFF] hover:bg-[#25D366] hover:border-[#25D366] flex items-center justify-center transition-all duration-200 shadow-xs"
+              >
+                <MessageCircle className="w-4 h-4" />
               </a>
               <a
                 href={siteConfig.socials.youtube}
@@ -191,223 +203,9 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 2. TWO OFFICE BOARDING PASSES WITH ANALOG CLOCKS & ROUTE LINE ── */}
-        <div className="py-14 border-b border-[#E2E8F0]">
-          {/* Header & Global Connectivity Indicator */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-            <div>
-              <div className="text-[11px] font-heading font-bold uppercase tracking-widest text-[#C2410C] mb-1.5 flex items-center gap-2">
-                <Globe className="w-3.5 h-3.5" />
-                <span>Global Operating Infrastructure</span>
-              </div>
-              <h4 className="text-2xl font-heading font-bold text-[#0F172A] tracking-tight">
-                Dual Delivery Hubs: United States & India
-              </h4>
-            </div>
-            <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-[#E4F6EC] text-[#15803D] border border-[#A7F3D0]">
-              <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse" />
-              <span>Real-Time Office Operations Active</span>
-            </div>
-          </div>
-
-          {/* Connected Route Corridor Banner */}
-          <div className="mb-6 p-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2.5 text-[#0F172A] font-semibold">
-              <span className="p-1.5 rounded-lg bg-[#E8F2FF] text-[#1D4ED8]">
-                <Navigation className="w-4 h-4 rotate-45" />
-              </span>
-              <span>Direct Talent Corridor: DFW / ORD ⇄ HYD</span>
-              <span className="hidden sm:inline text-[#94A3B8]">•</span>
-              <span className="font-mono text-[#1D4ED8] bg-[#E8F2FF] px-2 py-0.5 rounded text-[11px]">
-                India is {timeDifferenceText} of Texas (CST)
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-[#475569] font-medium">
-              <Clock className="w-3.5 h-3.5 text-[#C2410C]" />
-              <span>Shared Working Window: <strong>8:00 AM – 11:30 AM CST</strong> / <strong>6:30 PM – 10:00 PM IST</strong></span>
-            </div>
-          </div>
-
-          {/* Boarding Passes Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
-            {/* Center route pill for desktop */}
-            <div
-              className="hidden lg:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#FFFFFF] border-2 border-dashed border-[#2563EB] items-center justify-center text-[#2563EB] z-10 pointer-events-none shadow-md"
-              title="Continuous Talent Delivery Pipeline"
-            >
-              <Navigation className="w-4 h-4 rotate-45" />
-            </div>
-
-            {/* BOARDING PASS 1: USA (Plano, TX) - Sky Tint */}
-            <div
-              data-anim="depth-in"
-              id="office-boarding-pass-usa"
-              className="rounded-2xl bg-[#E8F2FF] border border-[#BFDBFE] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
-            >
-              {/* Boarding Pass Header Ribbon */}
-              <div>
-                <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-dashed border-[#BFDBFE]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#1D4ED8] bg-[#FFFFFF] px-2 py-0.5 rounded shadow-2xs">
-                      BOARDING PASS • CDX-USA
-                    </span>
-                    <span className="text-[11px] font-semibold text-[#1E3A8A]">
-                      PLANO, TEXAS
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-[#64748B]">
-                    TERM 01 / DESK A
-                  </span>
-                </div>
-
-                {/* Clock & City Summary */}
-                <div className="mb-5 bg-[#FFFFFF]/75 backdrop-blur-xs p-4 rounded-xl border border-[#DBEAFE]">
-                  <OfficeClock
-                    timeZone="America/Chicago"
-                    cityName="Plano, TX"
-                    countryCode="USA"
-                    badgeTint="sky"
-                  />
-                </div>
-
-                {/* Office Details */}
-                <div className="space-y-2.5 text-xs text-[#334155] mb-6">
-                  <div className="flex items-start gap-2.5">
-                    <MapPin className="w-4 h-4 text-[#1D4ED8] shrink-0 mt-0.5" />
-                    <span className="font-medium">5700 Tennyson Pkwy, Suite 300, Plano, TX 75024</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Phone className="w-4 h-4 text-[#1D4ED8] shrink-0" />
-                    <a
-                      href={`tel:${siteConfig.contact.phoneUSA.replace(/[^0-9+]/g, '')}`}
-                      className="font-semibold text-[#0F172A] hover:text-[#1D4ED8] transition-colors"
-                    >
-                      {siteConfig.contact.phoneUSA}
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Mail className="w-4 h-4 text-[#1D4ED8] shrink-0" />
-                    <a
-                      href={`mailto:${siteConfig.contact.email}`}
-                      className="text-[#334155] hover:text-[#0F172A] transition-colors"
-                    >
-                      {siteConfig.contact.email}
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-[#64748B]">
-                    <Clock className="w-4 h-4 text-[#94A3B8] shrink-0" />
-                    <span>Mon - Fri: 8:00 AM - 7:00 PM CST</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Perforated Action Bar */}
-              <div className="pt-4 border-t border-dashed border-[#BFDBFE] flex items-center gap-3">
-                <a
-                  href="https://maps.google.com/?q=5700+Tennyson+Pkwy+Plano+TX+75024"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#FFFFFF] hover:bg-[#F8FAFC] text-xs font-semibold text-[#0F172A] border border-[#CBD5E1] transition-all shadow-2xs hover:border-[#94A3B8]"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-[#1D4ED8]" />
-                  <span>Get Directions</span>
-                  <ExternalLink className="w-3 h-3 text-[#94A3B8]" />
-                </a>
-                <a
-                  href={`tel:${siteConfig.contact.phoneUSA.replace(/[^0-9+]/g, '')}`}
-                  className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-xs font-semibold text-[#FFFFFF] transition-all shadow-xs"
-                >
-                  <PhoneCall className="w-3.5 h-3.5" />
-                  <span>Call US HQ</span>
-                </a>
-              </div>
-            </div>
-
-            {/* BOARDING PASS 2: India (Hyderabad, TS) - Butter Tint */}
-            <div
-              data-anim="depth-in"
-              id="office-boarding-pass-india"
-              className="rounded-2xl bg-[#FFF4D6] border border-[#FDE68A] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group"
-            >
-              {/* Boarding Pass Header Ribbon */}
-              <div>
-                <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-dashed border-[#FDE68A]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#C2410C] bg-[#FFFFFF] px-2 py-0.5 rounded shadow-2xs">
-                      BOARDING PASS • CDX-IND
-                    </span>
-                    <span className="text-[11px] font-semibold text-[#9A3412]">
-                      HYDERABAD, TELANGANA
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-[#64748B]">
-                    GATE 02 / TECH HUB
-                  </span>
-                </div>
-
-                {/* Clock & City Summary */}
-                <div className="mb-5 bg-[#FFFFFF]/75 backdrop-blur-xs p-4 rounded-xl border border-[#FEF08A]">
-                  <OfficeClock
-                    timeZone="Asia/Kolkata"
-                    cityName="Hyderabad, TS"
-                    countryCode="IND"
-                    badgeTint="butter"
-                  />
-                </div>
-
-                {/* Office Details */}
-                <div className="space-y-2.5 text-xs text-[#334155] mb-6">
-                  <div className="flex items-start gap-2.5">
-                    <MapPin className="w-4 h-4 text-[#C2410C] shrink-0 mt-0.5" />
-                    <span className="font-medium">HITEC City, Phase 2, Madhapur, Hyderabad, TS 500081</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Phone className="w-4 h-4 text-[#C2410C] shrink-0" />
-                    <a
-                      href={`tel:${siteConfig.contact.phoneIndia.replace(/[^0-9+]/g, '')}`}
-                      className="font-semibold text-[#0F172A] hover:text-[#C2410C] transition-colors"
-                    >
-                      {siteConfig.contact.phoneIndia}
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Mail className="w-4 h-4 text-[#C2410C] shrink-0" />
-                    <a
-                      href="mailto:india@codextechit.com"
-                      className="text-[#334155] hover:text-[#0F172A] transition-colors"
-                    >
-                      india@codextechit.com
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-[#64748B]">
-                    <Clock className="w-4 h-4 text-[#94A3B8] shrink-0" />
-                    <span>Mon - Sat: 9:30 AM - 7:30 PM IST</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Perforated Action Bar */}
-              <div className="pt-4 border-t border-dashed border-[#FDE68A] flex items-center gap-3">
-                <a
-                  href="https://maps.google.com/?q=HITEC+City+Phase+2+Madhapur+Hyderabad+500081"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#FFFFFF] hover:bg-[#F8FAFC] text-xs font-semibold text-[#0F172A] border border-[#CBD5E1] transition-all shadow-2xs hover:border-[#94A3B8]"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-[#C2410C]" />
-                  <span>Get Directions</span>
-                  <ExternalLink className="w-3 h-3 text-[#94A3B8]" />
-                </a>
-                <a
-                  href={`tel:${siteConfig.contact.phoneIndia.replace(/[^0-9+]/g, '')}`}
-                  className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#C2410C] hover:bg-[#9A3412] text-xs font-semibold text-[#FFFFFF] transition-all shadow-xs"
-                >
-                  <PhoneCall className="w-3.5 h-3.5" />
-                  <span>Call India Hub</span>
-                </a>
-              </div>
-            </div>
-          </div>
+        {/* ── 2. GLOBAL HUB SHOWCASE: DUAL DAY/NIGHT CELESTIAL HUBS & 3D GLOBE (IMAGE 4) ── */}
+        <div className="border-b border-[#E2E8F0]">
+          <GlobalHubShowcase />
         </div>
 
         {/* ── 3. SITEMAPPED COLUMNS (5 GROUPED COLUMNS IN LIGHT THEME) ── */}
@@ -522,7 +320,7 @@ export const Footer: React.FC = () => {
           {/* Column 4: Resources */}
           <div className="flex flex-col h-full">
             <h5 className="font-heading font-bold text-[#0F172A] mb-3 text-xs uppercase tracking-wider min-h-[1.75rem] flex items-start">
-              Resources & Insights
+              Resources & Guides
             </h5>
             <ul className="flex flex-col gap-2 text-[#475569] font-normal flex-1">
               <li>
@@ -548,11 +346,6 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to="/blog" className="hover:text-[#C2410C] transition-colors font-medium text-[#0F172A]">
                   Codex Engineering Blog
-                </Link>
-              </li>
-              <li>
-                <Link to="/insights" className="hover:text-[#C2410C] transition-colors">
-                  Industry Insights
                 </Link>
               </li>
               <li>

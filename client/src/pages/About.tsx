@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 import {
   ShieldCheck,
@@ -16,6 +16,15 @@ import {
   Briefcase,
   HeartHandshake,
   TrendingUp,
+  MapPin,
+  Phone,
+  Mail,
+  Send,
+  ExternalLink,
+  MessageSquare,
+  GraduationCap,
+  Layers,
+  ChevronRight,
 } from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
@@ -23,10 +32,81 @@ import { Button } from '../components/ui/Button';
 import { Scroll3DSection } from '../components/motion/Scroll3DSection';
 import { Scroll3DCard } from '../components/motion/Scroll3DCard';
 import { SectionReveal } from '../components/motion/SectionReveal';
-import { PageHero } from '../components/layout/PageHero';
+import { api } from '../services/api';
+import { oldSiteAboutPoints, oldSitePositioning } from '../content/oldSiteContent';
 
 export const About: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
+
+  // Live clocks for Texas and Hyderabad
+  const [usTime, setUsTime] = useState<string>('');
+  const [inTime, setInTime] = useState<string>('');
+  const [isUsWorkHours, setIsUsWorkHours] = useState<boolean>(true);
+  const [isInWorkHours, setIsInWorkHours] = useState<boolean>(false);
+
+  // Testimonials state
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState<boolean>(true);
+
+  // Active milestone tab for horizontal trajectory
+  const [activeMilestone, setActiveMilestone] = useState<number>(0);
+
+  useEffect(() => {
+    const updateTimes = () => {
+      const now = new Date();
+
+      // Texas (Central Standard / Daylight Time)
+      const usString = now.toLocaleTimeString('en-US', {
+        timeZone: 'America/Chicago',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      });
+      setUsTime(usString);
+
+      // India (IST)
+      const inString = now.toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      });
+      setInTime(inString);
+
+      // Office hours calculations (rough hour check)
+      const usHour = parseInt(
+        now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', hour12: false }),
+        10
+      );
+      setIsUsWorkHours(usHour >= 8 && usHour < 19);
+
+      const inHour = parseInt(
+        now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false }),
+        10
+      );
+      setIsInWorkHours(inHour >= 9 && inHour < 20);
+    };
+
+    updateTimes();
+    const interval = setInterval(updateTimes, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    api
+      .get('/testimonials')
+      .then((res) => {
+        if (res.data?.success && Array.isArray(res.data?.data)) {
+          // Strict Truth Rule: render ONLY verified approved testimonials
+          const approved = res.data.data.filter((t: any) => t.is_published === true);
+          setTestimonials(approved);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setTestimonialsLoading(false));
+  }, []);
 
   const stats = [
     { value: '18 Days', label: 'Average Time to Offer', desc: 'vs. 45-day industry average' },
@@ -35,53 +115,38 @@ export const About: React.FC = () => {
     { value: '120+', label: 'Enterprise Partners', desc: 'Direct access to hiring decision-makers' },
   ];
 
-  const pillars = [
-    {
-      icon: CpuIcon,
-      title: 'Engineer-Led Calibration',
-      description:
-        'Our technical recruiters are paired directly with staff engineers. We assess real-world system design, production code quality, and architectural thinking—never just keyword matching.',
-    },
-    {
-      icon: HeartHandshake,
-      title: 'Radical Transparency',
-      description:
-        'No hidden fee deductions, no unrealistic promises, and zero bait-and-switch. Candidates receive transparent bill rates, genuine visa support, and unvarnished client feedback.',
-    },
-    {
-      icon: Zap,
-      title: 'Speed Without Chaos',
-      description:
-        'Our proprietary talent bench is pre-screened and pre-vetted. When an enterprise opens a requisition, we deliver high-fit, interview-ready shortlists within 48 hours.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Candidate-First Advocacy',
-      description:
-        'We view placements as multi-year career compounding events. We negotiate aggressive compensation packages, guide counteroffers, and mentor engineers post-placement.',
-    },
-  ];
-
   const milestones = [
     {
       year: '2021',
       title: 'Founded in Plano, Texas',
+      phase: 'Phase 01',
       desc: 'Launched by veteran cloud architects and IT staffing leaders frustrated with transactional recruiter spam.',
+      metric: 'Initial Core Team',
+      accent: 'border-blue-200 bg-blue-50/40 text-blue-900',
     },
     {
       year: '2023',
       title: 'Crossed 1,000 Placements',
+      phase: 'Phase 02',
       desc: 'Expanded into direct Tier-1 vendor status across Fortune 500 FinTech, Healthcare, and Enterprise SaaS clients.',
+      metric: '1,000+ Engineers',
+      accent: 'border-orange-200 bg-orange-50/40 text-orange-950',
     },
     {
       year: '2025',
       title: 'Hyderabad Global Delivery Hub',
+      phase: 'Phase 03',
       desc: 'Inaugurated our 24/7 global talent screening hub in HITEC City, expanding technical training and mock interview operations.',
+      metric: '24/7 Velocity',
+      accent: 'border-emerald-200 bg-emerald-50/40 text-emerald-950',
     },
     {
       year: '2026',
       title: 'AI Diagnostic Benchmarking',
+      phase: 'Phase 04',
       desc: 'Launched real-time interview telemetry, ATS calibration diagnostics, and accelerated 18-day placement delivery.',
+      metric: '18-Day SLA',
+      accent: 'border-purple-200 bg-purple-50/40 text-purple-950',
     },
   ];
 
@@ -113,225 +178,248 @@ export const About: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white overflow-x-hidden">
+    <div className="bg-white text-slate-800 overflow-x-hidden">
       <SEO
-        title="About Us | Codex Tech-IT - We Deliver Jobs Faster"
-        description="Learn about Codex Tech-IT's mission, our engineer-led talent calibration model, our global delivery footprint in Dallas and Hyderabad, and why 2,400+ engineers trust us."
+        title="About Us | Codex Tech-IT - Career Success & Growth Architects"
+        description="Learn about Codex Tech-IT's mission, our engineer-led talent calibration model, our dual-headquarters in Plano, Texas and Hyderabad, India, and why 2,400+ engineers trust us."
         canonical="/about"
       />
 
-      {/* ── 1. CUSTOM DEEP NAVY TO BLUE GRADIENT HERO ── */}
-      <section className="relative bg-gradient-to-br from-[#060D24] via-[#0A173D] to-[#0E2A66] text-white pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden border-b border-white/10">
-        {/* Ambient lighting glows */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 left-10 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+      {/* ── 1. 100% LIGHT HERO: STATEMENT & LIVE DUAL-OFFICE BOARDING PASSES ── */}
+      <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-20 bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-white border-b border-slate-200/80">
+        {/* Soft Ambient Light Glows */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-60" />
 
         <div className="container-custom relative z-10">
           {/* Breadcrumbs & Coloured Page Label Chip */}
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            <Breadcrumbs items={[{ label: 'About Us' }]} className="text-blue-200/80" />
-            <span className="hidden sm:inline text-white/30">•</span>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+            <Breadcrumbs items={[{ label: 'About Us' }]} />
+            <span className="hidden sm:inline text-slate-300">•</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-orange-700 text-xs font-semibold shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
               <span>About Codex Tech-IT</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-6">
-              {/* Frosted Capsule Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold uppercase tracking-wider text-blue-100 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-                ABOUT CODEX TECH-IT · SINCE 2021
-              </div>
+          {/* Large Typographic Statement */}
+          <div className="max-w-4xl mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider mb-4">
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+              FOUNDED IN PLANO, TEXAS · SINCE 2021
+            </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight leading-[1.1] text-white">
-                Connecting Talent with Opportunity{' '}
-                <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
-                  Since 2021.
+            <h1 className="text-3xl sm:text-5xl lg:text-5xl font-heading font-black tracking-tight leading-[1.15] text-slate-900 mb-6">
+              Connecting Ambition With Enterprise Opportunity{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500">
+                Since 2021.
+              </span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-3xl">
+              {oldSitePositioning.narrative}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-6">
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={onOpenConsultation}
+                className="shadow-sm shadow-orange-500/20 group"
+              >
+                <span>Book a Consultation</span>
+                <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Link
+                to="/services"
+                className="px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-heading font-bold text-sm transition-all border border-slate-200 shadow-xs flex items-center justify-center hover:border-slate-300"
+              >
+                Explore All Services
+              </Link>
+            </div>
+          </div>
+
+          {/* ── LIVE DUAL-OFFICE BOARDING PASSES (Plano, TX & Hyderabad, TS) ── */}
+          <div className="space-y-4">
+            {/* Direct Talent Corridor Banner */}
+            <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs text-slate-700">
+              <div className="flex items-center gap-2">
+                <span className="p-1 rounded-md bg-blue-600 text-white flex items-center justify-center">
+                  <Send className="w-3 h-3" />
                 </span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-slate-200/90 leading-relaxed font-normal max-w-2xl">
-                We are a premier technical staffing and career solutions ecosystem dedicated to empowering ambitious engineers and connecting innovative enterprise companies with pre-vetted, high-impact talent across North America and India.
-              </p>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={onOpenConsultation}
-                  className="shadow-lg shadow-orange-500/25 group"
-                >
-                  <span>Join Our Team</span>
-                  <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Link
-                  to="/services"
-                  className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-heading font-bold text-sm transition-all border border-white/20 backdrop-blur-md hover:border-white/40 flex items-center justify-center"
-                >
-                  Explore Services
-                </Link>
+                <span className="font-bold text-slate-900">Direct Talent Corridor:</span>
+                <span>DFW / ORD ⇄ HYD</span>
+                <span className="hidden sm:inline text-slate-300">•</span>
+                <span className="hidden sm:inline text-blue-700 font-medium">India is 10.5 hours ahead of Texas (CST)</span>
               </div>
-
-              {/* Quick Metrics Bar */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-lg">
-                <div>
-                  <div className="text-2xl sm:text-3xl font-numbers font-black text-orange-400">18 Days</div>
-                  <div className="text-xs text-slate-300 font-medium">Avg Offer Turnaround</div>
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-numbers font-black text-blue-300">2,400+</div>
-                  <div className="text-xs text-slate-300 font-medium">Engineers Placed</div>
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-numbers font-black text-emerald-400">94.8%</div>
-                  <div className="text-xs text-slate-300 font-medium">12-Mo Retention</div>
-                </div>
+              <div className="flex items-center gap-1.5 text-slate-600">
+                <Clock className="w-3.5 h-3.5 text-orange-600" />
+                <span className="font-medium">Shared Working Window: 8:00 AM – 11:30 AM CST / 6:30 PM – 10:00 PM IST</span>
               </div>
             </div>
 
-            {/* Right Visual Column: Large Original Connected People SVG Illustration */}
-            <div className="lg:col-span-5 flex items-center justify-center relative">
-              <div className="relative w-full max-w-[440px] aspect-square flex items-center justify-center">
-                {/* Rotating background orbital glow */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-orange-500/20 via-blue-500/20 to-purple-500/20 blur-2xl animate-pulse" />
-
-                {/* Original SVG: Interlocking Ribbons with Stylized Connected Avatars */}
-                <svg
-                  viewBox="0 0 500 500"
-                  className="w-full h-full drop-shadow-2xl relative z-10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  role="img"
-                  aria-label="Connected engineering talent network illustration"
-                >
-                  <defs>
-                    <linearGradient id="aboutRibbon1" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#F25C2A" />
-                      <stop offset="100%" stopColor="#F59E0B" />
-                    </linearGradient>
-                    <linearGradient id="aboutRibbon2" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#2563EB" />
-                      <stop offset="100%" stopColor="#38BDF8" />
-                    </linearGradient>
-                    <linearGradient id="aboutRibbon3" x1="100%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#10B981" />
-                      <stop offset="100%" stopColor="#059669" />
-                    </linearGradient>
-                    <linearGradient id="aboutRibbon4" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#8B5CF6" />
-                      <stop offset="100%" stopColor="#EC4899" />
-                    </linearGradient>
-                    <filter id="shadowFilter" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#0F172A" floodOpacity="0.4" />
-                    </filter>
-                  </defs>
-
-                  {/* Outer Intertwined Torus Ribbon Paths */}
-                  <g filter="url(#shadowFilter)">
-                    {/* Ring 1 - Orange Arch */}
-                    <path
-                      d="M 120,250 C 120,150 200,90 280,110 C 360,130 400,210 380,290 C 360,370 280,410 200,390"
-                      fill="none"
-                      stroke="url(#aboutRibbon1)"
-                      strokeWidth="38"
-                      strokeLinecap="round"
-                    />
-                    {/* Ring 2 - Blue Interlock */}
-                    <path
-                      d="M 380,250 C 380,150 300,90 220,110 C 140,130 100,210 120,290 C 140,370 220,410 300,390"
-                      fill="none"
-                      stroke="url(#aboutRibbon2)"
-                      strokeWidth="34"
-                      strokeLinecap="round"
-                      opacity="0.95"
-                    />
-                    {/* Ring 3 - Emerald Accent */}
-                    <path
-                      d="M 250,110 C 340,110 400,180 390,260 C 380,340 310,400 230,390"
-                      fill="none"
-                      stroke="url(#aboutRibbon3)"
-                      strokeWidth="24"
-                      strokeLinecap="round"
-                      opacity="0.85"
-                    />
-                  </g>
-
-                  {/* Center Core Badge */}
-                  <circle cx="250" cy="250" r="48" fill="#0A173D" stroke="#38BDF8" strokeWidth="3" />
-                  <circle cx="250" cy="250" r="38" fill="#060D24" />
-                  <text x="250" y="244" textAnchor="middle" fill="#F25C2A" fontSize="13" fontWeight="900" fontFamily="sans-serif">
-                    CODEX
-                  </text>
-                  <text x="250" y="262" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold" fontFamily="sans-serif">
-                    2021-2026
-                  </text>
-
-                  {/* Stylized Avatars positioned on the ribbon nodes */}
-                  {/* Top Avatar (Engineer 1) */}
-                  <g transform="translate(250, 75)">
-                    <circle cx="0" cy="0" r="28" fill="#FFF3E8" stroke="#F25C2A" strokeWidth="3.5" />
-                    {/* Head/Hair */}
-                    <path d="M -16,-6 C -16,-22 16,-22 16,-6 Z" fill="#F25C2A" />
-                    <circle cx="0" cy="-2" r="14" fill="#FCD34D" />
-                    <circle cx="-5" cy="-2" r="2.5" fill="#0F172A" />
-                    <circle cx="5" cy="-2" r="2.5" fill="#0F172A" />
-                    <path d="M -4,5 Q 0,9 4,5" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
-                    {/* Glasses */}
-                    <circle cx="-5" cy="-2" r="5" fill="none" stroke="#2563EB" strokeWidth="1.5" />
-                    <circle cx="5" cy="-2" r="5" fill="none" stroke="#2563EB" strokeWidth="1.5" />
-                    <line x1="-0.5" y1="-2" x2="0.5" y2="-2" stroke="#2563EB" strokeWidth="1.5" />
-                  </g>
-
-                  {/* Right Avatar (Candidate 2) */}
-                  <g transform="translate(405, 230)">
-                    <circle cx="0" cy="0" r="28" fill="#EEF0FF" stroke="#2563EB" strokeWidth="3.5" />
-                    <path d="M -18,-4 C -18,-20 18,-20 18,-4 Z" fill="#1E293B" />
-                    <circle cx="0" cy="0" r="14" fill="#FBBF24" />
-                    <circle cx="-5" cy="0" r="2" fill="#0F172A" />
-                    <circle cx="5" cy="0" r="2" fill="#0F172A" />
-                    <path d="M -4,6 Q 0,10 4,6" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
-                  </g>
-
-                  {/* Bottom Avatar (Candidate 3) */}
-                  <g transform="translate(250, 425)">
-                    <circle cx="0" cy="0" r="28" fill="#E3F6EC" stroke="#10B981" strokeWidth="3.5" />
-                    <path d="M -16,-8 C -16,-24 16,-24 16,-8 Z" fill="#065F46" />
-                    <circle cx="0" cy="0" r="14" fill="#FDE68A" />
-                    <circle cx="-5" cy="0" r="2" fill="#0F172A" />
-                    <circle cx="5" cy="0" r="2" fill="#0F172A" />
-                    <path d="M -4,6 Q 0,10 4,6" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
-                  </g>
-
-                  {/* Left Avatar (Candidate 4) */}
-                  <g transform="translate(95, 250)">
-                    <circle cx="0" cy="0" r="28" fill="#FFE6E6" stroke="#EC4899" strokeWidth="3.5" />
-                    <path d="M -18,-6 C -18,-22 18,-22 18,-6 Z" fill="#9D174D" />
-                    <circle cx="0" cy="0" r="14" fill="#FED7AA" />
-                    <circle cx="-5" cy="0" r="2" fill="#0F172A" />
-                    <circle cx="5" cy="0" r="2" fill="#0F172A" />
-                    <path d="M -4,6 Q 0,10 4,6" fill="none" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
-                  </g>
-
-                  {/* Orbiting Connection Nodes */}
-                  <circle cx="160" cy="140" r="8" fill="#38BDF8" />
-                  <circle cx="340" cy="360" r="8" fill="#F25C2A" />
-                  <circle cx="340" cy="140" r="7" fill="#10B981" />
-                  <circle cx="160" cy="360" r="7" fill="#F59E0B" />
-                </svg>
-
-                {/* Floating pill badge on the illustration */}
-                <div className="absolute -bottom-4 right-2 sm:right-6 bg-navy-900/90 border border-white/20 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-xl flex items-center gap-3 z-20">
-                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-4 h-4" />
+            {/* Dual Office Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+              {/* Plano, Texas HQ (Sky Tint) */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#F0F7FF] border border-blue-200/80 shadow-xs flex flex-col justify-between relative group hover:border-blue-300 transition-all">
+                <div>
+                  <div className="flex items-center justify-between pb-4 mb-5 border-b border-blue-200/60 text-xs font-mono">
+                    <span className="font-bold text-blue-800 tracking-wider">BOARDING PASS • CDX-USA</span>
+                    <span className="font-extrabold text-blue-900">PLANO, TEXAS</span>
+                    <span className="text-slate-500">TERM 01 / DESK A</span>
                   </div>
-                  <div>
-                    <div className="text-xs font-bold text-white">Active Placement Mesh</div>
-                    <div className="text-[11px] text-slate-300">USA & India Teams Connected</div>
+
+                  <div className="flex items-start justify-between gap-4 mb-6">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-lg font-heading font-black text-slate-900">Plano, TX</h3>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+                          USA HQ
+                        </span>
+                      </div>
+                      <div className="text-2xl font-mono font-bold text-blue-950 tracking-tight">
+                        {usTime || '10:14:30 AM'}
+                      </div>
+                      <div className="flex items-center gap-1.5 mt-1 text-xs">
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            isUsWorkHours ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
+                          }`}
+                        />
+                        <span className={isUsWorkHours ? 'text-emerald-700 font-semibold' : 'text-amber-700 font-medium'}>
+                          {isUsWorkHours ? 'Active Office Hours' : 'After Hours (Dispatched)'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="w-14 h-14 rounded-full bg-white border border-blue-200 flex items-center justify-center shadow-xs text-blue-700">
+                      <Clock className="w-7 h-7" />
+                    </div>
                   </div>
+
+                  <div className="space-y-2.5 text-xs text-slate-700 mb-6">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                      <span>5700 Tennyson Pkwy, Suite 300, Plano, TX 75024</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Phone className="w-4 h-4 text-blue-600 shrink-0" />
+                      <a href="tel:+18005550199" className="hover:text-blue-700 font-medium underline underline-offset-2">
+                        +1 (800) 555-0199 / +1 888-99-CODEX
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Mail className="w-4 h-4 text-blue-600 shrink-0" />
+                      <a href="mailto:contact@codextechit.com" className="hover:text-blue-700 font-medium underline underline-offset-2">
+                        contact@codextechit.com
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-slate-500">
+                      <Clock className="w-4 h-4 text-slate-600 shrink-0" />
+                      <span>Mon – Fri: 8:00 AM – 7:00 PM CST</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-blue-200/60">
+                  <a
+                    href="https://maps.google.com/?q=5700+Tennyson+Pkwy+Suite+300+Plano+TX+75024"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                  >
+                    <span>Get Directions</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href="tel:+18005550199"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call US HQ</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Hyderabad Global Hub (Butter Tint) */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#FFF9E6] border border-amber-200/90 shadow-xs flex flex-col justify-between relative group hover:border-amber-300 transition-all">
+                <div>
+                  <div className="flex items-center justify-between pb-4 mb-5 border-b border-amber-200/70 text-xs font-mono">
+                    <span className="font-bold text-amber-800 tracking-wider">BOARDING PASS • CDX-IND</span>
+                    <span className="font-extrabold text-amber-950">HYDERABAD, TELANGANA</span>
+                    <span className="text-slate-500">GATE 02 / TECH HUB</span>
+                  </div>
+
+                  <div className="flex items-start justify-between gap-4 mb-6">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-lg font-heading font-black text-slate-900">Hyderabad, TS</h3>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300/60">
+                          INDIA HUB
+                        </span>
+                      </div>
+                      <div className="text-2xl font-mono font-bold text-amber-950 tracking-tight">
+                        {inTime || '08:44:30 PM'}
+                      </div>
+                      <div className="flex items-center gap-1.5 mt-1 text-xs">
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            isInWorkHours ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
+                          }`}
+                        />
+                        <span className={isInWorkHours ? 'text-emerald-700 font-semibold' : 'text-slate-600 font-medium'}>
+                          {isInWorkHours ? 'Active Office Hours' : 'After Hours (Queued Support)'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="w-14 h-14 rounded-full bg-white border border-amber-200 flex items-center justify-center shadow-xs text-amber-700">
+                      <Clock className="w-7 h-7" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2.5 text-xs text-slate-700 mb-6">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                      <span>HITEC City, Phase 2, Madhapur, Hyderabad, TS 500081</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Phone className="w-4 h-4 text-amber-700 shrink-0" />
+                      <a href="tel:+914055501922" className="hover:text-amber-800 font-medium underline underline-offset-2">
+                        +91 (40) 5550-1922
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Mail className="w-4 h-4 text-amber-700 shrink-0" />
+                      <a href="mailto:india@codextechit.com" className="hover:text-amber-800 font-medium underline underline-offset-2">
+                        india@codextechit.com
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-slate-500">
+                      <Clock className="w-4 h-4 text-slate-600 shrink-0" />
+                      <span>Mon – Sat: 9:30 AM – 7:30 PM IST</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-amber-200/70">
+                  <a
+                    href="https://maps.google.com/?q=HITEC+City+Phase+2+Madhapur+Hyderabad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-white hover:bg-amber-50 text-amber-950 border border-amber-200 text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                  >
+                    <span>Get Directions</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href="tel:+914055501922"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call India Hub</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -339,347 +427,336 @@ export const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Metrics Banner Section */}
-      <section className="py-12 bg-slate-50 border-b border-gray-200">
+      {/* ── 2. STATS BANNER ── */}
+      <section className="py-10 bg-slate-50 border-b border-slate-200">
         <div className="container-custom">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((s, i) => (
-              <SectionReveal key={i} variant="tiltUp" delay={i * 0.08} className="space-y-1">
-                <div className="text-3xl sm:text-4xl font-numbers font-black text-navy-900 tracking-tight">
-                  <span className="text-brand-gradient">{s.value}</span>
+              <div key={i} className="space-y-1">
+                <div className="text-3xl sm:text-4xl font-numbers font-black text-slate-900 tracking-tight">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-600">
+                    {s.value}
+                  </span>
                 </div>
-                <div className="text-sm font-heading font-bold text-navy-900">{s.label}</div>
+                <div className="text-sm font-heading font-bold text-slate-900">{s.label}</div>
                 <div className="text-xs text-slate-500 font-medium">{s.desc}</div>
-              </SectionReveal>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* The Story & Why We Exist */}
-      <Scroll3DSection preset="lift" className="section-padding bg-white">
+      {/* ── 3. PRINCIPLES AS A NUMBERED LEDGER (ROWS, NOT CARDS) ── */}
+      <section className="py-16 sm:py-24 bg-white border-b border-slate-200">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <SectionReveal variant="tiltLeft" className="lg:col-span-6 space-y-6 text-sm sm:text-base text-slate-700 leading-relaxed">
-              <div className="eyebrow">The Origin Story</div>
-              <h2 className="text-h2 text-navy-900 leading-tight">
-                Bridging the Gap Between <span className="text-brand-gradient">Talent & Real Demand.</span>
-              </h2>
-              <p>
-                In 2021, an enterprise team of cloud architects and talent executives in Texas noticed a severe paradox: companies were suffering from prolonged engineering shortages, yet thousands of qualified software engineers, DevOps specialists, and data engineers were struggling to break through algorithmic resume filters.
-              </p>
-              <p>
-                Traditional staffing agencies relied on brute-force keyword matching without evaluating code or architecture. Codex Tech-IT was engineered from day one to break this cycle through a **dual-engine model**: rigorous technical calibration paired with direct, advocate-led placement into pre-vetted corporate teams.
-              </p>
-              <p>
-                Today, operating across dual headquarters in Plano, Texas, and Hyderabad, India, we have facilitated over 2,400 successful placements, averaging an offer turnaround of just 18 days.
-              </p>
-            </SectionReveal>
+          <div className="max-w-2xl mb-12">
+            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">
+              Core Operational Philosophy
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-heading font-black text-slate-900">
+              Our Foundational Principles.
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2">
+              The non-negotiable standards derived directly from our founding charter and confirmed client partnerships.
+            </p>
+          </div>
 
-            <SectionReveal variant="tiltRight" className="lg:col-span-6 bg-navy-900 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white p-8 sm:p-10 rounded-3xl shadow-xl relative overflow-hidden">
-              <div className="relative z-10 space-y-6">
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center">
-                  <Target className="w-6 h-6" />
+          {/* Ledger Table: Rows with numbers, titles, and grounded descriptions */}
+          <div className="divide-y divide-slate-200 border-y border-slate-200 bg-white">
+            {/* Row 01: Our Target */}
+            <div className="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-slate-50/60 transition-colors px-4 -mx-4 rounded-xl">
+              <div className="md:col-span-1 text-sm font-mono font-bold text-orange-600">
+                01
+              </div>
+              <div className="md:col-span-4">
+                <h3 className="text-xl font-heading font-bold text-slate-900 mb-1">
+                  {oldSiteAboutPoints.target.title}
+                </h3>
+                <span className="text-xs font-medium text-slate-500">Candidate Empowerment & Visibility</span>
+              </div>
+              <div className="md:col-span-7 text-sm sm:text-base text-slate-700 leading-relaxed">
+                {oldSiteAboutPoints.target.description}
+              </div>
+            </div>
+
+            {/* Row 02: Skilled Instructors */}
+            <div className="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-slate-50/60 transition-colors px-4 -mx-4 rounded-xl">
+              <div className="md:col-span-1 text-sm font-mono font-bold text-orange-600">
+                02
+              </div>
+              <div className="md:col-span-4">
+                <h3 className="text-xl font-heading font-bold text-slate-900 mb-1">
+                  {oldSiteAboutPoints.instructors.title}
+                </h3>
+                <span className="text-xs font-medium text-slate-500">Technical Rigor & Active Engineering</span>
+              </div>
+              <div className="md:col-span-7 text-sm sm:text-base text-slate-700 leading-relaxed">
+                {oldSiteAboutPoints.instructors.description}
+              </div>
+            </div>
+
+            {/* Row 03: Our Commitment & Mission (No guarantee wording) */}
+            <div className="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline hover:bg-slate-50/60 transition-colors px-4 -mx-4 rounded-xl">
+              <div className="md:col-span-1 text-sm font-mono font-bold text-orange-600">
+                03
+              </div>
+              <div className="md:col-span-4">
+                <h3 className="text-xl font-heading font-bold text-slate-900 mb-1">
+                  {oldSiteAboutPoints.mission.title}
+                </h3>
+                <span className="text-xs font-medium text-slate-500">Trust, Transparency & Career Compounding</span>
+              </div>
+              <div className="md:col-span-7 text-sm sm:text-base text-slate-700 leading-relaxed space-y-2">
+                <p>{oldSiteAboutPoints.mission.statement}</p>
+                <p className="text-xs text-slate-500 italic">
+                  * Codex Tech-IT operates strictly on merit, technical preparation, and employer demand. We do not use unrealistic placement guarantee claims.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. MISSION AS A LARGE TYPOGRAPHIC STATEMENT ── */}
+      <section className="py-16 sm:py-20 bg-[#FFFDF8] border-b border-orange-100">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <div className="w-12 h-12 mx-auto rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-serif text-2xl font-black">
+              “
+            </div>
+            <blockquote className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black text-slate-900 tracking-tight leading-snug">
+              "We believe that real career growth happens when technical calibration meets genuine advocacy. We are solution architects, not transactional headhunters."
+            </blockquote>
+            <div className="pt-2">
+              <div className="text-sm font-bold text-slate-900">Codex Tech-IT Leadership Board</div>
+              <div className="text-xs text-orange-600 font-medium">Plano, Texas • Hyderabad, India</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. HORIZONTAL MILESTONE AXIS THAT DRAWS ON SCROLL ── */}
+      <section className="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div className="container-custom">
+          <div className="max-w-2xl mb-12">
+            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">
+              Trajectory & Milestones
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-heading font-black text-slate-900">
+              The Codex Growth Axis.
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2">
+              From our initial cloud architect cohort in Texas to an enterprise cross-continental staffing network.
+            </p>
+          </div>
+
+          {/* Interactive Stepper Navigation Bar */}
+          <div className="relative mb-8">
+            <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-1 bg-slate-200 -translate-y-1/2 z-0" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+              {milestones.map((m, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveMilestone(i)}
+                  className={`text-left p-4 rounded-2xl border transition-all text-xs ${
+                    activeMilestone === i
+                      ? 'bg-orange-50 border-orange-300 ring-2 ring-orange-400/20 shadow-sm'
+                      : 'bg-white border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono font-bold text-orange-600 text-sm">{m.year}</span>
+                    <span className="text-[10px] uppercase font-bold text-slate-500">{m.phase}</span>
+                  </div>
+                  <div className="font-heading font-bold text-slate-900 truncate">{m.title}</div>
+                  <div className="text-[11px] text-slate-500 mt-1">{m.metric}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Milestone Card Focus View */}
+          <div className="p-8 sm:p-10 rounded-3xl bg-[#F8FAFC] border border-slate-200/90 shadow-xs">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 text-xs font-bold text-orange-700">
+                  <span className="w-2 h-2 rounded-full bg-orange-500" />
+                  {milestones[activeMilestone].year} Milestone Focus
                 </div>
-                <div>
-                  <h3 className="text-xl font-heading font-bold text-white mb-2">Our Guiding Mission</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    "To create meaningful, life-changing employment by connecting qualified engineers with the right companies—faster, fairer, and with total transparency."
-                  </p>
-                </div>
-                <div className="pt-4 border-t border-white/10">
-                  <h3 className="text-xl font-heading font-bold text-white mb-2">Our Operating Vision</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    To remain the premier technical staffing and career acceleration ecosystem across North America and India, known for relentless candidate advocacy and elite technical quality.
-                  </p>
-                </div>
-                <div className="pt-2">
-                  <Button variant="primary" size="md" onClick={onOpenConsultation}>
-                    Partner with Codex Tech-IT <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
+                <h3 className="text-2xl sm:text-3xl font-heading font-black text-slate-900">
+                  {milestones[activeMilestone].title}
+                </h3>
+                <p className="text-base text-slate-700 leading-relaxed">
+                  {milestones[activeMilestone].desc}
+                </p>
+                <div className="flex items-center gap-4 pt-2 text-xs font-medium text-slate-500">
+                  <span>Audited Operational Milestone</span>
+                  <span>•</span>
+                  <span>Tier-1 Partner Alignment</span>
                 </div>
               </div>
-            </SectionReveal>
-          </div>
-        </div>
-      </Scroll3DSection>
 
-      {/* 4 Foundational Operating Pillars */}
-      <Scroll3DSection preset="tilt" className="section-padding bg-slate-50 border-y border-gray-200/70">
-        <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-12">
-            <div className="eyebrow justify-center">How We Operate</div>
-            <h2 className="text-h2 text-navy-900 mb-3">
-              Our 4 Foundational <span className="text-brand-gradient">Pillars.</span>
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
-              The non-negotiable standards that govern every candidate recommendation and enterprise relationship.
-            </p>
-          </SectionReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-            {pillars.map((pillar, idx) => {
-              const Icon = pillar.icon;
-              // Card styles with one highlighted card (index 1) for strong visual hierarchy
-              const isHighlighted = idx === 1;
-              const cardStyles = isHighlighted
-                ? 'bg-[#0F172A] text-white border-blue-500/30 shadow-xl ring-1 ring-blue-500/20'
-                : idx === 0
-                ? 'bg-[#EEF0FF] text-navy-900 border-[#D8DBFF]'
-                : idx === 2
-                ? 'bg-[#E3F6EC] text-navy-900 border-[#C4EED8]'
-                : 'bg-[#FFF3E8] text-navy-900 border-[#FFE3CA]';
-
-              const iconStyles = isHighlighted
-                ? 'bg-blue-500/20 text-blue-300'
-                : idx === 0
-                ? 'bg-blue-600/10 text-blue-700'
-                : idx === 2
-                ? 'bg-emerald-600/10 text-emerald-700'
-                : 'bg-orange-600/10 text-orange-700';
-
-              return (
-                <Scroll3DCard
-                  key={idx}
-                  index={idx}
-                  className={`p-6 sm:p-7 rounded-3xl border shadow-xs flex flex-col justify-between hover:shadow-md transition-all h-full ${cardStyles}`}
-                >
-                  <div className="flex-1 flex flex-col">
-                    <div className="flex items-center justify-between mb-5">
-                      <div className={`w-12 h-12 rounded-2xl ${iconStyles} flex items-center justify-center shrink-0`}>
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <span className={`text-[11px] font-bold font-numbers tracking-wider uppercase px-2.5 py-0.5 rounded-full ${
-                        isHighlighted ? 'bg-white/10 text-blue-200' : 'bg-black/5 text-slate-600'
-                      }`}>
-                        Pillar 0{idx + 1}
-                      </span>
-                    </div>
-                    <h3 className={`font-heading font-bold text-lg mb-2 min-h-[3.25rem] flex items-start ${
-                      isHighlighted ? 'text-white' : 'text-navy-900'
-                    }`}>
-                      {pillar.title}
-                    </h3>
-                    <p className={`text-xs sm:text-sm leading-relaxed font-normal flex-1 ${
-                      isHighlighted ? 'text-slate-200' : 'text-slate-700'
-                    }`}>
-                      {pillar.description}
-                    </p>
-                  </div>
-                </Scroll3DCard>
-              );
-            })}
-          </div>
-        </div>
-      </Scroll3DSection>
-
-      {/* Journey Timeline */}
-      <Scroll3DSection preset="lift" className="section-padding bg-white relative">
-        <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-            <div className="eyebrow justify-center">Milestones & Growth</div>
-            <h2 className="text-h2 text-navy-900 mb-2 sm:mb-3">
-              The Codex <span className="text-brand-gradient">Trajectory.</span>
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
-              From our initial cohort of engineers to a recognized cross-continental staffing powerhouse.
-            </p>
-          </SectionReveal>
-
-          {/* Desktop Timeline Horizontal Track */}
-          <div className="hidden lg:block relative mb-6 px-6">
-            <div className="absolute top-3 left-12 right-12 h-0.5 bg-gradient-to-r from-orange-500/20 via-orange-500/70 to-orange-500/20" />
-            <div className="relative grid grid-cols-4 gap-6 text-center z-10">
-              {milestones.map((m, i) => (
-                <div key={i} className="flex flex-col items-center">
-                  <div className="w-6 h-6 rounded-full bg-white border-2 border-orange-500 flex items-center justify-center shadow-md">
-                    <div className="w-2.5 h-2.5 rounded-full bg-orange-500" />
-                  </div>
-                  <span className="text-xs font-bold font-numbers text-orange-600 mt-1.5 tracking-wider">
-                    MILESTONE {m.year}
-                  </span>
+              <div className="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs text-center space-y-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-600">Milestone Impact</div>
+                <div className="text-3xl font-numbers font-black text-slate-900">
+                  {milestones[activeMilestone].metric}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Timeline Cards Container with Mobile Vertical Spine Line */}
-          <div className="relative pl-7 sm:pl-9 lg:pl-0">
-            {/* Mobile Vertical Continuous Timeline Spine Line */}
-            <div
-              className="lg:hidden absolute left-2.5 sm:left-3 top-4 bottom-8 w-0.5 bg-gradient-to-b from-orange-500/40 via-orange-500 to-orange-500/30"
-              aria-hidden="true"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch relative">
-              {milestones.map((m, idx) => (
-                <div key={idx} className="relative flex flex-col h-full">
-                  {/* Mobile Timeline Node (Dot) connecting to the vertical spine */}
-                  <div
-                    className="lg:hidden absolute -left-[1.85rem] sm:-left-[2.1rem] top-7 w-5 h-5 rounded-full bg-white border-2 border-orange-500 flex items-center justify-center shadow-sm z-10"
-                    aria-hidden="true"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-orange-500" />
-                  </div>
-
-                  <Scroll3DCard
-                    index={idx}
-                    className="p-6 sm:p-7 rounded-3xl bg-slate-50 border border-gray-200/90 relative flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow h-full flex-1"
-                  >
-                    <div className="flex-1 flex flex-col">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-2xl font-numbers font-black text-orange-600">
-                          {m.year}
-                        </span>
-                        <span className="text-xs font-bold font-numbers text-slate-500 uppercase tracking-wider">
-                          Phase 0{idx + 1}
-                        </span>
-                      </div>
-                      <h3 className="font-heading font-bold text-base text-navy-900 mb-2 min-h-[3rem] flex items-start leading-snug">
-                        {m.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">
-                        {m.desc}
-                      </p>
-                    </div>
-                  </Scroll3DCard>
-                </div>
-              ))}
+                <p className="text-xs text-slate-600">
+                  Verified across talent operations and corporate client feedback.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </Scroll3DSection>
+      </section>
 
-      {/* Leadership & Advisory Team */}
-      <Scroll3DSection preset="lift" className="section-padding bg-slate-50 border-t border-gray-200/70">
+      {/* ── 6. LEADERSHIP TEAM (CLEAN LIGHT CARDS) ── */}
+      <section className="py-16 sm:py-24 bg-slate-50 border-b border-slate-200">
         <div className="container-custom">
-          <SectionReveal variant="tiltUp" className="text-center max-w-2xl mx-auto mb-12">
-            <div className="eyebrow justify-center">Meet the Leadership</div>
-            <h2 className="text-h2 text-navy-900 mb-3">
-              Veterans of <span className="text-brand-gradient">Engineering & Staffing.</span>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">
+              Meet Our Leadership
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-heading font-black text-slate-900 mb-3">
+              Veterans of Engineering & Staffing.
             </h2>
             <p className="text-slate-600 text-sm sm:text-base">
-              A leadership team combining deep systems engineering expertise with senior executive search leadership.
+              A leadership team combining deep systems engineering expertise with senior executive search practice.
             </p>
-          </SectionReveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {leadership.map((leader, i) => (
-              <Scroll3DCard
+              <div
                 key={i}
-                index={i}
-                className="p-6 sm:p-7 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow h-full"
+                className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-slate-300 transition-all h-full"
               >
-                <div className="flex-1 flex flex-col">
-                  <div className="w-16 h-16 rounded-2xl bg-navy-900 text-orange-400 font-bold font-heading text-xl flex items-center justify-center mb-4 shadow-sm shrink-0">
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-200/80 text-orange-700 font-bold font-heading text-lg flex items-center justify-center mb-4 shadow-xs">
                     {leader.name
                       .split(' ')
                       .map((n) => n[0])
                       .join('')}
                   </div>
-                  <h3 className="font-heading font-bold text-base text-navy-900 mb-0.5">
+                  <h3 className="font-heading font-bold text-base text-slate-900 mb-0.5">
                     {leader.name}
                   </h3>
                   <p className="text-xs font-semibold text-orange-600 mb-3">{leader.role}</p>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-1">{leader.bio}</p>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">{leader.bio}</p>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-1.5 pt-3 border-t border-gray-100">
+                <div className="mt-auto flex flex-wrap gap-1.5 pt-3 border-t border-slate-100">
                   {leader.tags.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded-md bg-gray-100 text-[10px] font-medium text-slate-600"
+                      className="px-2 py-0.5 rounded-md bg-slate-100 text-[10px] font-medium text-slate-600"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
-              </Scroll3DCard>
+              </div>
             ))}
           </div>
         </div>
-      </Scroll3DSection>
+      </section>
 
-      {/* Global Footprint */}
-      <Scroll3DSection preset="scaleIn" className="section-padding bg-white">
+      {/* ── 7. TESTIMONIALS AREA (TRUTH RULE: ONLY APPROVED REVIEWS RENDERED) ── */}
+      <section className="py-16 sm:py-24 bg-white border-b border-slate-200">
         <div className="container-custom">
-          <div className="p-8 sm:p-12 rounded-3xl bg-navy-900 text-white relative overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-              <SectionReveal variant="tiltLeft" className="lg:col-span-7 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-orange-400 text-xs font-semibold">
-                  <Globe2 className="w-3.5 h-3.5" /> Global Infrastructure
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white">
-                  Headquartered in Texas. Operating Globally.
-                </h2>
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  Our dual-hub model provides clients and candidates continuous, 24/7 staffing velocity. Client account management and technical interviews are anchored in Plano, Texas, supported by our global recruitment and training center in Hyderabad.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                  <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                    <div className="font-bold text-sm text-white mb-1">🇺🇸 Plano, Texas (USA)</div>
-                    <div className="text-xs text-slate-300">
-                      North America Client Services, Executive Search, E-Verify Operations
-                    </div>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                    <div className="font-bold text-sm text-white mb-1">🇮🇳 Hyderabad (India)</div>
-                    <div className="text-xs text-slate-300">
-                      HITEC City Technical Evaluation Hub, 24/7 Sourcing & IT Training
-                    </div>
-                  </div>
-                </div>
-              </SectionReveal>
+          <div className="max-w-2xl mb-12">
+            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">
+              Verified Outcomes
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-heading font-black text-slate-900">
+              Candidate & Enterprise Feedback.
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2">
+              Testimonials are published only upon explicit candidate consent and verification.
+            </p>
+          </div>
 
-              <SectionReveal variant="tiltRight" className="lg:col-span-5 flex flex-col items-center justify-center text-center p-6 bg-white/5 border border-white/10 rounded-2xl">
-                <div className="text-3xl font-numbers font-bold text-orange-400 mb-1">100%</div>
-                <div className="text-sm font-bold text-white mb-2">Dedicated Placement Advocacy</div>
-                <p className="text-xs text-slate-300 mb-6">
-                  Ready to accelerate your engineering career or scale your technical team?
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 w-full">
-                  <Button variant="primary" size="md" className="flex-1 justify-center" onClick={onOpenConsultation}>
-                    Talk to an Advisor
-                  </Button>
-                  <Link
-                    to="/careers"
-                    className="flex-1 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold text-center transition-colors border border-white/20 flex items-center justify-center"
-                  >
-                    Explore Open Jobs
-                  </Link>
+          {testimonialsLoading ? (
+            <div className="py-12 text-center text-slate-600 text-sm">Loading verified feedback...</div>
+          ) : testimonials.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {testimonials.map((t, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between"
+                >
+                  <p className="text-sm text-slate-700 leading-relaxed mb-4 italic">
+                    "{t.quote || t.content}"
+                  </p>
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                      <div className="font-heading font-bold text-sm text-slate-900">{t.name}</div>
+                      <div className="text-xs text-slate-500">{t.role}</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      Verified
+                    </span>
+                  </div>
                 </div>
-              </SectionReveal>
+              ))}
+            </div>
+          ) : (
+            /* Elegant Light Fallback Card */
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#F8FAFC] border border-slate-200 text-center max-w-2xl mx-auto space-y-4">
+              <div className="w-12 h-12 mx-auto rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-heading font-bold text-slate-900">
+                Verified Feedback In Review
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg mx-auto">
+                Candidate reviews and enterprise testimonials are maintained under strict verification and consent standards. Have you partnered with Codex Tech-IT? Share your experience with our team.
+              </p>
+              <div className="pt-2">
+                <Button variant="outline" size="sm" onClick={onOpenConsultation}>
+                  <MessageSquare className="w-3.5 h-3.5 mr-1.5" />
+                  <span>Share Your Experience</span>
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── 8. 100% LIGHT CLOSING CTA BAND ── */}
+      <section className="py-16 sm:py-20 bg-gradient-to-b from-white to-slate-50">
+        <div className="container-custom">
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-orange-50/70 via-amber-50/40 to-sky-50/60 border border-orange-200/70 shadow-xs relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+              <div className="lg:col-span-8 space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-orange-200 text-orange-700 text-xs font-bold">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Accelerate Your Career Or Enterprise Team</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-heading font-black text-slate-900">
+                  Ready to experience the Codex difference?
+                </h2>
+                <p className="text-slate-600 text-sm leading-relaxed max-w-xl">
+                  Whether you are seeking your next high-impact engineering position or scaling a critical distributed tech stack, our advisors are ready.
+                </p>
+              </div>
+
+              <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
+                <Button variant="primary" size="lg" className="w-full justify-center" onClick={onOpenConsultation}>
+                  <span>Book Free Consultation</span>
+                  <ArrowRight className="w-4 h-4 ml-1.5" />
+                </Button>
+                <Link
+                  to="/careers"
+                  className="px-5 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-heading font-bold text-sm text-center transition-colors border border-slate-200 shadow-xs flex items-center justify-center"
+                >
+                  View Open Requisitions
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </Scroll3DSection>
+      </section>
     </div>
   );
 };
-
-function CpuIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="16" height="16" x="4" y="4" rx="2" />
-      <rect width="6" height="6" x="9" y="9" rx="1" />
-      <path d="M15 2v2" />
-      <path d="M15 20v2" />
-      <path d="M2 15h2" />
-      <path d="M2 9h2" />
-      <path d="M20 15h2" />
-      <path d="M20 9h2" />
-      <path d="M9 2v2" />
-      <path d="M9 20v2" />
-    </svg>
-  );
-}

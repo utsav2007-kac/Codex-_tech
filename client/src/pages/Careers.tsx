@@ -264,6 +264,10 @@ export const Careers: React.FC = () => {
     );
     formData.append('job_id', String(activeJobForModal.dbId || 7));
     formData.append('job_title', activeJobForModal.title);
+    try {
+      const refCode = sessionStorage.getItem('cx_referral_code');
+      if (refCode) formData.append('referral_code', refCode);
+    } catch {}
     formData.append('resume', applicantFile);
 
     try {

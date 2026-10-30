@@ -87,7 +87,7 @@ export function initAnimDirectives(container: HTMLElement | Document = document)
       });
     });
 
-    // ── 3. RISE-STAGGER (Children rise 20px with stagger, guaranteed zero-blank) ──
+    // ── 3. RISE-STAGGER (Children rise with stagger, guaranteed zero-blank) ──
     const riseGroups = container.querySelectorAll<HTMLElement>('[data-anim="rise-stagger"]');
     riseGroups.forEach((group) => {
       const targets = group.children;
@@ -96,24 +96,25 @@ export function initAnimDirectives(container: HTMLElement | Document = document)
       gsap.fromTo(
         targets,
         {
-          y: 20,
-          opacity: 0,
+          y: 16,
+          opacity: 0.4,
         },
         {
           y: 0,
           opacity: 1,
-          duration: 0.6,
+          duration: 0.55,
           stagger: 0.08,
           ease: 'power2.out',
           immediateRender: false,
           scrollTrigger: {
             trigger: group,
             start: 'top 96%',
-            toggleActions: 'play none none reverse',
+            toggleActions: 'play none none none',
+            once: true,
             fastScrollEnd: true,
           },
           onComplete: () => {
-            gsap.set(targets, { clearProps: 'transform,opacity' });
+            gsap.set(targets, { clearProps: 'all' });
           },
         }
       );
@@ -148,7 +149,11 @@ export function initAnimDirectives(container: HTMLElement | Document = document)
           scrollTrigger: {
             trigger: heading,
             start: 'top 92%',
-            toggleActions: 'play none none reverse',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+          onComplete: () => {
+            gsap.set(targets, { clearProps: 'all' });
           },
         }
       );
@@ -180,11 +185,12 @@ export function initAnimDirectives(container: HTMLElement | Document = document)
           scrollTrigger: {
             trigger: box,
             start: 'top 92%',
-            toggleActions: 'play none none reverse',
+            toggleActions: 'play none none none',
+            once: true,
             fastScrollEnd: true,
           },
           onComplete: () => {
-            gsap.set(targets, { clearProps: 'transform,opacity' });
+            gsap.set(targets, { clearProps: 'all' });
           },
         }
       );
@@ -307,7 +313,11 @@ export function initAnimDirectives(container: HTMLElement | Document = document)
           scrollTrigger: {
             trigger: item,
             start: 'top 88%',
-            toggleActions: 'play none none reverse',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+          onComplete: () => {
+            gsap.set(item, { clearProps: 'all' });
           },
         }
       );

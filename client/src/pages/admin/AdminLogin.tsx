@@ -59,8 +59,8 @@ export const AdminLogin: React.FC = () => {
             <img
               src="/assets/logo.svg"
               alt="Codex Tech-IT"
-              width="180"
-              height="50"
+              width="214"
+              height="40"
               className="h-11 w-auto mx-auto object-contain"
             />
           </Link>

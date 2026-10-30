@@ -15,6 +15,15 @@ import {
   toolReportSchema,
 } from '@codex/shared';
 
+function generateReferralCode(): string {
+  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  let code = 'CX-';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
 export const formsController = {
   // 1. Consultation / Lead Form
   async submitLead(req: Request, res: Response, next: NextFunction) {
@@ -35,10 +44,18 @@ export const formsController = {
           source: data.source || 'website',
           plan: data.plan || null,
           message: data.message || null,
+          referral_code: (data as any).referral_code || null,
           consent: data.consent,
           status: 'NEW',
         },
       });
+
+      if ((data as any).referral_code) {
+        await prisma.referral.updateMany({
+          where: { referral_code: (data as any).referral_code },
+          data: { used_count: { increment: 1 } },
+        }).catch(() => {});
+      }
 
       // Notify admin
       await sendEmail({
@@ -198,9 +215,17 @@ export const formsController = {
           resume_path: req.file.filename,
           resume_original_name: req.file.originalname,
           cover_note: data.cover_note || null,
+          referral_code: (data as any).referral_code || null,
           status: 'NEW',
         },
       });
+
+      if ((data as any).referral_code) {
+        await prisma.referral.updateMany({
+          where: { referral_code: (data as any).referral_code },
+          data: { used_count: { increment: 1 } },
+        }).catch(() => {});
+      }
 
       res.status(201).json({
         success: true,
@@ -219,6 +244,13 @@ export const formsController = {
     try {
       const data = referralSchema.parse(req.body);
 
+      let referralCode = generateReferralCode();
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const existing = await prisma.referral.findUnique({ where: { referral_code: referralCode } });
+        if (!existing) break;
+        referralCode = generateReferralCode();
+      }
+
       const referral = await prisma.referral.create({
         data: {
           referrer_name: data.referrer_name,
@@ -228,13 +260,19 @@ export const formsController = {
           referee_email: data.referee_email,
           referee_phone: data.referee_phone,
           role_skill: data.role_skill,
+          referral_code: referralCode,
           status: 'NEW',
         },
       });
 
       res.status(201).json({
         success: true,
-        data: { id: referral.id, message: 'Referral submitted! Thank you for expanding the Codex talent network.' },
+        data: {
+          id: referral.id,
+          referral_code: referralCode,
+          share_url: `/refer-earn?ref=${referralCode}`,
+          message: 'Referral submitted! Thank you for expanding the Codex talent network.',
+        },
       });
     } catch (err) {
       next(err);

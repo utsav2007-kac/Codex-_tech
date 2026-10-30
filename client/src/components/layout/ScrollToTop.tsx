@@ -1,66 +1,63 @@
-import { useEffect, useRef } from 'react';
-import { useLocation, useNavigationType } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  const navType = useNavigationType();
-  const prevPathRef = useRef(pathname);
-  const isTransitioningRef = useRef(false);
+  const { pathname, hash, search } = useLocation();
 
+  // Capture ?ref= referral code parameter across the app and persist in sessionStorage
   useEffect(() => {
-    const handleScroll = () => {
-      if (isTransitioningRef.current) return;
-      try {
-        sessionStorage.setItem(`scroll_pos_${pathname}`, window.scrollY.toString());
-      } catch {}
-    };
+    try {
+      const params = new URLSearchParams(search);
+      const refCode = params.get('ref');
+      if (refCode && refCode.trim().length > 0) {
+        sessionStorage.setItem('cx_referral_code', refCode.trim());
+      }
+    } catch {}
+  }, [search]);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('beforeunload', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('beforeunload', handleScroll);
-    };
-  }, [pathname]);
-
+  // Enforce manual scroll restoration across browser refreshes and history navigation
   useEffect(() => {
-    isTransitioningRef.current = true;
-
-    if (navType === 'POP') {
-      try {
-        const saved = sessionStorage.getItem(`scroll_pos_${pathname}`);
-        const targetY = saved !== null ? parseInt(saved, 10) : 0;
-        window.scrollTo({ top: targetY, behavior: 'instant' as ScrollBehavior });
-        if (window.__lenis) {
-          window.__lenis.scrollTo(targetY, { immediate: true });
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    // Clear any residual scroll positions from sessionStorage
+    try {
+      Object.keys(sessionStorage).forEach((key) => {
+        if (key.startsWith('scroll_pos_')) {
+          sessionStorage.removeItem(key);
         }
-        setTimeout(() => {
-          window.scrollTo({ top: targetY, behavior: 'instant' as ScrollBehavior });
-          if (window.__lenis) {
-            window.__lenis.scrollTo(targetY, { immediate: true });
-          }
-          isTransitioningRef.current = false;
-        }, 120);
-      } catch {
-        isTransitioningRef.current = false;
+      });
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    // If a hash anchor is provided in the URL (e.g. #contact), navigate smoothly to it
+    if (hash) {
+      const target = document.getElementById(hash.replace('#', ''));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        return;
       }
-    } else {
-      // PUSH: save previous page position before resetting
-      try {
-        sessionStorage.setItem(`scroll_pos_${prevPathRef.current}`, window.scrollY.toString());
-      } catch {}
-      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-      if (window.__lenis) {
-        window.__lenis.scrollTo(0, { immediate: true });
-      }
-      setTimeout(() => {
-        isTransitioningRef.current = false;
-      }, 120);
     }
 
-    prevPathRef.current = pathname;
-  }, [pathname, navType]);
+    // Always reset to the very top (0, 0) immediately on reload and route navigation
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    }
+
+    // Secondary check shortly after render to ensure no late layout shifts or component mounts move scroll
+    const timer = setTimeout(() => {
+      if (!window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+        if (window.__lenis) {
+          window.__lenis.scrollTo(0, { immediate: true });
+        }
+      }
+    }, 60);
+
+    return () => clearTimeout(timer);
+  }, [pathname, hash]);
 
   return null;
 };

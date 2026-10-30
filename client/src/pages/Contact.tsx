@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useOutletContext } from 'react-router-dom';
-import { Mail, Phone, MapPin, Clock, MessageSquare, CheckCircle2, AlertCircle, Loader2, Send } from 'lucide-react';
+import { useOutletContext, Link } from 'react-router-dom';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  MessageSquare,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Send,
+} from 'lucide-react';
 import { SEO } from '../components/ui/SEO';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { Button } from '../components/ui/Button';
-import { Scroll3DSection } from '../components/motion/Scroll3DSection';
-import { Scroll3DCard } from '../components/motion/Scroll3DCard';
-import { SectionReveal } from '../components/motion/SectionReveal';
-import { PageHero } from '../components/layout/PageHero';
 import { siteConfig } from '../config/site';
 import { api } from '../services/api';
 
@@ -62,96 +68,121 @@ export const Contact: React.FC = () => {
   return (
     <div className="bg-white overflow-x-hidden">
       <SEO
-        title="Contact Codex Tech-IT | Offices in Dallas, TX & Hyderabad"
-        description="Get in touch with Codex Tech-IT technical recruiters and talent directors. Reach our Dallas, TX headquarters or Hyderabad delivery operations."
+        title="Contact Codex Tech-IT | Offices in New York, NY, Ahmedabad & Goa"
+        description="Get in touch with Codex Tech-IT technical recruiters and talent directors. Reach our New York headquarters, Ahmedabad delivery operations, or Goa branch."
         canonical="/contact"
       />
 
-      {/* ── 1. SHORT HERO WITH TWO OFFICES SIDE BY SIDE ── */}
-      <section className="relative bg-gradient-to-br from-navy-950 via-[#0A173D] to-navy-900 text-white pt-24 sm:pt-32 pb-14 sm:pb-20 border-b border-white/10 overflow-hidden">
-        {/* Ambient glows */}
-        <div className="absolute top-0 right-1/4 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+      {/* ── 1. SIGNATURE LIGHT HERO WITH TWO REAL OFFICES SIDE BY SIDE ── */}
+      <section
+        data-nav-theme="light"
+        className="relative bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9]/70 to-white text-slate-900 pt-28 pb-16 sm:pb-24 border-b border-slate-200/80 overflow-hidden"
+      >
+        {/* Ambient radial glows */}
+        <div className="absolute top-0 right-1/4 w-[600px] h-[350px] bg-gradient-to-r from-orange-200/25 to-blue-200/25 blur-[120px] pointer-events-none rounded-full" />
+        <div className="absolute bottom-0 left-10 w-[400px] h-[260px] bg-amber-100/35 blur-[110px] pointer-events-none rounded-full" />
 
         <div className="container-custom relative z-10">
           {/* Breadcrumbs and Coloured Page Label Chip */}
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            <Breadcrumbs items={[{ label: 'Contact' }]} className="text-blue-200/80" />
-            <span className="hidden sm:inline text-white/30">•</span>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold backdrop-blur-md">
-              <Mail className="w-3.5 h-3.5 text-orange-400" />
-              <span>Contact & Advisory</span>
+            <Breadcrumbs items={[{ label: 'Contact' }]} className="text-slate-600" />
+            <span className="hidden sm:inline text-slate-400">•</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200/90 text-slate-700 text-xs font-semibold shadow-xs">
+              <Mail className="w-3.5 h-3.5 text-[#C2410C]" />
+              <span>Contact & Advisory Desk</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Headline */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-wider text-orange-400">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="lg:col-span-5 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-xs font-bold uppercase tracking-wider text-orange-700 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 GLOBAL REACH · 24/7 SUPPORT
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-white leading-[1.15]">
+              <h1 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-slate-900 leading-[1.15]">
                 Let's Discuss Your{' '}
-                <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C2410C] via-[#EA580C] to-[#2563EB]">
                   Goals.
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-                Whether you need to scale an engineering pod under aggressive delivery deadlines or accelerate your personal job search, our technical recruiters in Dallas and Hyderabad are ready to assist.
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                Whether you need to scale an engineering pod under aggressive delivery deadlines or accelerate your personal job search, our technical recruiters in New York and India are ready to assist.
               </p>
 
-              <div className="pt-2">
-                <Button variant="primary" size="md" onClick={onOpenConsultation} className="shadow-lg shadow-orange-500/25">
+              <div className="pt-2 flex flex-wrap gap-3">
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={onOpenConsultation}
+                  className="bg-[#C2410C] hover:bg-[#9A3412] text-white shadow-xl shadow-orange-500/20 px-6 py-3 font-bold rounded-xl"
+                >
                   Book 1-on-1 Consultation
                 </Button>
+                <a
+                  href={`tel:${siteConfig.contact.phoneUSA}`}
+                  className="px-5 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold shadow-xs transition-all inline-flex items-center gap-2"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#C2410C]" />
+                  <span>Call {siteConfig.contact.phoneUSA}</span>
+                </a>
               </div>
             </div>
 
             {/* Right: The Two Offices Highlight Cards Side by Side */}
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* US Office Card */}
-              <div className="p-6 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl space-y-3">
+              {/* US Headquarters Card (New York) */}
+              <div className="p-6 rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl shadow-slate-900/5 hover:border-orange-300 transition-all space-y-3.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xl">🇺🇸</span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30">
+                  <span className="text-2xl">🇺🇸</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-orange-50 text-[#C2410C] border border-orange-200/70">
                     US Headquarters
                   </span>
                 </div>
-                <h2 className="text-lg font-heading font-bold text-white">Plano, Texas (USA)</h2>
-                <div className="space-y-1.5 text-xs text-slate-300">
+                <div>
+                  <h2 className="text-lg font-heading font-bold text-slate-900 mb-1">
+                    New York, NY (USA)
+                  </h2>
+                  <p className="text-[11px] text-slate-500 font-mono">Broadway Executive Office</p>
+                </div>
+                <div className="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0 mt-0.5" />
-                    <span>{siteConfig.offices[0].address}</span>
+                    <MapPin className="w-4 h-4 text-[#C2410C] shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{siteConfig.offices[0].address}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-                    <a href={`tel:${siteConfig.contact.phoneUSA}`} className="hover:text-white transition-colors">
+                    <Phone className="w-4 h-4 text-[#C2410C] shrink-0" />
+                    <a href={`tel:${siteConfig.contact.phoneUSA}`} className="hover:text-orange-600 font-mono font-medium transition-colors text-slate-800">
                       {siteConfig.contact.phoneUSA}
                     </a>
                   </div>
                 </div>
               </div>
 
-              {/* India Office Card */}
-              <div className="p-6 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl space-y-3">
+              {/* India Delivery Center Card (Ahmedabad) */}
+              <div className="p-6 rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl shadow-slate-900/5 hover:border-blue-300 transition-all space-y-3.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xl">🇮🇳</span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                  <span className="text-2xl">🇮🇳</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/70">
                     Global Delivery Hub
                   </span>
                 </div>
-                <h2 className="text-lg font-heading font-bold text-white">Hyderabad (India)</h2>
-                <div className="space-y-1.5 text-xs text-slate-300">
+                <div>
+                  <h2 className="text-lg font-heading font-bold text-slate-900 mb-1">
+                    Ahmedabad, Gujarat (India)
+                  </h2>
+                  <p className="text-[11px] text-slate-500 font-mono">Shivalik Shilp Technology Center</p>
+                </div>
+                <div className="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
-                    <span>{siteConfig.offices[1].address}</span>
+                    <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{siteConfig.offices[1].address}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                    <a href={`tel:${siteConfig.contact.phoneIndia}`} className="hover:text-white transition-colors">
+                    <Phone className="w-4 h-4 text-blue-600 shrink-0" />
+                    <a href={`tel:${siteConfig.contact.phoneIndia}`} className="hover:text-orange-600 font-mono font-medium transition-colors text-slate-800">
                       {siteConfig.contact.phoneIndia}
                     </a>
                   </div>
@@ -162,32 +193,31 @@ export const Contact: React.FC = () => {
         </div>
       </section>
 
-      <Scroll3DSection id="contact-form-section" preset="lift" className="py-16 sm:py-20 lg:py-24 bg-white">
+      {/* ── 2. GLOBAL OFFICES DIRECTORY & CONTACT INQUIRY FORM ── */}
+      <section id="contact-form-section" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-slate-100">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 max-w-6xl mx-auto items-start">
             {/* Contact Information & Office Locations (5 cols) */}
             <div className="lg:col-span-5 space-y-6">
               <div>
-                <SectionReveal variant="tiltLeft">
-                  <div className="eyebrow">Direct Advisory Desk</div>
-                  <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-navy-900 tracking-tight mb-2">
-                    Global Offices
-                  </h2>
-                  <p className="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">
-                    Connect directly with our senior talent partners in North America and Asia-Pacific.
-                  </p>
-                </SectionReveal>
+                <div className="text-xs font-bold text-orange-600 uppercase tracking-wider mb-1">Direct Advisory Desk</div>
+                <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tracking-tight mb-2">
+                  Global Offices
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">
+                  Connect directly with our senior talent partners in North America and Asia-Pacific.
+                </p>
 
                 <div className="space-y-4">
-                  {/* USA Office */}
-                  <Scroll3DCard index={0} className="p-6 rounded-3xl bg-slate-50/70 border border-gray-200/90 shadow-sm">
+                  {/* USA Office: New York */}
+                  <div className="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/90 shadow-xs hover:border-orange-300 hover:bg-white hover:shadow-md transition-all">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 text-[10.5px] font-bold text-orange-700 uppercase tracking-wider mb-2.5 border border-orange-200/60">
-                      United States Headquarters
+                      🇺🇸 United States Corporate Headquarters
                     </div>
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-3">Dallas Executive Office</h3>
-                    <div className="space-y-2.5 text-xs text-slate-700 font-medium">
+                    <h3 className="font-heading font-bold text-base text-slate-900 mb-2">New York Executive Office</h3>
+                    <div className="space-y-2 text-xs text-slate-700 font-medium">
                       <div className="flex items-start gap-2.5">
-                        <MapPin className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
+                        <MapPin className="w-4 h-4 text-[#C2410C] shrink-0 mt-0.5" />
                         <span>{siteConfig.offices[0].address}</span>
                       </div>
                       <div className="flex items-center gap-2.5">
@@ -203,15 +233,15 @@ export const Contact: React.FC = () => {
                         </a>
                       </div>
                     </div>
-                  </Scroll3DCard>
+                  </div>
 
-                  {/* India Office */}
-                  <Scroll3DCard index={1} className="p-6 rounded-3xl bg-slate-50/70 border border-gray-200/90 shadow-sm">
+                  {/* India Office: Ahmedabad */}
+                  <div className="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/90 shadow-xs hover:border-blue-300 hover:bg-white hover:shadow-md transition-all">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-[10.5px] font-bold text-blue-700 uppercase tracking-wider mb-2.5 border border-blue-200/60">
-                      India Delivery Operations
+                      🇮🇳 India Delivery & Sourcing Center
                     </div>
-                    <h3 className="font-heading font-bold text-base text-navy-900 mb-3">Hyderabad Technology Center</h3>
-                    <div className="space-y-2.5 text-xs text-slate-700 font-medium">
+                    <h3 className="font-heading font-bold text-base text-slate-900 mb-2">Ahmedabad Technology Center</h3>
+                    <div className="space-y-2 text-xs text-slate-700 font-medium">
                       <div className="flex items-start gap-2.5">
                         <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                         <span>{siteConfig.offices[1].address}</span>
@@ -223,10 +253,30 @@ export const Contact: React.FC = () => {
                         </a>
                       </div>
                     </div>
-                  </Scroll3DCard>
+                  </div>
+
+                  {/* India Office: Goa Branch */}
+                  <div className="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/90 shadow-xs hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-[10.5px] font-bold text-emerald-700 uppercase tracking-wider mb-2.5 border border-emerald-200/60">
+                      🇮🇳 Branch Operations Desk
+                    </div>
+                    <h3 className="font-heading font-bold text-base text-slate-900 mb-2">Goa Branch Office</h3>
+                    <div className="space-y-2 text-xs text-slate-700 font-medium">
+                      <div className="flex items-start gap-2.5">
+                        <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{siteConfig.offices[2].address}</span>
+                      </div>
+                      <div className="flex items-center gap-2.5">
+                        <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                        <a href={`tel:${siteConfig.contact.phoneUSA}`} className="hover:text-orange-600 font-semibold transition-colors">
+                          {siteConfig.contact.phoneUSA}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
 
                   {/* Business Hours & SLA */}
-                  <Scroll3DCard index={2} className="p-5 rounded-2xl bg-blue-50/50 border border-blue-100/80">
+                  <div className="p-5 rounded-2xl bg-blue-50/60 border border-blue-100/90 shadow-xs">
                     <div className="flex items-center gap-2 text-xs font-bold text-blue-900 mb-1.5">
                       <Clock className="w-4 h-4 text-blue-600" />
                       <span>Operating Hours & Advisory Response</span>
@@ -234,32 +284,37 @@ export const Contact: React.FC = () => {
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {siteConfig.contact.hours} · Guaranteed &lt; 15 min business response for enterprise inquiries.
                     </p>
-                  </Scroll3DCard>
+                  </div>
                 </div>
               </div>
 
-              {/* Direct Strategy Booking Card (Compact, Natural Height) */}
-              <Scroll3DCard index={3} className="p-6 sm:p-7 rounded-3xl bg-navy-900 text-white border border-navy-800 shadow-xl">
+              {/* Direct Strategy Booking Card */}
+              <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-orange-50/90 via-white to-amber-50/60 text-slate-900 border border-orange-200/90 shadow-md">
                 <div className="flex items-center gap-2 mb-2">
-                  <MessageSquare className="w-4 h-4 text-orange-400" />
-                  <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider">Fast-Track Call</span>
+                  <MessageSquare className="w-4 h-4 text-[#C2410C]" />
+                  <span className="text-[11px] font-bold text-[#C2410C] uppercase tracking-wider">Fast-Track Call</span>
                 </div>
-                <h4 className="font-heading font-bold text-lg text-white mb-2">Prefer a direct conversation?</h4>
-                <p className="text-xs text-slate-300 leading-relaxed mb-5">
+                <h4 className="font-heading font-bold text-lg text-slate-900 mb-2">Prefer a direct conversation?</h4>
+                <p className="text-xs text-slate-600 leading-relaxed mb-5">
                   Schedule a 1-on-1 career consultation directly with our talent directors. 100% confidential.
                 </p>
-                <Button variant="primary" size="sm" className="w-full justify-center shadow-lg shadow-orange-500/25" onClick={onOpenConsultation}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="w-full justify-center bg-[#C2410C] hover:bg-[#9A3412] text-white shadow-lg shadow-orange-500/20 py-3 font-bold rounded-xl"
+                  onClick={onOpenConsultation}
+                >
                   Reserve Free Strategy Call
                 </Button>
-              </Scroll3DCard>
+              </div>
             </div>
 
             {/* Interactive Contact Form (7 cols) */}
             <div className="lg:col-span-7">
-              <Scroll3DCard index={1} maxTilt={2} className="p-8 sm:p-10 rounded-3xl bg-slate-50/70 border border-gray-200/90 shadow-sm">
+              <div className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-xl shadow-slate-900/5">
                 <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-gray-200/70">
                   <div>
-                    <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-navy-900 tracking-tight">
+                    <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tracking-tight">
                       Send Us an Inquiry
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-600 mt-1">
@@ -357,7 +412,7 @@ export const Contact: React.FC = () => {
                       type="submit"
                       variant="primary"
                       size="lg"
-                      className="w-full justify-center shadow-lg shadow-orange-500/25 hover:shadow-orange-500/35 transition-all text-sm font-bold"
+                      className="w-full justify-center bg-[#C2410C] hover:bg-[#9A3412] text-white shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 transition-all text-sm font-bold py-3.5 rounded-xl"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -370,13 +425,20 @@ export const Contact: React.FC = () => {
                         </span>
                       )}
                     </Button>
+
+                    <p className="text-[11px] text-slate-500 leading-relaxed pt-2 border-t border-gray-200/80">
+                      By providing a telephone number and submitting this form you are consenting to be contacted by SMS text message. Message frequency may vary. Message & data rates may apply. You can reply STOP to opt-out of further messaging or HELP for more information. Refer to our{' '}
+                      <Link to="/privacy-policy" className="text-[#C2410C] hover:underline font-semibold">
+                        Privacy Policy
+                      </Link>.
+                    </p>
                   </form>
                 )}
-              </Scroll3DCard>
+              </div>
             </div>
           </div>
         </div>
-      </Scroll3DSection>
+      </section>
     </div>
   );
 };

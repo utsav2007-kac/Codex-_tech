@@ -1,0 +1,90 @@
+<USER_REQUEST>
+ROLE: Act as a senior art director, front-end engineer and QA lead. Work on exactly THREE areas of the Codex Tech-IT website (Vite + React + Express + MySQL), in the real running code, and verify in a production build in a real browser. Anything not seen or measured is labeled "NOT VERIFIED". Do not say "complete" without attached screenshots (not links) and measurements.
+
+SCOPE (change only these)
+A) The nine service detail pages:
+   /services/job-placement, /services/recruitment-staffing, /services/talent-acquisition, /services/it-training, /services/background-verification, /services/payroll-taxes, /services/resume-linkedin-rebranding, /services/interview-preparation, /services/custom-job-campaigns (keep every URL, their SEO, and the existing course pages under it-training).
+B) About Us (/about).
+C) Refer & Earn (/refer-earn).
+Do NOT redesign anything else: not Home, /services overview, /blog, /admin, careers, contact, or the MySQL form behaviour. The shared navbar and footer stay as they are on Home. Keep all routes, the original logo files and prerendering.
+
+THEME: IDENTICAL TO THE HOME PAGE, LIGHT ONLY
+- Reuse the Home page's design tokens (client/src/styles/tokens.css), fonts (Sora headings, Inter body), navbar, footer, buttons, chips, section components and motion presets. Do not invent a new theme. Look at the Home hero: soft light gradient, rounded pill navbar, orange primary button, fanned info cards, chips.
+- NO dark backgrounds on these pages: no navy page background, no dark hero, no dark cards, no dark bands. (The current /services/job-placement has a dark navy page and a dark "Salary Uplift Estimator" card: replace them with light surfaces and light panels with Ink text.) Palette: White #FFFFFF, Paper #F8FAFC, Sky #E8F2FF, Butter #FFF4D6, Mint #E4F6EC, Blush #FFE9E6, Lavender #EFEEFF, Cream #FFF7ED, Hairline #E2E8F0; Ink #0F172A and Graphite #475569 for text; Orange #F25C2A for fills and shapes, #C2410C for orange text and the primary button; Cobalt #2563EB for fills, #1D4ED8 for blue text.
+- Contrast 4.5:1 or better for all text, measured from rendered pixels on every tint. Report a contrast table.
+- In the Services dropdown, show each service's short description in full (wrap to two lines) instead of cutting it with an ellipsis.
+
+CONTENT: USE THE OLD SITE'S POINTS (https://www.codextech-it.com). RULES
+1. Create client/src/content/oldSiteContent.ts holding the points below, each with its source URL. Rewrite them in your own words in Codex Tech-IT's current voice (do not paste the old text verbatim); keep the meaning accurate.
+2. TRUTH RULES: never invent anything. Keep every number, date, address, price and claim that is ALREADY live on the new site. Do NOT add old-site numbers that conflict with it. List every conflict in OWNER_DECISIONS.md (a table: item, old site, new site, where it appears, what you did) and show nothing new for those items until I decide. Do not use "guaranteed job" or any guarantee wording. Payroll and compliance pages carry "General information, not legal advice".
+3. Do NOT copy the old site's placement-logo wall (the 11 logo images) or present named employers unless I confirm they actually hired our candidates and allow their logos. Show roles and technologies instead.
+4. Old testimonials (Raj Chauhan, Anjana Thomas, Ramandeep Kaur, Smit Patel, Shweta Singh, Sonia Rajput, Maharshi Bhardwaj): import them into the Testimonial table as UNPUBLISHED drafts (add a published/consent_confirmed field via migration if missing) so I can approve each one in Admin. Do not display them until approved. Never show reused stock photos; use initials avatars.
+
+OLD-SITE CONTENT POINTS (verified from the old site)
+- Positioning: "career success and growth architects, not just a recruiting and employment firm"; personalised advisory, strategic career planning and a network of opportunities matched to skills; training and placement aimed at international students and graduates; also custom software development and IT outsourcing (do NOT add a software-development page, only list it in OWNER_DECISIONS.md as a possible addition).
+- Career paths facilitated: Data Scientist, Python Developer, Java Developer, Business Analyst, Data Engineer, Data Analyst, Full Stack Developer, Front-End Developer, Back-End Developer, AWS Engineer, SQL Engineer, "and many more", each with a one-line role description.
+- Services: Career Guidance (a personal career advisor explains the process and answers queries; the old site says within 24 hours: treat as a claim to confirm); Enhanced Resume Crafting (US-market resume optimisation); Skill Development Program (technical training and guidance: tailored sessions, resume workshops, practice interviews, mentorship from industry professionals); Resume Promotion (positioning the resume to employers); Expert Documentation Support (help with documentation and onboarding after the offer); One-on-One Interview (help crafting questions to ask the interviewer, customised preparation for the role and company); Mock Interview (simulated interviews with real-time feedback; body language and communication training).
+- A six-step path to a job and an FAQ: why partner with a staffing firm; training and professional development; typical placement time ("several weeks to a few months" depending on skills, demand and market).
+- About: Our Target (give job seekers a platform that secures opportunities and recognition), Skilled Instructors (clear, precise, inspiring guidance), Our Mission ("At what we believe": unparalleled IT service, relationships built on trust, immediate wins and lasting partnerships, solution architects not just recruiters).
+- Refer & Earn: 2 steps (1 Register and receive a unique link; 2 Earn when someone signs up with your link and completes the program); the old reward is described as up to $500 per candidate paid in two parts (on enrolment and on placement and payment completion), plus lucky draws and gadget gifts, "T&C apply" (all of these are CONFLICT or CLAIM items: do not publish old figures, see rule 2).
+
+MAPPING OLD CONTENT TO PAGES
+- Job Placement: career paths list as role chips, Career Guidance (personal advisor), the six-step path.
+- Recruitment & Staffing, Talent Acquisition: keep current copy; add only the positioning statement.
+- IT Training: Skill Development Program (tailored sessions, workshops, practice interviews, mentorship), career paths as tracks, existing course pages.
+- Background Verification: keep current copy; documentation checklist wording from Expert Documentation Support.
+- Payroll & Compliance: onboarding and documentation support after the offer (plus the "not legal advice" note).
+- Resume & LinkedIn Rebranding: Enhanced Resume Crafting and Resume Promotion.
+- Interview Preparation: One-on-One Interview and Mock Interview (all four bullet points).
+- Custom Job Campaigns: Resume Promotion, Career Guidance, and the FAQ on placement time (no timeline numbers beyond "varies").
+- About: Target, Skilled Instructors, Mission, the existing milestones (keep current text and dates).
+- Refer & Earn: 2 steps and the terms structure.
+
+A) NINE SERVICE PAGES: NINE DIFFERENT STRUCTURES (all light)
+Each page has its own page tint, hero layout, section order, in-page navigation and ONE signature interactive component. Page copy stays truthful (rules above).
+| Service | Hero layout | Signature component | In-page navigation | Tint |
+|---|---|---|---|---|
+| Job Placement | Full-width journey track under the title | Horizontal Profile, Match, Interview, Offer journey with an animated candidate token, scroll-scrubbed and reversible; role chips from the career paths | Progress rail on the left | Sky |
+| Recruitment & Staffing | Split screen with a model selector | Hiring-model comparison (Contract, Contract-to-hire, Direct hire) that reconfigures a table and effort bars | Tabs | Butter |
+| Talent Acquisition (RPO) | Centred hub diagram | Hub-and-spoke SVG of an embedded hiring team, clickable spokes | Sticky side index | Mint |
+| IT Training | Left sticky syllabus list with a content pane | Week-by-week curriculum scrubber and course cards linking to the existing course pages | Weekly stepper | Lavender |
+| Background Verification | Report mock-up as the hero | Animated verification report where checks go from pending to cleared (illustration only, labelled "Illustration") | None (single long scroll) | Blush |
+| Payroll & Compliance | Ledger layout | Gross-to-net explainer with sample numbers labelled "Illustration" | Anchored chips | Cream |
+| Resume & LinkedIn Rebranding | Before and after slider as the hero | Draggable and keyboard-operable before/after of a sample resume and profile, with an ATS-score gauge | Floating mini nav | Sky and Butter split |
+| Interview Preparation | Flashcard deck as the hero | Flip-card deck of question types with a STAR answer builder and a mock-interview checklist | Round tabs | Lavender |
+| Custom Job Campaigns | Configurator as the hero | Campaign planner (target roles, locations, volume) that outputs a summary and pre-fills the contact form | Step indicator | Mint and Blush |
+- No two pages share more than two section components in the same order; nine different hero layouts and signature components; at most one equal-card grid per page; a different closing CTA design on each. Shared: tokens, typography, logo, navbar, footer, breadcrumbs, a primary "Book a free call" CTA and Service JSON-LD.
+- Replace the dark estimator on Job Placement with a light "Salary range" panel ONLY if its data is real (Settings or database); otherwise label it "Illustration" or remove it. Remove unbacked chips such as "180+ Active US Enterprise Requisitions Live", "+32% Avg. Base Salary Uplift" and "100% Free for Job Seekers" unless the owner confirms them (list in OWNER_DECISIONS.md).
+- Build a structure-diff test that outputs each page's ordered section signature and fails when two pages are too similar.
+
+B) ABOUT US (a structure different from Home and from every service page)
+Light hero with a large statement and the two-office detail (addresses only as already live); principles as a numbered ledger (rows, not cards): Target, Skilled Instructors, and "Our commitment" (no guarantee wording); mission as a large typographic statement; the existing milestones as a horizontal axis that draws on scroll; team (existing); testimonials area that renders only approved reviews (otherwise a "Share your experience" prompt); a closing CTA band.
+
+C) REFER & EARN
+- Light hero with a reward-first headline and the two steps (Register, Refer and earn) as a connected track. Reward amounts and wording come ONLY from Admin > Settings (keys referral_reward_total, referral_reward_on_enrolment, referral_reward_on_placement, referral_terms); pre-fill with the figure currently live on the site; show "up to" and link to the terms. Terms and eligibility section: clearly marked placeholder text for the owner (include "T&C apply" and payout timing as placeholders).
+- Referral form (referrer: name, email, phone; friend: name, email, phone, role or skill; consent checkbox; honeypot), validated with the shared Zod schema, POST /api/referrals, loading, success and error states, visible in Admin > Referrals.
+- UNIQUE LINK (the old site promises one): on success the server returns a unique code (CX- plus 6 characters from an unambiguous alphabet), stored on the referral (add the column by migration if missing). The success panel shows a shareable link /refer-earn?ref=CODE with a Copy button. When a visitor arrives with ?ref=, keep the code (cookie or sessionStorage in try/catch) and attach it to later lead and application submissions. Admin > Referrals shows the code and how many submissions used it. No automatic payouts: payouts stay manual. Rate-limit the endpoint.
+- FAQ accordion (8 real questions, FAQPage JSON-LD, present in the prerendered HTML), and an optional earnings calculator that uses the Settings values only.
+
+MOTION AND TYPOGRAPHY (reuse Home's systems)
+- Use the existing data-anim presets and the one-scroll-engine setup. EVERY section gets a scroll entrance and one signature animation, recorded in client/src/motion/manifest.json; no two adjacent sections share an entrance. All scroll animations REVERSE when scrolling up; anchor jumps never leave half-animated elements. Hidden initial states only under html.js-motion-ready with a 1.5s failsafe and a no-JS fallback (content must never be blank). Transform and opacity only; reduced motion and the quality governor respected; 60 FPS scrolling, CLS under 0.02, extra JS per route under 60 KB gzip.
+- Typography per the Home scale: Sora and Inter, fluid sizes, headings at most 2 lines at 1440px with no orphan words, text-wrap balance and pretty, 60-70ch paragraphs, one header alignment per section (never mixed), no descender clipping, curly quotes and non-breaking spaces between numbers and units.
+
+TESTS AND DELIVERY
+- Playwright at 1920, 1440, 1280, 1024, 768 and 390px on all 11 pages: no horizontal overflow, no clipped text, NO dark backgrounds (assert background luminance of every section and card), contrast 4.5:1 or better from rendered pixels, all sections visible after scrolling and with JS disabled, keyboard operation and labels for every signature component, reduced-motion behaviour, referral form and unique-code flow (and the record in admin), and the other pages unchanged (compare before and after screenshots of Home, /services, /blog, /contact).
+- Run the critique loop twice on one service page, About and Refer & Earn: list at least 8 concrete flaws, fix them, show before and after.
+- DELIVER: files changed; oldSiteContent.ts; OWNER_DECISIONS.md; the structure-diff report; a truth-audit table (every number, name and claim on the 11 pages with its source: database, Settings, existing copy, old site or Illustration); contrast table; attached screenshots of all 11 pages at 1440, 768 and 390px; recordings of each signature component and of the scroll-down-and-up behaviour; measurements; and anything NOT VERIFIED.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-30T16:46:59+05:30.
+
+The user's current state is as follows:
+Active Document: d:\web devlopment\client\src\pages\Services.tsx (LANGUAGE_UNSPECIFIED)
+Cursor is on line: 1101
+Other open documents:
+- d:\web devlopment\.gitignore (LANGUAGE_UNSPECIFIED)
+- d:\web devlopment\client\src\components\services\templates\TechnicalMasteryTemplate.tsx (LANGUAGE_UNSPECIFIED)
+- d:\web devlopment\client\src\components\hero\CodexMonogramStage.tsx (LANGUAGE_UNSPECIFIED)
+- d:\web devlopment\server\db\seed.ts (LANGUAGE_UNSPECIFIED)
+- d:\web devlopment\agent\RUBRIC.md (LANGUAGE_UNSPECIFIED)
+</ADDITIONAL_METADATA>

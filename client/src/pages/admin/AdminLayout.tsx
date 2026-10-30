@@ -74,7 +74,7 @@ export const AdminLayout: React.FC = () => {
             <img
               src="/assets/logo-white.svg"
               alt="Codex Tech-IT"
-              width="148"
+              width="214"
               height="40"
               className="h-8 w-auto object-contain"
             />
@@ -136,8 +136,8 @@ export const AdminLayout: React.FC = () => {
                 <img
                   src="/assets/logo-white.svg"
                   alt="Codex Tech-IT"
-                  width="136"
-                  height="36"
+                  width="214"
+                  height="40"
                   className="h-7 w-auto object-contain"
                 />
               </Link>

@@ -34,7 +34,7 @@ import { api } from '../services/api';
 import { useMotionSystem } from '../motion';
 
 // New Signature Components for Home
-import { PastelPillars } from '../components/home/PastelPillars';
+import { WorkforceTalentEcosystem } from '../components/home/WorkforceTalentEcosystem';
 import { ThreeColumnHighlight } from '../components/home/ThreeColumnHighlight';
 import { Since2021Timeline } from '../components/home/Since2021Timeline';
 import { DataVisualizations } from '../components/charts/DataVisualizations';
@@ -132,16 +132,6 @@ export const Home: React.FC = () => {
                         Find My Next Job <ArrowRight className="w-5 h-5 ml-1" />
                       </Button>
                     </MagneticButton>
-                    <MagneticButton strength={0.2}>
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        onClick={onOpenConsultation}
-                        className="bg-white text-[#0F172A] border border-[#CBD5E1] hover:bg-slate-50 backdrop-blur-md shadow-xs font-semibold"
-                      >
-                        Hire Top Talent
-                      </Button>
-                    </MagneticButton>
                   </div>
                 </div>
 
@@ -160,8 +150,8 @@ export const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Codex Monogram Stage with floating quadrant cards */}
-            <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center">
+            {/* Right Column: Codex Monogram Stage with floating quadrant cards (hidden on mobile, visible on lg and above) */}
+            <div className="hidden lg:flex lg:col-span-6 xl:col-span-6 relative items-center justify-center">
               <CodexMonogramStage />
             </div>
           </div>
@@ -169,16 +159,12 @@ export const Home: React.FC = () => {
       </section>
 
       {/* ── 2. DUAL-DIRECTION 3D SCROLLING SHOWCASE (WORKING BOTH SIDES) ── */}
-      <section data-nav-theme="light" data-anim="split-lines" className="relative overflow-hidden bg-slate-50/70 border-b border-gray-200/80">
+      <section data-nav-theme="dark" data-anim="split-lines" className="relative overflow-hidden bg-[#070E1A] border-b border-slate-800">
         <Dual3DScrollShowcase />
       </section>
 
-      {/* ── 3. SO, WHAT IS CODEX TECH-IT? (4 PASTEL CARDS MATCHING REFERENCE 1) ── */}
-      <section data-nav-theme="light" data-anim="tilt-in" className="section-padding bg-white border-b border-gray-200/70">
-        <div className="container-custom">
-          <PastelPillars />
-        </div>
-      </section>
+      {/* ── 3. WORKFORCE TALENT ECOSYSTEM (LIGHT & DARK ARCHITECTURE MATCHING IMAGE 3) ── */}
+      <WorkforceTalentEcosystem />
 
       {/* ── 4. WHY JOB SEEKERS & EMPLOYERS CHOOSE CODEX (THREE-COLUMN HIGHLIGHT MATCHING REFERENCE 1) ── */}
       <section data-nav-theme="light" data-anim="flip-rows" className="section-padding bg-slate-50/60 border-b border-gray-200/70">
@@ -239,15 +225,18 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ── 7. DATA VISUALISATIONS (CHARTS, VELOCITY GAUGE, & BENCHMARKS) ── */}
-      <section data-nav-theme="light" data-anim="tilt-in" className="section-padding bg-white border-b border-gray-200/70">
-        <div className="container-custom">
+      {/* ── 7. DATA VISUALISATIONS (CHARTS, VELOCITY GAUGE, & BENCHMARKS - REFINED LIGHT-DARK PALETTE) ── */}
+      <section id="performance-numbers" data-nav-theme="dark" data-anim="tilt-in" className="section-padding bg-gradient-to-b from-[#182338] via-[#21304A] to-[#182338] text-white border-b border-slate-700/80 relative overflow-hidden">
+        {/* Ambient background glow matching website brand colors */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-r from-[#F15A24]/15 via-[#1F6AA5]/20 to-[#F15A24]/10 blur-[130px] pointer-events-none rounded-full" />
+
+        <div className="container-custom relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="eyebrow justify-center">Analytics & Insights</div>
-            <h2 className="text-h2 text-navy-900 mb-3">
-              Performance <span className="text-brand-gradient">By the Numbers.</span>
+            <div className="eyebrow justify-center text-[#F15A24]">Analytics & Insights</div>
+            <h2 className="text-h2 text-white mb-3">
+              Performance <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F15A24] via-[#EA580C] to-[#3B82F6]">By the Numbers.</span>
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-400 text-sm">
               Live placement benchmarks, compensation medians, and interview scheduling velocity across our engineering cohorts.
             </p>
           </div>
