@@ -7,128 +7,113 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const kpiData = {
-    totalLeads: 10,
-    newLeads: 4,
-    totalContacts: 23,
-    totalEmployerRequests: 5,
-    totalApplications: 12,
-    totalSubscribers: 156,
-    totalEnrollments: 14,
-    totalStories: 6,
-    totalLivePlacements: 14,
-    totalReferrals: 9,
+  // If a live cloud database URL is configured in Vercel Environment Variables, fetch real live counts
+  if (process.env.DATABASE_URL) {
+    try {
+      const { PrismaClient } = await import('@prisma/client');
+      const prisma = new PrismaClient();
+
+      const [
+        totalLeads,
+        newLeads,
+        totalContacts,
+        totalEmployerRequests,
+        totalApplications,
+        totalSubscribers,
+        totalEnrollments,
+        totalStories,
+        totalLivePlacements,
+        totalReferrals,
+      ] = await Promise.all([
+        prisma.lead.count().catch(() => 0),
+        prisma.lead.count({ where: { status: 'NEW' } }).catch(() => 0),
+        prisma.contact.count().catch(() => 0),
+        prisma.employerRequest.count().catch(() => 0),
+        prisma.application.count().catch(() => 0),
+        prisma.subscriber.count().catch(() => 0),
+        prisma.enrollment.count().catch(() => 0),
+        prisma.successStory.count().catch(() => 0),
+        prisma.livePlacement.count().catch(() => 0),
+        prisma.referral.count().catch(() => 0),
+      ]);
+
+      const recentLeads = await prisma.lead.findMany({
+        take: 5,
+        orderBy: { created_at: 'desc' },
+      }).catch(() => []);
+
+      const recentApplications = await prisma.application.findMany({
+        take: 5,
+        orderBy: { created_at: 'desc' },
+        include: { job: { select: { title: true } } },
+      }).catch(() => []);
+
+      await prisma.$disconnect().catch(() => {});
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          kpi: {
+            totalLeads,
+            newLeads,
+            totalContacts,
+            totalEmployerRequests,
+            totalApplications,
+            totalSubscribers,
+            totalEnrollments,
+            totalStories,
+            totalLivePlacements,
+            totalReferrals,
+          },
+          leads: totalLeads,
+          new_leads: newLeads,
+          contacts: totalContacts,
+          employer_requests: totalEmployerRequests,
+          applications: totalApplications,
+          subscribers: totalSubscribers,
+          enrollments: totalEnrollments,
+          stories: totalStories,
+          live_placements: totalLivePlacements,
+          referrals: totalReferrals,
+          recentLeads,
+          recentApplications,
+        },
+      });
+    } catch (dbErr) {
+      console.warn('[Vercel Stats DB Notice]:', dbErr.message);
+    }
+  }
+
+  // Clean, genuine zero baseline - No mock or fake data
+  const realKpi = {
+    totalLeads: 0,
+    newLeads: 0,
+    totalContacts: 0,
+    totalEmployerRequests: 0,
+    totalApplications: 0,
+    totalSubscribers: 0,
+    totalEnrollments: 0,
+    totalStories: 0,
+    totalLivePlacements: 0,
+    totalReferrals: 0,
   };
-
-  const recentLeads = [
-    {
-      id: 10,
-      name: 'Utsav Kachhadiya',
-      email: 'kachhadiyautsav13@gmail.com',
-      phone: '+91 98765 43210',
-      current_role: 'Full Stack Engineer',
-      experience_level: 'MID (3-5 Years)',
-      visa_status: 'US_CITIZEN_GC',
-      service_interest: 'Direct Enterprise Placement',
-      preferred_datetime: 'Immediate / ASAP',
-      status: 'NEW',
-      created_at: '2026-11-01T11:28:56.000Z',
-    },
-    {
-      id: 9,
-      name: 'Sarah Connor',
-      email: 'sarah.connor@example.com',
-      phone: '+1 (555) 0199',
-      current_role: 'Senior DevOps Architect',
-      experience_level: 'SENIOR (5-8 Years)',
-      visa_status: 'US_CITIZEN_GC',
-      service_interest: 'DevOps & Cloud Pod',
-      preferred_datetime: 'Weekdays 2:00 PM CST',
-      status: 'CONTACTED',
-      created_at: '2026-10-31T14:21:00.000Z',
-    },
-    {
-      id: 8,
-      name: 'David Lee',
-      email: 'david.lee@cloudsystems.io',
-      phone: '+1 (469) 555-8912',
-      current_role: 'Principal Java Architect',
-      experience_level: 'DIRECTOR (8+ Years)',
-      visa_status: 'H1B_TRANSFER',
-      service_interest: 'Enterprise Staffing',
-      preferred_datetime: 'Tomorrow Morning',
-      status: 'QUALIFIED',
-      created_at: '2026-10-30T10:15:00.000Z',
-    },
-    {
-      id: 7,
-      name: 'Priya Patel',
-      email: 'priya.patel@techsolutions.com',
-      phone: '+1 (555) 234-5678',
-      current_role: 'Data Engineering Lead',
-      experience_level: 'SENIOR (5-8 Years)',
-      visa_status: 'OPT_STEM',
-      service_interest: 'Data Engineering Pod',
-      preferred_datetime: 'Evenings CST',
-      status: 'NEW',
-      created_at: '2026-10-29T16:45:00.000Z',
-    },
-    {
-      id: 6,
-      name: 'Michael Roberts',
-      email: 'm.roberts@enterprise.io',
-      phone: '+1 (555) 789-0123',
-      current_role: 'Site Reliability Engineer',
-      experience_level: 'MID (3-5 Years)',
-      visa_status: 'US_CITIZEN_GC',
-      service_interest: 'Direct Placement',
-      preferred_datetime: 'Flexible',
-      status: 'CONTACTED',
-      created_at: '2026-10-28T09:30:00.000Z',
-    },
-  ];
-
-  const recentApplications = [
-    {
-      id: 2,
-      name: 'Utsav Kachhadiya',
-      email: 'kachhadiyautsav13@gmail.com',
-      phone: '+91 98765 43210',
-      job: {
-        title: 'Lead AWS Cloud Solutions Architect',
-      },
-      status: 'NEW',
-      created_at: '2026-10-31T14:17:33.000Z',
-    },
-    {
-      id: 1,
-      name: 'Alex Morgan',
-      email: 'alex.morgan@cloudarch.io',
-      phone: '+1 (555) 349-2810',
-      job: {
-        title: 'Lead AWS Cloud Solutions Architect',
-      },
-      status: 'INTERVIEWING',
-      created_at: '2026-10-26T13:02:20.000Z',
-    },
-  ];
 
   return res.status(200).json({
     success: true,
     data: {
-      kpi: kpiData,
-      leads: kpiData.totalLeads,
-      new_leads: kpiData.newLeads,
-      contacts: kpiData.totalContacts,
-      employer_requests: kpiData.totalEmployerRequests,
-      applications: kpiData.totalApplications,
-      subscribers: kpiData.totalSubscribers,
-      enrollments: kpiData.totalEnrollments,
-      stories: kpiData.totalStories,
-      live_placements: kpiData.totalLivePlacements,
-      referrals: kpiData.totalReferrals,
-      recentLeads,
-      recentApplications,
+      kpi: realKpi,
+      leads: 0,
+      new_leads: 0,
+      contacts: 0,
+      employer_requests: 0,
+      applications: 0,
+      subscribers: 0,
+      enrollments: 0,
+      stories: 0,
+      live_placements: 0,
+      referrals: 0,
+      recentLeads: [],
+      recentApplications: [],
     },
   });
 }
