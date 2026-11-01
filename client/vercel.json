@@ -1,8 +1,11 @@
-
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/contact",
+      "destination": "/api/contact"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]
