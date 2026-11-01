@@ -1,7 +1,7 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-module.exports = async (req, res) => {
-  // Set CORS headers
+export default async function handler(req, res) {
+  // CORS configuration
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -13,15 +13,24 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({
       success: false,
-      error: { code: 'METHOD_NOT_ALLOWED', message: 'Only POST requests are accepted' },
+      error: { code: 'METHOD_NOT_ALLOWED', message: 'Only POST requests are allowed' },
     });
   }
 
   try {
-    const data = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {};
+    let data = req.body;
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (_) {
+        data = {};
+      }
+    }
+    data = data || {};
+
     const { name, email, phone, subject, message, honeypot } = data;
 
-    // Honeypot check for spam bots
+    // Honeypot bot protection
     if (honeypot) {
       return res.status(200).json({ success: true, data: { message: 'Message received.' } });
     }
@@ -55,12 +64,11 @@ module.exports = async (req, res) => {
     const cleanData = {
       name: name.trim(),
       email: email.trim(),
-      phone: phone ? phone.trim() : 'Not provided',
+      phone: phone && typeof phone === 'string' && phone.trim() ? phone.trim() : 'Not provided',
       subject: subject.trim(),
       message: message.trim(),
     };
 
-    // SMTP Credentials
     const smtpUser = process.env.SMTP_USER || 'kachhadiyautsav13@gmail.com';
     const smtpPass = process.env.SMTP_PASS || 'pzuc tgdp hwas ixie';
     const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
@@ -133,27 +141,6 @@ module.exports = async (req, res) => {
       text: `New Contact Submission from ${cleanData.name} (${cleanData.email}, Phone: ${cleanData.phone})\n\nSubject: ${cleanData.subject}\n\nMessage:\n${cleanData.message}`,
     });
 
-    // Optional database write (silent fallback if database is not connected on Vercel)
-    try {
-      if (process.env.DATABASE_URL) {
-        const { PrismaClient } = require('@prisma/client');
-        const prisma = new PrismaClient();
-        await prisma.contact.create({
-          data: {
-            name: cleanData.name,
-            email: cleanData.email,
-            phone: cleanData.phone !== 'Not provided' ? cleanData.phone : null,
-            subject: cleanData.subject,
-            message: cleanData.message,
-            status: 'NEW',
-          },
-        });
-        await prisma.$disconnect();
-      }
-    } catch (dbErr) {
-      console.warn('[Vercel Serverless DB Warning] Could not persist to DB:', dbErr.message);
-    }
-
     return res.status(201).json({
       success: true,
       data: {
@@ -170,4 +157,4 @@ module.exports = async (req, res) => {
       },
     });
   }
-};
+}
