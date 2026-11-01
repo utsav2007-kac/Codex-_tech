@@ -4,9 +4,10 @@ import { formsController } from '../controllers/formsController';
 import { toolsController } from '../controllers/toolsController';
 import { adminController } from '../controllers/adminController';
 import { blogController } from '../controllers/blogController';
+import { testimonialsController } from '../controllers/testimonialsController';
 import { requireAdminAuth } from '../middleware/auth';
 import { formLimiter, loginLimiter } from '../middleware/rateLimit';
-import { uploadResume, uploadBlogImage } from '../middleware/upload';
+import { uploadResume, uploadBlogImage, uploadAvatarImage } from '../middleware/upload';
 
 const router = Router();
 
@@ -29,7 +30,8 @@ router.get('/stories', publicController.getStories);
 router.get('/stories/:slug', publicController.getStoryBySlug);
 router.get('/live-placements', publicController.getLivePlacements);
 router.get('/faqs', publicController.getFaqs);
-router.get('/testimonials', publicController.getTestimonials);
+router.get('/testimonials', testimonialsController.getPublicTestimonials);
+router.get('/testimonials/home', testimonialsController.getHomeTestimonials);
 router.get('/webinars', publicController.getWebinars);
 router.get('/interview-questions', publicController.getInterviewQuestions);
 router.get('/settings/public', publicController.getPublicSettings);
@@ -69,16 +71,27 @@ router.patch('/admin/:type(leads|contacts|employer-requests|applications|referra
 router.put('/admin/:type(leads|contacts|employer-requests|applications|referrals|subscribers|enrollments)/:id/status', requireAdminAuth, adminController.updateStatus);
 router.delete('/admin/:type(leads|contacts|employer-requests|applications|referrals|subscribers|enrollments)/:id', requireAdminAuth, adminController.deleteSubmission);
 
+// --- ADMIN TESTIMONIALS & HOME SHOWCASE MANAGEMENT ---
+router.get('/admin/testimonials', requireAdminAuth, testimonialsController.adminGetTestimonials);
+router.post('/admin/testimonials', requireAdminAuth, testimonialsController.adminCreateTestimonial);
+router.put('/admin/testimonials/:id', requireAdminAuth, testimonialsController.adminUpdateTestimonial);
+router.delete('/admin/testimonials/:id', requireAdminAuth, testimonialsController.adminDeleteTestimonial);
+router.patch('/admin/testimonials/:id/highlight', requireAdminAuth, testimonialsController.adminSetHighlight);
+router.post('/admin/testimonials/upload-avatar', requireAdminAuth, uploadAvatarImage.single('avatar'), testimonialsController.adminUploadAvatar);
+router.post('/admin/testimonials/bulk', requireAdminAuth, testimonialsController.adminBulkAction);
+router.post('/admin/testimonials/reorder', requireAdminAuth, testimonialsController.adminReorder);
+
 // Content management CRUD routes
-router.post('/admin/:model(jobs|stories|live-placements|faqs|testimonials)', requireAdminAuth, adminController.createContentItem);
-router.put('/admin/:model(jobs|stories|live-placements|faqs|testimonials)/:id', requireAdminAuth, adminController.updateContentItem);
-router.patch('/admin/:model(jobs|stories|live-placements|faqs|testimonials)/:id/status', requireAdminAuth, adminController.toggleContentStatus);
-router.delete('/admin/:model(posts|jobs|courses|stories|live-placements|faqs|testimonials)/:id', requireAdminAuth, adminController.deleteContentItem);
+router.post('/admin/:model(jobs|stories|live-placements|faqs)', requireAdminAuth, adminController.createContentItem);
+router.put('/admin/:model(jobs|stories|live-placements|faqs)/:id', requireAdminAuth, adminController.updateContentItem);
+router.patch('/admin/:model(jobs|stories|live-placements|faqs)/:id/status', requireAdminAuth, adminController.toggleContentStatus);
+router.delete('/admin/:model(posts|jobs|courses|stories|live-placements|faqs)/:id', requireAdminAuth, adminController.deleteContentItem);
 
 router.get('/admin/export/:type', requireAdminAuth, adminController.exportCsv);
 router.get('/admin/resume/:id', requireAdminAuth, adminController.downloadResume);
 router.get('/admin/settings', requireAdminAuth, adminController.getSettings);
 router.put('/admin/settings', requireAdminAuth, adminController.updateSettings);
+router.post('/admin/settings/test-email', requireAdminAuth, adminController.sendTestEmail);
 
 // --- ADMIN BLOG MANAGEMENT ---
 router.get('/admin/blog/posts', requireAdminAuth, blogController.adminGetPosts);
@@ -87,7 +100,9 @@ router.post('/admin/blog/posts', requireAdminAuth, blogController.adminCreatePos
 router.put('/admin/blog/posts/:id', requireAdminAuth, blogController.adminUpdatePost);
 router.delete('/admin/blog/posts/:id', requireAdminAuth, blogController.adminDeletePost);
 router.patch('/admin/blog/posts/:id/status', requireAdminAuth, blogController.adminUpdateStatus);
-router.post('/admin/blog/upload-image', requireAdminAuth, uploadBlogImage.single('image'), blogController.adminUploadImage);
+router.post('/admin/blog/upload-image', requireAdminAuth, uploadBlogImage.any(), blogController.adminUploadImage);
+router.get('/admin/blog/media', requireAdminAuth, blogController.adminGetMedia);
 router.get('/admin/blog/meta', requireAdminAuth, blogController.adminGetMeta);
+router.post('/admin/blog/ai-generate', requireAdminAuth, blogController.adminGenerateArticle);
 
 export default router;

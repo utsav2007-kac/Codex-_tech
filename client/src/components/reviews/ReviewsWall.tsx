@@ -20,6 +20,11 @@ export interface ReviewItem {
   quote: string;
   type?: 'candidate' | 'employer';
   highlightMetric?: string;
+  avatar?: string;
+  avatar_url?: string;
+  is_main_highlight?: boolean;
+  show_in_spotlight?: boolean;
+  show_in_cards?: boolean;
   is_sample?: boolean;
 }
 
@@ -141,17 +146,38 @@ export const ReviewsWall: React.FC = () => {
 
   const pillsContainerRef = useRef<HTMLDivElement>(null);
 
-  // Fetch live reviews if API available
+  // Fetch live reviews from home API endpoint
   useEffect(() => {
     api
-      .get('/testimonials')
+      .get('/testimonials/home')
       .then((res) => {
-        if (res.data?.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
-          setReviews(res.data.data);
+        const homeData = res.data?.data;
+        if (homeData) {
+          const list = homeData.reviews || homeData.spotlight;
+          if (Array.isArray(list) && list.length > 0) {
+            setReviews(list);
+            // Default to main highlight index if present
+            if (homeData.mainHighlight) {
+              const highlightIdx = list.findIndex((r: any) => r.id === homeData.mainHighlight.id);
+              if (highlightIdx !== -1) {
+                setCurrentIndex(highlightIdx);
+              }
+            }
+          }
         }
       })
       .catch(() => {
-        // Retain defaultReviews
+        // Fallback to legacy endpoint
+        api
+          .get('/testimonials')
+          .then((res) => {
+            if (res.data?.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
+              setReviews(res.data.data);
+            }
+          })
+          .catch(() => {
+            // Retain defaultReviews
+          });
       });
   }, []);
 
@@ -260,7 +286,7 @@ export const ReviewsWall: React.FC = () => {
                     : 'text-[#475569] hover:text-[#0F172A] hover:bg-[#F1F5F9]'
                 }`}
               >
-                Engineers
+                Engineers ({reviews.filter((r) => r.type === 'candidate').length})
               </button>
               <button
                 type="button"
@@ -274,7 +300,7 @@ export const ReviewsWall: React.FC = () => {
                     : 'text-[#475569] hover:text-[#0F172A] hover:bg-[#F1F5F9]'
                 }`}
               >
-                Hiring Leads
+                Hiring Leads ({reviews.filter((r) => r.type === 'employer').length})
               </button>
             </div>
           </div>
@@ -396,9 +422,17 @@ export const ReviewsWall: React.FC = () => {
                 key={`author-reveal-${activeReview.id}`}
                 className="reveal-author-block flex items-center gap-3.5"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-[#FFFFFF] font-heading font-bold text-base flex items-center justify-center shadow-sm">
-                  {getInitials(activeReview.name)}
-                </div>
+                {activeReview.avatar_url || activeReview.avatar ? (
+                  <img
+                    src={activeReview.avatar_url || activeReview.avatar}
+                    alt={activeReview.name}
+                    className="w-12 h-12 rounded-2xl object-cover border border-[#2563EB]/30 shadow-sm shrink-0"
+                  />
+                ) : (
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-[#FFFFFF] font-heading font-bold text-base flex items-center justify-center shadow-sm shrink-0">
+                    {getInitials(activeReview.name)}
+                  </div>
+                )}
                 <div>
                   <h4 className="font-heading font-bold text-base text-[#0F172A]">
                     {activeReview.name}
@@ -453,15 +487,23 @@ export const ReviewsWall: React.FC = () => {
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <div
-                          className={`w-8 h-8 rounded-xl font-bold text-xs flex items-center justify-center transition-colors ${
-                            isSelected
-                              ? 'bg-[#2563EB] text-white'
-                              : 'bg-[#F1F5F9] text-[#0F172A]'
-                          }`}
-                        >
-                          {getInitials(item.name)}
-                        </div>
+                        {item.avatar_url || item.avatar ? (
+                          <img
+                            src={item.avatar_url || item.avatar}
+                            alt={item.name}
+                            className="w-8 h-8 rounded-xl object-cover shrink-0 shadow-2xs border border-slate-200"
+                          />
+                        ) : (
+                          <div
+                            className={`w-8 h-8 rounded-xl font-bold text-xs flex items-center justify-center transition-colors shrink-0 ${
+                              isSelected
+                                ? 'bg-[#2563EB] text-white'
+                                : 'bg-[#F1F5F9] text-[#0F172A]'
+                            }`}
+                          >
+                            {getInitials(item.name)}
+                          </div>
+                        )}
                         <div>
                           <h5 className="font-heading font-bold text-xs text-[#0F172A] line-clamp-1">
                             {item.name}

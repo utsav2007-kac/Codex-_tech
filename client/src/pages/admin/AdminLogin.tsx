@@ -43,7 +43,7 @@ export const AdminLogin: React.FC = () => {
         setLoginError(res.data?.error?.message || 'Invalid administrator credentials.');
       }
     } catch (err: any) {
-      setLoginError(err.response?.data?.error?.message || 'Login failed. Please verify credentials.');
+      setLoginError(err.message || err.response?.data?.error?.message || 'Login failed. Please verify credentials.');
     } finally {
       setIsSubmitting(false);
     }

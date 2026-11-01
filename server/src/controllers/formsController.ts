@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { prisma } from '../services/db';
-import { sendEmail } from '../services/email';
+import { sendEmail, getNotificationEmail } from '../services/email';
 import { config } from '../config';
 import {
   consultationSchema,
@@ -112,19 +112,68 @@ export const formsController = {
         },
       });
 
-      await sendEmail({
-        to: config.notifyEmail,
-        subject: `Contact Inquiry: ${data.subject} (${data.name})`,
-        html: `<p><strong>Name:</strong> ${data.name}</p>
-               <p><strong>Email:</strong> ${data.email}</p>
-               <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
-               <p><strong>Subject:</strong> ${data.subject}</p>
-               <p><strong>Message:</strong><br/>${data.message}</p>`,
+      const recipientEmail = await getNotificationEmail();
+
+      const emailHtml = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+          <div style="border-bottom: 2px solid #ea580c; padding-bottom: 16px; margin-bottom: 20px;">
+            <div style="display: inline-block; padding: 4px 10px; background-color: #ffedd5; color: #c2410c; border-radius: 9999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+              New Website Inquiry
+            </div>
+            <h2 style="color: #0f172a; margin: 0 0 6px 0; font-size: 20px; font-weight: 800;">Contact Form Submission: ${data.subject}</h2>
+            <p style="color: #64748b; margin: 0; font-size: 13px;">Codex Tech-IT Contact &amp; Advisory Desk</p>
+          </div>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13.5px;">
+            <tr>
+              <td style="padding: 10px 12px; background-color: #f8fafc; font-weight: 600; color: #475569; width: 140px; border-bottom: 1px solid #f1f5f9;">Full Name:</td>
+              <td style="padding: 10px 12px; color: #0f172a; font-weight: 700; border-bottom: 1px solid #f1f5f9;">${data.name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; background-color: #f8fafc; font-weight: 600; color: #475569; border-bottom: 1px solid #f1f5f9;">Email Address:</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9;">
+                <a href="mailto:${data.email}" style="color: #ea580c; font-weight: 600; text-decoration: none;">${data.email}</a>
+                <span style="color: #94a3b8; font-size: 12px; margin-left: 6px;">(Click reply in email client to respond directly)</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; background-color: #f8fafc; font-weight: 600; color: #475569; border-bottom: 1px solid #f1f5f9;">Phone Number:</td>
+              <td style="padding: 10px 12px; color: #0f172a; font-weight: 600; border-bottom: 1px solid #f1f5f9;">${data.phone || 'Not provided'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; background-color: #f8fafc; font-weight: 600; color: #475569; border-bottom: 1px solid #f1f5f9;">Subject:</td>
+              <td style="padding: 10px 12px; color: #0f172a; font-weight: 700; border-bottom: 1px solid #f1f5f9;">${data.subject}</td>
+            </tr>
+          </table>
+
+          <div style="background-color: #f8fafc; border-left: 4px solid #ea580c; padding: 16px 20px; border-radius: 8px; margin-bottom: 24px;">
+            <p style="margin: 0 0 8px 0; font-weight: 700; color: #0f172a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Message Details:</p>
+            <p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${data.message}</p>
+          </div>
+
+          <div style="font-size: 11.5px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 14px; text-align: center;">
+            Delivered to designated admin mailbox (<code>${recipientEmail}</code>). Codex Tech-IT Platform.
+          </div>
+        </div>
+      `;
+
+      const emailSent = await sendEmail({
+        to: recipientEmail,
+        replyTo: data.email,
+        subject: `[Contact Inquiry] ${data.subject} - ${data.name}`,
+        html: emailHtml,
       });
+
+      if (!emailSent) {
+        return res.status(500).json({
+          success: false,
+          error: { message: 'Message recorded in system, but email gateway could not deliver notification. Please reach out to us directly at contact@codextechit.com.' },
+        });
+      }
 
       res.status(201).json({
         success: true,
-        data: { id: contact.id, message: 'Message sent successfully. We will reply promptly.' },
+        data: { id: contact.id, message: 'Message sent successfully! Our team will reply promptly.' },
       });
     } catch (err) {
       next(err);

@@ -42,15 +42,41 @@ export const uploadResume = multer({
 });
 
 const imageMemoryStorage = multer.memoryStorage();
+
 export const uploadBlogImage = multer({
+  storage: imageMemoryStorage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit per image
+  },
+  fileFilter: (_req, file, cb) => {
+    // Strictly reject SVG to prevent stored XSS attacks
+    if (file.mimetype === 'image/svg+xml' || file.originalname.toLowerCase().endsWith('.svg')) {
+      return cb(
+        new Error('SVG files are not permitted for security reasons. Please convert to WebP or PNG before uploading.')
+      );
+    }
+    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
+    if (!allowed.includes(file.mimetype)) {
+      return cb(
+        new Error('Invalid image file. Only JPG, PNG, WebP, GIF, or AVIF files up to 10MB are permitted.')
+      );
+    }
+    cb(null, true);
+  },
+});
+
+export const uploadAvatarImage = multer({
   storage: imageMemoryStorage,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB limit
   },
   fileFilter: (_req, file, cb) => {
-    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+    if (file.mimetype === 'image/svg+xml' || file.originalname.toLowerCase().endsWith('.svg')) {
+      return cb(new Error('SVG files cannot be used as profile photos. Please upload a JPG, PNG, or WebP photo.'));
+    }
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
     if (!allowed.includes(file.mimetype)) {
-      return cb(new Error('Invalid image file. Only JPEG, PNG, WebP, or SVG files up to 5MB are allowed.'));
+      return cb(new Error('Invalid profile photo. Only JPG, PNG, or WebP photos up to 5MB are permitted.'));
     }
     cb(null, true);
   },

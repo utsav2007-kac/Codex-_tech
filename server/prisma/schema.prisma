@@ -6,6 +6,7 @@ datasource db {
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextIndex"]
+  binaryTargets   = ["native", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
 }
 
 enum VisaStatus {
@@ -326,21 +327,53 @@ model Faq {
 }
 
 model Testimonial {
-  id           Int      @id @default(autoincrement())
-  name         String   @db.VarChar(100)
-  role         String   @db.VarChar(100)
-  quote        String   @db.Text
-  rating       Int      @default(5)
-  source       String   @default("LinkedIn") @db.VarChar(50)
-  avatar       String?  @db.VarChar(255)
-  date         String?  @db.VarChar(50)
-  is_sample         Boolean  @default(true)
-  is_published      Boolean  @default(true)
-  consent_confirmed Boolean  @default(false)
-  created_at        DateTime @default(now())
+  id                    Int       @id @default(autoincrement())
+  name                  String    @db.VarChar(100)
+  role                  String    @db.VarChar(100)
+  quote                 String    @db.Text
+  rating                Int       @default(5)
+  source                String    @default("LinkedIn") @db.VarChar(50)
+  avatar                String?   @db.VarChar(255)
+  date                  String?   @db.VarChar(50)
+  is_sample             Boolean   @default(true)
+  is_published          Boolean   @default(true)
+  consent_confirmed     Boolean   @default(false)
+  reviewer_type         String    @default("candidate") @db.VarChar(50)
+  company_name          String?   @db.VarChar(150)
+  placement             String?   @db.VarChar(150)
+  highlight_metric      String?   @db.VarChar(150)
+  avatar_url            String?   @db.VarChar(255)
+  show_in_spotlight     Boolean   @default(false)
+  is_main_highlight     Boolean   @default(false)
+  show_in_cards         Boolean   @default(true)
+  spotlight_order       Int       @default(0)
+  card_order            Int       @default(0)
+  permission_confirmed  Boolean   @default(true)
+  permission_confirmed_at DateTime?
+  updated_at            DateTime  @default(now()) @updatedAt
+  created_at            DateTime  @default(now())
 
   @@index([is_published])
+  @@index([show_in_spotlight])
+  @@index([is_main_highlight])
+  @@index([show_in_cards])
   @@map("testimonials")
+}
+
+model BlogMedia {
+  id            Int      @id @default(autoincrement())
+  filename      String   @db.VarChar(255)
+  url           String   @db.VarChar(255)
+  original_name String?  @db.VarChar(255)
+  mime_type     String   @db.VarChar(100)
+  width         Int?
+  height        Int?
+  bytes         Int
+  uploaded_by   String?  @db.VarChar(100)
+  created_at    DateTime @default(now())
+
+  @@index([created_at])
+  @@map("blog_media")
 }
 
 model InterviewQuestion {

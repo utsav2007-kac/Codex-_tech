@@ -8,6 +8,7 @@ import { SEO } from '../../components/ui/SEO';
 import { Button } from '../../components/ui/Button';
 import { api } from '../../services/api';
 import { AdminBlogManager } from '../../components/admin/AdminBlogManager';
+import { AdminTestimonials } from './AdminTestimonials';
 
 type ContentModel = 'posts' | 'jobs' | 'stories' | 'live-placements' | 'faqs' | 'testimonials';
 
@@ -208,6 +209,8 @@ export const AdminContent: React.FC = () => {
 
       {model === 'posts' ? (
         <AdminBlogManager />
+      ) : model === 'testimonials' ? (
+        <AdminTestimonials />
       ) : (
         <div className="space-y-5">
           {/* Section Toolbar */}
@@ -630,46 +633,6 @@ export const AdminContent: React.FC = () => {
                           rows={3}
                           value={formData.answer || ''}
                           onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
-                          className="w-full px-3 py-2 rounded-xl border border-gray-200 text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200"
-                          required
-                        />
-                      </div>
-                    </>
-                  )}
-
-                  {/* Form fields for TESTIMONIALS */}
-                  {model === 'testimonials' && (
-                    <>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block font-semibold text-navy-900 mb-1">Candidate Name</label>
-                          <input
-                            type="text"
-                            value={formData.name || ''}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="w-full px-3 py-2 rounded-xl border border-gray-200 text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200"
-                            placeholder="e.g. Alex M."
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className="block font-semibold text-navy-900 mb-1">Role & Company</label>
-                          <input
-                            type="text"
-                            value={formData.role || ''}
-                            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                            className="w-full px-3 py-2 rounded-xl border border-gray-200 text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200"
-                            placeholder="e.g. Cloud Security Analyst @ FinTech"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="block font-semibold text-navy-900 mb-1">Candidate Quote / Testimonial</label>
-                        <textarea
-                          rows={3}
-                          value={formData.quote || ''}
-                          onChange={(e) => setFormData({ ...formData, quote: e.target.value })}
                           className="w-full px-3 py-2 rounded-xl border border-gray-200 text-navy-900 bg-white focus:outline-none focus:ring-2 focus:ring-orange-200"
                           required
                         />

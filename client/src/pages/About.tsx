@@ -9,18 +9,12 @@ import {
   Users,
   Sparkles,
   Building2,
-  Clock,
   Compass,
   Zap,
   Globe2,
   Briefcase,
   HeartHandshake,
   TrendingUp,
-  MapPin,
-  Phone,
-  Mail,
-  Send,
-  ExternalLink,
   MessageSquare,
   GraduationCap,
   Layers,
@@ -38,61 +32,12 @@ import { oldSiteAboutPoints, oldSitePositioning } from '../content/oldSiteConten
 export const About: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
 
-  // Live clocks for Texas and Hyderabad
-  const [usTime, setUsTime] = useState<string>('');
-  const [inTime, setInTime] = useState<string>('');
-  const [isUsWorkHours, setIsUsWorkHours] = useState<boolean>(true);
-  const [isInWorkHours, setIsInWorkHours] = useState<boolean>(false);
-
   // Testimonials state
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const [testimonialsLoading, setTestimonialsLoading] = useState<boolean>(true);
 
   // Active milestone tab for horizontal trajectory
   const [activeMilestone, setActiveMilestone] = useState<number>(0);
-
-  useEffect(() => {
-    const updateTimes = () => {
-      const now = new Date();
-
-      // Texas (Central Standard / Daylight Time)
-      const usString = now.toLocaleTimeString('en-US', {
-        timeZone: 'America/Chicago',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-      });
-      setUsTime(usString);
-
-      // India (IST)
-      const inString = now.toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-      });
-      setInTime(inString);
-
-      // Office hours calculations (rough hour check)
-      const usHour = parseInt(
-        now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', hour12: false }),
-        10
-      );
-      setIsUsWorkHours(usHour >= 8 && usHour < 19);
-
-      const inHour = parseInt(
-        now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false }),
-        10
-      );
-      setIsInWorkHours(inHour >= 9 && inHour < 20);
-    };
-
-    updateTimes();
-    const interval = setInterval(updateTimes, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     api
@@ -237,191 +182,6 @@ export const About: React.FC = () => {
               >
                 Explore All Services
               </Link>
-            </div>
-          </div>
-
-          {/* ── LIVE DUAL-OFFICE BOARDING PASSES (Plano, TX & Hyderabad, TS) ── */}
-          <div className="space-y-4">
-            {/* Direct Talent Corridor Banner */}
-            <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs text-slate-700">
-              <div className="flex items-center gap-2">
-                <span className="p-1 rounded-md bg-blue-600 text-white flex items-center justify-center">
-                  <Send className="w-3 h-3" />
-                </span>
-                <span className="font-bold text-slate-900">Direct Talent Corridor:</span>
-                <span>DFW / ORD ⇄ HYD</span>
-                <span className="hidden sm:inline text-slate-300">•</span>
-                <span className="hidden sm:inline text-blue-700 font-medium">India is 10.5 hours ahead of Texas (CST)</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-slate-600">
-                <Clock className="w-3.5 h-3.5 text-orange-600" />
-                <span className="font-medium">Shared Working Window: 8:00 AM – 11:30 AM CST / 6:30 PM – 10:00 PM IST</span>
-              </div>
-            </div>
-
-            {/* Dual Office Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
-              {/* Plano, Texas HQ (Sky Tint) */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#F0F7FF] border border-blue-200/80 shadow-xs flex flex-col justify-between relative group hover:border-blue-300 transition-all">
-                <div>
-                  <div className="flex items-center justify-between pb-4 mb-5 border-b border-blue-200/60 text-xs font-mono">
-                    <span className="font-bold text-blue-800 tracking-wider">BOARDING PASS • CDX-USA</span>
-                    <span className="font-extrabold text-blue-900">PLANO, TEXAS</span>
-                    <span className="text-slate-500">TERM 01 / DESK A</span>
-                  </div>
-
-                  <div className="flex items-start justify-between gap-4 mb-6">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-lg font-heading font-black text-slate-900">Plano, TX</h3>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
-                          USA HQ
-                        </span>
-                      </div>
-                      <div className="text-2xl font-mono font-bold text-blue-950 tracking-tight">
-                        {usTime || '10:14:30 AM'}
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs">
-                        <span
-                          className={`w-2 h-2 rounded-full ${
-                            isUsWorkHours ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
-                          }`}
-                        />
-                        <span className={isUsWorkHours ? 'text-emerald-700 font-semibold' : 'text-amber-700 font-medium'}>
-                          {isUsWorkHours ? 'Active Office Hours' : 'After Hours (Dispatched)'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="w-14 h-14 rounded-full bg-white border border-blue-200 flex items-center justify-center shadow-xs text-blue-700">
-                      <Clock className="w-7 h-7" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2.5 text-xs text-slate-700 mb-6">
-                    <div className="flex items-start gap-2.5">
-                      <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                      <span>5700 Tennyson Pkwy, Suite 300, Plano, TX 75024</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <Phone className="w-4 h-4 text-blue-600 shrink-0" />
-                      <a href="tel:+18005550199" className="hover:text-blue-700 font-medium underline underline-offset-2">
-                        +1 (800) 555-0199 / +1 888-99-CODEX
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <Mail className="w-4 h-4 text-blue-600 shrink-0" />
-                      <a href="mailto:contact@codextechit.com" className="hover:text-blue-700 font-medium underline underline-offset-2">
-                        contact@codextechit.com
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-slate-500">
-                      <Clock className="w-4 h-4 text-slate-600 shrink-0" />
-                      <span>Mon – Fri: 8:00 AM – 7:00 PM CST</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-blue-200/60">
-                  <a
-                    href="https://maps.google.com/?q=5700+Tennyson+Pkwy+Suite+300+Plano+TX+75024"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                  >
-                    <span>Get Directions</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href="tel:+18005550199"
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                  >
-                    <Phone className="w-3.5 h-3.5" />
-                    <span>Call US HQ</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Hyderabad Global Hub (Butter Tint) */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#FFF9E6] border border-amber-200/90 shadow-xs flex flex-col justify-between relative group hover:border-amber-300 transition-all">
-                <div>
-                  <div className="flex items-center justify-between pb-4 mb-5 border-b border-amber-200/70 text-xs font-mono">
-                    <span className="font-bold text-amber-800 tracking-wider">BOARDING PASS • CDX-IND</span>
-                    <span className="font-extrabold text-amber-950">HYDERABAD, TELANGANA</span>
-                    <span className="text-slate-500">GATE 02 / TECH HUB</span>
-                  </div>
-
-                  <div className="flex items-start justify-between gap-4 mb-6">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-lg font-heading font-black text-slate-900">Hyderabad, TS</h3>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300/60">
-                          INDIA HUB
-                        </span>
-                      </div>
-                      <div className="text-2xl font-mono font-bold text-amber-950 tracking-tight">
-                        {inTime || '08:44:30 PM'}
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs">
-                        <span
-                          className={`w-2 h-2 rounded-full ${
-                            isInWorkHours ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
-                          }`}
-                        />
-                        <span className={isInWorkHours ? 'text-emerald-700 font-semibold' : 'text-slate-600 font-medium'}>
-                          {isInWorkHours ? 'Active Office Hours' : 'After Hours (Queued Support)'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="w-14 h-14 rounded-full bg-white border border-amber-200 flex items-center justify-center shadow-xs text-amber-700">
-                      <Clock className="w-7 h-7" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2.5 text-xs text-slate-700 mb-6">
-                    <div className="flex items-start gap-2.5">
-                      <MapPin className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-                      <span>HITEC City, Phase 2, Madhapur, Hyderabad, TS 500081</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <Phone className="w-4 h-4 text-amber-700 shrink-0" />
-                      <a href="tel:+914055501922" className="hover:text-amber-800 font-medium underline underline-offset-2">
-                        +91 (40) 5550-1922
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <Mail className="w-4 h-4 text-amber-700 shrink-0" />
-                      <a href="mailto:india@codextechit.com" className="hover:text-amber-800 font-medium underline underline-offset-2">
-                        india@codextechit.com
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-slate-500">
-                      <Clock className="w-4 h-4 text-slate-600 shrink-0" />
-                      <span>Mon – Sat: 9:30 AM – 7:30 PM IST</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-amber-200/70">
-                  <a
-                    href="https://maps.google.com/?q=HITEC+City+Phase+2+Madhapur+Hyderabad"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-white hover:bg-amber-50 text-amber-950 border border-amber-200 text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                  >
-                    <span>Get Directions</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href="tel:+914055501922"
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                  >
-                    <Phone className="w-3.5 h-3.5" />
-                    <span>Call India Hub</span>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>

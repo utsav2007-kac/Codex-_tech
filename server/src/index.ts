@@ -38,6 +38,13 @@ const uploadsDir = path.resolve(__dirname, '../uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
+app.use(
+  '/uploads',
+  express.static(uploadsDir, {
+    maxAge: '30d',
+    immutable: true,
+  })
+);
 
 // Dynamic robots.txt from MySQL settings
 app.get('/robots.txt', (_req, res) => {
@@ -472,7 +479,7 @@ if (fs.existsSync(clientDist)) {
 // Global error handler
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   app.listen(config.port, () => {
     console.log(`[Codex Tech-IT Server] Running at http://localhost:${config.port}`);
     console.log(`[Codex Tech-IT Server] API mounted at http://localhost:${config.port}/api`);

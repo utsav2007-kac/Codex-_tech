@@ -1,0 +1,153 @@
+/* ── BLOG CONTENT & FIGURE MEDIA STYLING ── */
+
+/* Base figure styling */
+.blog-figure {
+  display: block;
+  margin: 2rem auto;
+  box-sizing: border-box;
+  max-width: 100%;
+  clear: both;
+  transition: all 0.2s ease;
+}
+
+.blog-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+
+.blog-figure figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #64748b;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Alignment rules */
+.blog-figure.align-center {
+  margin-left: auto;
+  margin-right: auto;
+  clear: both;
+}
+
+.blog-figure.align-left {
+  float: left;
+  margin: 0.5rem 1.75rem 1.5rem 0;
+  clear: left;
+}
+
+.blog-figure.align-right {
+  float: right;
+  margin: 0.5rem 0 1.5rem 1.75rem;
+  clear: right;
+}
+
+/* Width presets */
+.blog-figure.w-25 { width: 25%; }
+.blog-figure.w-33 { width: 33.333%; }
+.blog-figure.w-50 { width: 50%; }
+.blog-figure.w-66 { width: 66.666%; }
+.blog-figure.w-75 { width: 75%; }
+.blog-figure.w-100 { width: 100%; }
+
+/* Clearing floats for structured typography */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.prose table,
+.prose blockquote,
+.prose hr,
+.blog-callout {
+  clear: both !important;
+}
+
+/* Mobile responsive collapse (< 640px) */
+@media (max-width: 639px) {
+  .blog-figure,
+  .blog-figure.align-left,
+  .blog-figure.align-right,
+  .blog-figure.w-25,
+  .blog-figure.w-33,
+  .blog-figure.w-50,
+  .blog-figure.w-66,
+  .blog-figure.w-75 {
+    float: none !important;
+    width: 100% !important;
+    margin: 1.5rem 0 !important;
+    clear: both !important;
+  }
+}
+
+/* In-Editor Figure Selection State */
+.blog-figure {
+  cursor: pointer;
+  position: relative;
+  transition: outline 0.15s ease, opacity 0.15s ease;
+}
+
+.blog-figure:hover {
+  outline: 2px dashed #cbd5e1;
+  outline-offset: 4px;
+}
+
+.blog-figure.is-selected {
+  outline: 2.5px solid #f97316 !important;
+  outline-offset: 4px;
+  border-radius: 0.875rem;
+}
+
+.blog-figure.is-dragging {
+  opacity: 0.4 !important;
+  user-select: none;
+}
+
+/* 3px Orange Drop Line Indicator with Drop Here badge */
+.editor-drop-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #f97316;
+  border-radius: 9999px;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.7);
+  transition: top 0.06s ease-out;
+}
+
+.editor-drop-line::after {
+  content: 'Drop here';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* Pulse animation on figure repositioning */
+.figure-highlight-pulse {
+  outline: 3px solid #f97316 !important;
+  outline-offset: 4px;
+  animation: figure-highlight-anim 1.4s ease-out;
+}
+
+@keyframes figure-highlight-anim {
+  0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.85); }
+  50% { box-shadow: 0 0 0 14px rgba(249, 115, 22, 0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+

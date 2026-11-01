@@ -8,6 +8,8 @@ import { BlogStatus } from '@prisma/client';
 import { blogPostInputSchema, blogQuerySchema } from '@codex/shared';
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
+import { generateAIBlogArticle } from '../services/aiBlogGenerator';
+import { StorageAdapter } from '../services/storageAdapter';
 
 // ══════════════════════════════════════════════════════════════════════
 // IN-MEMORY RESPONSE CACHE & VIEW RATE LIMITER
@@ -52,22 +54,25 @@ function shouldCountView(ip: string, slug: string): boolean {
   return true;
 }
 
-// HTML Sanitizer Configuration
+// HTML Sanitizer Configuration (Permits figures, responsive images, captions, callouts and tables)
 const sanitizeOptions: sanitizeHtml.IOptions = {
   allowedTags: [
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
     'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span', 'img'
+    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span', 'img',
+    'figure', 'figcaption'
   ],
   allowedAttributes: {
     a: ['href', 'name', 'target', 'rel', 'class'],
-    img: ['src', 'alt', 'title', 'width', 'height', 'loading', 'class'],
-    div: ['class', 'id'],
-    span: ['class', 'id'],
-    table: ['class'],
-    th: ['class', 'scope'],
-    td: ['class'],
-    tr: ['class'],
+    img: ['src', 'srcset', 'sizes', 'alt', 'title', 'width', 'height', 'loading', 'decoding', 'class', 'style', 'data-align', 'data-size', 'data-id'],
+    figure: ['class', 'style', 'data-align', 'data-size', 'data-id'],
+    figcaption: ['class', 'style'],
+    div: ['class', 'id', 'style'],
+    span: ['class', 'id', 'style'],
+    table: ['class', 'style'],
+    th: ['class', 'scope', 'style'],
+    td: ['class', 'style'],
+    tr: ['class', 'style'],
     pre: ['class'],
     code: ['class'],
     blockquote: ['class'],
@@ -81,7 +86,7 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
     ul: ['class'],
     ol: ['class']
   },
-  allowedSchemes: ['http', 'https', 'mailto'],
+  allowedSchemes: ['http', 'https', 'mailto', 'data'],
   allowProtocolRelative: false
 };
 
@@ -795,45 +800,86 @@ export const blogController = {
     }
   },
 
-  // POST /api/admin/blog/upload-image
+  // POST /api/admin/blog/upload-image (Multi-file or single file image upload)
   adminUploadImage: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.file) {
-        return res.status(400).json({ success: false, error: 'No image file uploaded' });
-      }
-
-      const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
-      if (!allowedMimes.includes(req.file.mimetype)) {
-        return res.status(400).json({
-          success: false,
-          error: 'Only JPEG, PNG, WebP, or SVG images are accepted'
+      const files: Express.Multer.File[] = [];
+      if (req.file) {
+        files.push(req.file);
+      } else if (Array.isArray(req.files)) {
+        files.push(...req.files);
+      } else if (req.files && typeof req.files === 'object') {
+        Object.values(req.files).forEach((val) => {
+          if (Array.isArray(val)) files.push(...val);
         });
       }
 
-      const uploadsDir = path.resolve(__dirname, '../../uploads/blog');
-      const publicBlogDir = path.resolve(__dirname, '../../../client/public/assets/blog');
-      if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-      if (!fs.existsSync(publicBlogDir)) fs.mkdirSync(publicBlogDir, { recursive: true });
+      if (files.length === 0) {
+        return res.status(400).json({ success: false, error: 'No image files uploaded' });
+      }
 
-      const filename = `blog-upload-${Date.now()}.webp`;
-      const outPathPublic = path.join(publicBlogDir, filename);
-      const outPathUploads = path.join(uploadsDir, filename);
+      const results = [];
+      for (const file of files) {
+        // SVG security check
+        if (file.mimetype === 'image/svg+xml' || file.originalname.toLowerCase().endsWith('.svg')) {
+          return res.status(400).json({
+            success: false,
+            error: `File "${file.originalname}" was rejected: SVG illustrations must be converted to WebP or PNG before uploading to prevent XSS.`
+          });
+        }
 
-      // Convert to WebP using sharp with high quality and 16:9 bounds
-      await sharp(req.file.buffer)
-        .resize(1200, 675, { fit: 'cover' })
-        .webp({ quality: 88 })
-        .toFile(outPathPublic);
+        const saved = await StorageAdapter.saveBlogImage(file.buffer, file.originalname);
 
-      // Also copy to uploads for redundancy
-      fs.copyFileSync(outPathPublic, outPathUploads);
+        // Record in blog_media database
+        const mediaRecord = await prisma.blogMedia.create({
+          data: {
+            filename: saved.filename,
+            url: saved.url,
+            original_name: file.originalname,
+            mime_type: saved.mimeType,
+            width: saved.width,
+            height: saved.height,
+            bytes: saved.bytes,
+            uploaded_by: (req as any).adminUser?.email || 'admin'
+          }
+        });
+
+        results.push({
+          id: mediaRecord.id,
+          url: saved.url,
+          filename: saved.filename,
+          width: saved.width,
+          height: saved.height,
+          bytes: saved.bytes,
+          original_name: file.originalname
+        });
+      }
+
+      // Return both single object (for backward-compatible single upload) and array
+      return res.json({
+        success: true,
+        data: results.length === 1 ? results[0] : results,
+        items: results
+      });
+    } catch (err: any) {
+      return res.status(400).json({
+        success: false,
+        error: err.message || 'Image upload failed'
+      });
+    }
+  },
+
+  // GET /api/admin/blog/media (Recent Media Library for Blog Editor)
+  adminGetMedia: async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const media = await prisma.blogMedia.findMany({
+        orderBy: { created_at: 'desc' },
+        take: 60
+      });
 
       return res.json({
         success: true,
-        data: {
-          url: `/assets/blog/${filename}`,
-          filename
-        }
+        data: media
       });
     } catch (err) {
       next(err);
@@ -854,6 +900,34 @@ export const blogController = {
         data: { authors, categories, tags }
       });
     } catch (err) {
+      next(err);
+    }
+  },
+
+  // POST /api/admin/blog/ai-generate (AI Article Generation for Admin Editor)
+  adminGenerateArticle: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { prompt, tone, audience, targetRole, generateFaqs } = req.body;
+      if (!prompt || typeof prompt !== 'string' || prompt.trim().length < 3) {
+        return res.status(400).json({
+          success: false,
+          error: 'Please provide a valid topic, prompt, or bullet points to generate an article.'
+        });
+      }
+
+      const generated = await generateAIBlogArticle({
+        prompt,
+        tone,
+        audience,
+        targetRole,
+        generateFaqs
+      });
+
+      return res.json({
+        success: true,
+        data: generated
+      });
+    } catch (err: any) {
       next(err);
     }
   }

@@ -11,6 +11,7 @@ import { RelatedPosts } from '../../components/blog/RelatedPosts';
 import { BlogPostCardData } from '../../components/blog/BlogCard';
 import { Calendar, Clock, ArrowUp, Mail, Check, AlertCircle, ArrowRight } from 'lucide-react';
 import { getFallbackBlogBySlug } from '../../data/blogData';
+import '../../styles/blog-content.css';
 
 interface ArticleDetailData {
   id: number;

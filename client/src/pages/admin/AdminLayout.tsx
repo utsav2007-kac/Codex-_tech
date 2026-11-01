@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { LayoutDashboard, Users, FileText, Settings, LogOut, ExternalLink, Menu, X, Shield, BookOpen, Layers } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, Settings, LogOut, ExternalLink, Menu, X, Shield, BookOpen, Layers, MessageSquareQuote } from 'lucide-react';
 import { api } from '../../services/api';
 
 export const AdminLayout: React.FC = () => {
@@ -25,12 +25,23 @@ export const AdminLayout: React.FC = () => {
           setCurrentUser(userData);
         } else {
           localStorage.removeItem('codex_admin_user');
+          localStorage.removeItem('codex_admin_token');
           navigate('/admin/login', { replace: true });
         }
       })
-      .catch(() => {
-        localStorage.removeItem('codex_admin_user');
-        navigate('/admin/login', { replace: true });
+      .catch((err: any) => {
+        if (err.status === 401 || err.response?.status === 401) {
+          localStorage.removeItem('codex_admin_user');
+          localStorage.removeItem('codex_admin_token');
+          navigate('/admin/login', { replace: true });
+        } else {
+          try {
+            const cachedUser = JSON.parse(hasSession);
+            setCurrentUser(cachedUser);
+          } catch {
+            navigate('/admin/login', { replace: true });
+          }
+        }
       })
       .finally(() => setIsChecking(false));
   }, [navigate]);
@@ -62,6 +73,7 @@ export const AdminLayout: React.FC = () => {
     { label: 'Overview Dashboard', path: '/admin', icon: LayoutDashboard },
     { label: 'Inquiries & Submissions', path: '/admin/submissions', icon: Users },
     { label: 'Content Management', path: '/admin/content', icon: BookOpen },
+    { label: 'Testimonials', path: '/admin/testimonials', icon: MessageSquareQuote },
     { label: 'System Settings', path: '/admin/settings', icon: Settings },
   ];
 

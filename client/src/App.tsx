@@ -50,6 +50,7 @@ const AdminLayout = lazy(() => import('./pages/admin/AdminLayout').then((m) => (
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard').then((m) => ({ default: m.AdminDashboard })));
 const AdminSubmissions = lazy(() => import('./pages/admin/AdminSubmissions').then((m) => ({ default: m.AdminSubmissions })));
 const AdminContent = lazy(() => import('./pages/admin/AdminContent').then((m) => ({ default: m.AdminContent })));
+const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials').then((m) => ({ default: m.AdminTestimonials })));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings').then((m) => ({ default: m.AdminSettings })));
 
 const RouteFallback: React.FC = () => (
@@ -132,6 +133,7 @@ export const App: React.FC = () => {
             <Route path="enrollments" element={<AdminSubmissions />} />
             <Route path="content" element={<AdminContent />} />
             <Route path="blog" element={<AdminContent />} />
+            <Route path="testimonials" element={<AdminTestimonials />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
