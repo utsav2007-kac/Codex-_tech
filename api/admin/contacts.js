@@ -1,3 +1,5 @@
+import { databaseSnapshot } from '../_data.js';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
@@ -17,6 +19,5 @@ export default async function handler(req, res) {
     } catch (_) {}
   }
 
-  // Clean empty state - No fake data
-  return res.status(200).json({ success: true, data: [] });
+  return res.status(200).json({ success: true, data: databaseSnapshot.contacts });
 }

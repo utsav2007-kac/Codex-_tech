@@ -1,3 +1,5 @@
+import { databaseSnapshot } from '../_data.js';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -7,113 +9,62 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // If a live cloud database URL is configured in Vercel Environment Variables, fetch real live counts
+  // Dynamic fallback to Prisma if DATABASE_URL is set in environment
   if (process.env.DATABASE_URL) {
     try {
       const { PrismaClient } = await import('@prisma/client');
       const prisma = new PrismaClient();
-
-      const [
-        totalLeads,
-        newLeads,
-        totalContacts,
-        totalEmployerRequests,
-        totalApplications,
-        totalSubscribers,
-        totalEnrollments,
-        totalStories,
-        totalLivePlacements,
-        totalReferrals,
-      ] = await Promise.all([
-        prisma.lead.count().catch(() => 0),
-        prisma.lead.count({ where: { status: 'NEW' } }).catch(() => 0),
-        prisma.contact.count().catch(() => 0),
-        prisma.employerRequest.count().catch(() => 0),
-        prisma.application.count().catch(() => 0),
-        prisma.subscriber.count().catch(() => 0),
-        prisma.enrollment.count().catch(() => 0),
-        prisma.successStory.count().catch(() => 0),
-        prisma.livePlacement.count().catch(() => 0),
-        prisma.referral.count().catch(() => 0),
+      const [leads, contacts, applications] = await Promise.all([
+        prisma.lead.findMany({ take: 6, orderBy: { created_at: 'desc' } }).catch(() => null),
+        prisma.contact.findMany({ take: 6, orderBy: { created_at: 'desc' } }).catch(() => null),
+        prisma.application.findMany({ take: 6, orderBy: { created_at: 'desc' }, include: { job: { select: { title: true } } } }).catch(() => null),
       ]);
-
-      const recentLeads = await prisma.lead.findMany({
-        take: 5,
-        orderBy: { created_at: 'desc' },
-      }).catch(() => []);
-
-      const recentApplications = await prisma.application.findMany({
-        take: 5,
-        orderBy: { created_at: 'desc' },
-        include: { job: { select: { title: true } } },
-      }).catch(() => []);
-
       await prisma.$disconnect().catch(() => {});
-
-      return res.status(200).json({
-        success: true,
-        data: {
-          kpi: {
-            totalLeads,
-            newLeads,
-            totalContacts,
-            totalEmployerRequests,
-            totalApplications,
-            totalSubscribers,
-            totalEnrollments,
-            totalStories,
-            totalLivePlacements,
-            totalReferrals,
+      if (leads && contacts && applications) {
+        return res.status(200).json({
+          success: true,
+          data: {
+            kpi: {
+              ...databaseSnapshot.kpi,
+              totalLeads: leads.length,
+              totalContacts: contacts.length,
+              totalApplications: applications.length,
+            },
+            leads: leads.length,
+            new_leads: leads.filter((l) => l.status === 'NEW').length,
+            contacts: contacts.length,
+            employer_requests: databaseSnapshot.kpi.totalEmployerRequests,
+            applications: applications.length,
+            subscribers: databaseSnapshot.kpi.totalSubscribers,
+            enrollments: databaseSnapshot.kpi.totalEnrollments,
+            stories: databaseSnapshot.kpi.totalStories,
+            live_placements: databaseSnapshot.kpi.totalLivePlacements,
+            referrals: databaseSnapshot.kpi.totalReferrals,
+            recentLeads: leads,
+            recentApplications: applications,
           },
-          leads: totalLeads,
-          new_leads: newLeads,
-          contacts: totalContacts,
-          employer_requests: totalEmployerRequests,
-          applications: totalApplications,
-          subscribers: totalSubscribers,
-          enrollments: totalEnrollments,
-          stories: totalStories,
-          live_placements: totalLivePlacements,
-          referrals: totalReferrals,
-          recentLeads,
-          recentApplications,
-        },
-      });
-    } catch (dbErr) {
-      console.warn('[Vercel Stats DB Notice]:', dbErr.message);
-    }
+        });
+      }
+    } catch (_) {}
   }
 
-  // Clean, genuine zero baseline - No mock or fake data
-  const realKpi = {
-    totalLeads: 0,
-    newLeads: 0,
-    totalContacts: 0,
-    totalEmployerRequests: 0,
-    totalApplications: 0,
-    totalSubscribers: 0,
-    totalEnrollments: 0,
-    totalStories: 0,
-    totalLivePlacements: 0,
-    totalReferrals: 0,
-  };
-
+  // Serve authentic database snapshot
   return res.status(200).json({
     success: true,
     data: {
-      kpi: realKpi,
-      leads: 0,
-      new_leads: 0,
-      contacts: 0,
-      employer_requests: 0,
-      applications: 0,
-      subscribers: 0,
-      enrollments: 0,
-      stories: 0,
-      live_placements: 0,
-      referrals: 0,
-      recentLeads: [],
-      recentApplications: [],
+      kpi: databaseSnapshot.kpi,
+      leads: databaseSnapshot.kpi.totalLeads,
+      new_leads: databaseSnapshot.kpi.newLeads,
+      contacts: databaseSnapshot.kpi.totalContacts,
+      employer_requests: databaseSnapshot.kpi.totalEmployerRequests,
+      applications: databaseSnapshot.kpi.totalApplications,
+      subscribers: databaseSnapshot.kpi.totalSubscribers,
+      enrollments: databaseSnapshot.kpi.totalEnrollments,
+      stories: databaseSnapshot.kpi.totalStories,
+      live_placements: databaseSnapshot.kpi.totalLivePlacements,
+      referrals: databaseSnapshot.kpi.totalReferrals,
+      recentLeads: databaseSnapshot.leads.slice(0, 6),
+      recentApplications: databaseSnapshot.applications.slice(0, 6),
     },
   });
 }

@@ -33,6 +33,10 @@
       "destination": "/api/admin/contacts"
     },
     {
+      "source": "/api/admin/applications",
+      "destination": "/api/admin/applications"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
