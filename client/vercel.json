@@ -25,6 +25,14 @@
       "destination": "/api/admin/logout"
     },
     {
+      "source": "/api/admin/leads",
+      "destination": "/api/admin/leads"
+    },
+    {
+      "source": "/api/admin/contacts",
+      "destination": "/api/admin/contacts"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
