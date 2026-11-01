@@ -5,6 +5,26 @@
       "destination": "/api/contact"
     },
     {
+      "source": "/api/admin/login",
+      "destination": "/api/admin/login"
+    },
+    {
+      "source": "/api/admin/me",
+      "destination": "/api/admin/me"
+    },
+    {
+      "source": "/api/admin/stats",
+      "destination": "/api/admin/stats"
+    },
+    {
+      "source": "/api/admin/settings",
+      "destination": "/api/admin/settings"
+    },
+    {
+      "source": "/api/admin/logout",
+      "destination": "/api/admin/logout"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
