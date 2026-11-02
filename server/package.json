@@ -11,6 +11,8 @@
     "prisma:push": "prisma db push",
     "prisma:reset": "prisma migrate reset --force",
     "seed": "tsx db/seed.ts",
+    "db:seed:demo": "tsx db/seed_demo.ts",
+    "db:seed:demo:clear": "tsx db/seed_demo_clear.ts",
     "test": "vitest run"
   },
   "dependencies": {

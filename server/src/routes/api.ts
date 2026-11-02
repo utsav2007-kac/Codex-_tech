@@ -59,6 +59,7 @@ router.post('/tools/interview-readiness', toolsController.evaluateReadinessHandl
 router.post('/admin/login', loginLimiter, adminController.login);
 router.post('/admin/logout', adminController.logout);
 router.get('/admin/me', requireAdminAuth, adminController.getMe);
+router.get('/admin/health', requireAdminAuth, adminController.getHealth);
 router.get('/admin/stats', requireAdminAuth, adminController.getStats);
 router.get('/admin/submissions/:type', requireAdminAuth, adminController.getSubmissions);
 router.patch('/admin/submissions/:type/:id/status', requireAdminAuth, adminController.updateStatus);

@@ -93,6 +93,64 @@ export const adminController = {
     res.json({ success: true, data: req.user });
   },
 
+  // Admin Health & Database Inspector (Admin Only)
+  async getHealth(req: AuthRequest, res: Response) {
+    try {
+      const dbUrl = process.env.DATABASE_URL || '';
+      const dbMatch = dbUrl.match(/\/([a-zA-Z0-9_\-]+)(?:\?|$)/);
+      const databaseName = dbMatch ? dbMatch[1] : 'codex_tech_it';
+      const isProduction = process.env.NODE_ENV === 'production';
+
+      const [
+        leadsCount,
+        contactsCount,
+        applicationsCount,
+        employerRequestsCount,
+        referralsCount,
+        subscribersCount,
+        enrollmentsCount,
+        placementsCount,
+      ] = await Promise.all([
+        prisma.lead.count(),
+        prisma.contact.count(),
+        prisma.application.count(),
+        prisma.employerRequest.count(),
+        prisma.referral.count(),
+        prisma.subscriber.count(),
+        prisma.enrollment.count(),
+        prisma.livePlacement.count(),
+      ]);
+
+      res.json({
+        success: true,
+        data: {
+          environment: isProduction ? 'Production' : 'Local',
+          database: databaseName,
+          status: 'Connected',
+          timestamp: new Date().toISOString(),
+          tables: {
+            leads: leadsCount,
+            contacts: contactsCount,
+            applications: applicationsCount,
+            employer_requests: employerRequestsCount,
+            referrals: referralsCount,
+            subscribers: subscribersCount,
+            enrollments: enrollmentsCount,
+            live_placements: placementsCount,
+          },
+        },
+      });
+    } catch (err: any) {
+      res.status(500).json({
+        success: false,
+        error: {
+          code: 'DATABASE_DISCONNECTED',
+          message: err.message || 'Unable to connect to database',
+        },
+      });
+    }
+  },
+
   // Stats / Dashboard KPI summary
   async getStats(req: AuthRequest, res: Response, next: NextFunction) {
     try {
