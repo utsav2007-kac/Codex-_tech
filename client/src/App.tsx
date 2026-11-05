@@ -37,6 +37,8 @@ const BlogList = lazy(() => import('./pages/blog/BlogList').then((m) => ({ defau
 const BlogDetail = lazy(() => import('./pages/blog/BlogDetail').then((m) => ({ default: m.BlogDetail })));
 const Faq = lazy(() => import('./pages/Faq').then((m) => ({ default: m.Faq })));
 const Contact = lazy(() => import('./pages/Contact').then((m) => ({ default: m.Contact })));
+const PricingPage = lazy(() => import('./pages/PricingPage').then((m) => ({ default: m.PricingPage })));
+const PricingDetailsPage = lazy(() => import('./pages/PricingDetailsPage').then((m) => ({ default: m.PricingDetailsPage })));
 const Legal = lazy(() => import('./pages/Legal').then((m) => ({ default: m.Legal })));
 const ThankYou = lazy(() => import('./pages/ThankYou').then((m) => ({ default: m.ThankYou })));
 const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })));
@@ -104,6 +106,8 @@ export const App: React.FC = () => {
             <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/price" element={<PricingPage />} />
+            <Route path="/price-details" element={<PricingDetailsPage />} />
             <Route path="/privacy-policy" element={<Legal />} />
             <Route path="/terms-and-conditions" element={<Legal />} />
             <Route path="/cookie-policy" element={<Legal />} />
